@@ -3,7 +3,7 @@
 
 
         <div class="container gal-container">
-            <div class="col-md-8 col-sm-12 co-xs-12 gal-item">
+            <div class="col-md-4 col-sm-8 co-xs-12 gal-item">
                 <div class="box">
                     <a href="#" data-toggle="modal" data-target="#1">
                         <img src="{{config("constants.upload.register.imageFolder").user()['user_id'] . '_main_orginal' . '.jpg'}}">

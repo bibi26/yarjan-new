@@ -149,47 +149,40 @@ class NewPersonInfoController extends Controller
         ]);
 //dd(config("constants.upload.register.allowExtensionPHP"));
         if ($validator->fails()) {
-            die(json_encode([
-                'hasErr' => true,
-                'error' => $validator->errors()->all()
-            ]));
+
         }
         try {
             $fileinfo = getimagesize($request->file($f));
         } catch (\Exception $e) {
             \Log::channel('notify')->error("LINE => " . __LINE__ . " METHOD => " . __METHOD__ . " INFO => " . $e->getMessage());
-            die(json_encode([
-                'hasErr' => true,
-                'error' => "فایل معتبر نمی باشد!"
-            ]));
+
         }
         $width = $fileinfo[0];
         $height = $fileinfo[1];
         if ($width < $_imgWidth || $height < $_imgHeight) {
-            die(json_encode([
+            return response([
                 'hasErr' => true,
                 'error' => "فایل " . " بارگذاری نشد. اندازه عکس بسیار کوچک است (حداقل " . $_imgWidth . " در " . $_imgHeight . " پیکسل)"
-            ]));
+            ]);
         }
         $f == 'fileMain' ? $fileName = user()['user_id'] . '_main_orginal' . '.jpg' : $fileName = user()['user_id'] . '_additional_orginal_' . md5(mt_rand(1000, 10000000)) . ".jpg";
         try {
             $request->file($f)->move(config("constants.upload.register.imageFolder"), $fileName);
         } catch (\Exception $e) {
             \Log::channel('notify')->error("LINE => " . __LINE__ . " METHOD => " . __METHOD__ . " INFO => " . $e->getMessage());
-            die(json_encode([
+            return response([
                 'hasErr' => true,
                 'error' => 'خطا در آپلود فایل!'
-            ]));
+            ]);
         }
 
 
-        $output = [
+        return response([
             'hasErr' => false,
             'initialPreview' => [config("constants.upload.register.imageFolder") . $fileName . "?" . mt_rand(1000, 100000)],
             'initialPreviewConfig' => [['url' => 'delete_img', 'key' => $fileName, 'extra' => ['_token' => csrf_token()]]],
             'append' => $f == 'fileMain' ? FALSE : TRUE
-        ];
-        die(json_encode($output));
+        ]);
 
     }
 
@@ -204,25 +197,26 @@ class NewPersonInfoController extends Controller
                 \File::delete($file_path);
             } catch (\Exception $e) {
                 \Log::channel('notify')->error("LINE => " . __LINE__ . " METHOD => " . __METHOD__ . " INFO => " . $e->getMessage());
-                die(json_encode(response([
+                return response([
                     'hasErr' => true,
                     'msg' => 'خطا در حذف فایل!'
-                ])));
+                ]);
+
             }
         } else {
             $msg = 'فایل یافت نشد!';
             \Log::channel('notify')->error("LINE => " . __LINE__ . " METHOD => " . __METHOD__ . " INFO => " . $msg);
 
-            die(json_encode(response([
+            return response([
                 'hasErr' => true,
                 'msg' => $msg
-            ])));
+            ]);
         }
 
-        die(json_encode(response([
+        return response([
             'hasErr' => false,
             'msg' => ''
-        ])));
+        ]);
     }
 
 

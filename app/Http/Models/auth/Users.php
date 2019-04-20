@@ -43,15 +43,22 @@ class Users extends BaseModel
     {
         return $this->belongsTo(Cities::class,'city_id','id');
     }
-    public function getUsers()
+
+    public function getUser($user_id)
     {
-        return Users::with(['provinces','cities'])->get();
+        return Users::with(['provinces','cities'])->where('id',$user_id)->first();
+
     }
 
-    public function getUsersOnline()
+    public function getUsers($limit,$offset)
     {
-        return DB::table('sessions')->select(['user_id','last_activity'])->get();
+       $total=  Users::with(['provinces','cities']);
+       return[
+           'count'=>$total->count(),
+           'total'=>$total->limit($limit)->offset($offset)->get()
+        ];
     }
+
 
     public function getUserbyUserId($userId)
     {

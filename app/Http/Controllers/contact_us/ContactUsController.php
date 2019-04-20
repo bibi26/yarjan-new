@@ -17,29 +17,14 @@ class ContactUsController extends Controller
 
     function store(Request $request)
     {
-        $input = array(
-            "mobile" => request('mobile'),
-            "email" => request('email'),
-            "message" => request('message'),
-            "captcha" => request('captcha')
-        );
-        $rules = [
+
+
+        $this->validate($request,  [
             'mobile' => ["nullable", "regex:/^09[0-9]{9}+$/u"],
             'email' => ["nullable", "email"],
             'message' => ["required"],
             'captcha' => ["required", "captcha"]
-        ];
-
-        $messages = [
-            'mobile.regex' => 'شماره همراه معتبر نمی باشد.',
-            'email.email' => 'ایمیل معتبر نمی باشد.',
-            'message.required' => 'پیام را وارد نمایید.',
-            'captcha.required' => 'کد امنیتی را وارد نمایید.',
-            'captcha.captcha' => 'کد امنیتی معتبر نمی باشد.'
-        ];
-
-
-        $this->validate($request, $rules, $messages);
+        ]);
 
 
         try{

@@ -26,7 +26,7 @@ return [
         'successLogin'=>'successLogin',
         'sendVerifyCode'=>'sendVerifyCode',
         'noRole'=>'noRole'
-    ]
+    ],'userOnlinetime'=>300 //second
 ];
 
 

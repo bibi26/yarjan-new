@@ -35,6 +35,8 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::get('/cartable', 'CartableController@cartableView')->name("cartableView");
     Route::post('/cartable', 'CartableController@delete_img')->name("personInfo.uploadImg.delete");
     Route::get('/show_persons', 'ShowPersonsController@showPersonsView')->name("personInfo.showPersons");
+    Route::post('/show_persons', 'ShowPersonsController@showPersonsView');
+    Route::get('/detailPerson/{id}', 'DetailPersonController@detailPersonView')->name("personInfo.detailPerson");
 
 });
 

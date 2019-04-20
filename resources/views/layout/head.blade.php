@@ -12,6 +12,7 @@
     <script src="{{ URL::asset('/js/fileinput.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('/js/theme.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('/js/fa.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::asset('/js/functions.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('/js/piexif.min.js') }}" type="text/javascript"></script>
 
 <script>

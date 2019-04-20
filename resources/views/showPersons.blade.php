@@ -23,7 +23,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.10),
             0 1px 2px rgba(0, 0, 0, 0.22);
             position: relative;
-            max-height: 370px;
+            height: 370px;
         }
 
         .card .profile_image {
@@ -33,11 +33,12 @@
             max-height: 200px;
             margin: 0 auto;
             border: none;
+            height: 220px;
         }
 
         .card div {
             padding: 16px 20px;
-            border-bottom: 1px solid #EEEEEE;
+
         }
 
         .card div h3 {
@@ -129,7 +130,7 @@
                 return false;
             if (($(window).scrollTop() + 500) <= ($(document).height() - $(window).height()))
                 return false
-            var user_posts = '';
+            var persons = '';
             if (!request_ajax || ajax_is_on)
                 return false;
             ajax_is_on = true;
@@ -137,8 +138,9 @@
                 .addClass('displayGif');
 
             $.ajax({
-                url: BASE_URL + 'ShowPersons/getRecords',
+                url: 'show_persons',
                 data: {
+                    _token: _TOKEN,
                     page_number: offset,
                 },
                 type: 'POST',
@@ -147,61 +149,67 @@
                 success: function (data) {
                     $("#loading-gif").removeClass('displayGif').addClass('hideGif');
                     if (data.count != 0) {
-                        for (var x = 0; x < data.posts.length; x++) {
-                            user_posts += "<li>\
+                        for (var x = 0; x < data.persons.length; x++) {
+                            persons += "<li>\
                         <div class='card'>\
                             <a class='button' href='article-link1'>\
-                                <img class='profile_image' src='" + data.posts[x].profile_image + "' >\
+                                <img class='profile_image' src='" + data.persons[x].profile_image + "' >\
                             </a>\
                             <span style='position: absolute;top: 5px;left: 5px;'>\
-                                <img  src='" + BASE_URL + "/assets/img/" + data.posts[x].online_status + ".png' >\
+                                <img  src='" + data.persons[x].online_status_icon + "' >\
                             </span>\
-                            <div  style='text-align: right;'>\
-                                    <h3><span>" + data.posts[x].first_name + "</span>&nbsp;-&nbsp;<span>" + data.posts[x].birth_date + "</span></h3>\
-                                    <p><span>" + data.posts[x].province_name + "</span>&nbsp;-&nbsp;<span>" + data.posts[x].city_name + "</span></p>\
+                            <div  style='text-align: right; border-bottom: 1px solid #EEEEEE;'>\
+                                    <h3><span>" + data.persons[x].fname + "</span>&nbsp;-&nbsp;<span>" + data.persons[x].age + "</span></h3>\
+                                    <p><span>" + data.persons[x].provinces.name + "</span>&nbsp;-&nbsp;<span>" + data.persons[x].cities.name + "</span></p>\
                             </div>\
-                            <div class='row'>\
-                                <a class='col-lg-4 btn btn-small btn-default'  href='article-link1' >" + data.posts[x].visits + "&nbsp;<span class='glyphicon glyphicon-eye-open ' style='color: #ff335a;'></span></a>\
-                                <span class='col-lg-4'></span>\
-                                <a class='col-lg-4 btn btn-small btn-default'  href='article-link1' >80&nbsp;<span class='glyphicon glyphicon-heart' style='color: #ff335a;'></span></a>\
-                            </div>\
-                              <a href='" + BASE_URL + "/detail'>\
+                             <div style='width: 100%;'>\
+                                  <div style='float: right; width: 25%;padding-right: 0px;'><a class='btn btn-small btn-default' href='article-link1'>400&nbsp;\
+                                  <i class='fa fa-eye ' style='color: #ff335a;'></i></a></div>\
+                                <div style='float: right; width: 50%;padding-right: 0px;text-align: center;'>\
+                                <span class=''  style='color: #4ff872;padding-top: 6px;'> بازدید شده</span></div>\
+                                <div style='float: right; width: 25%;padding-right: 0px;'><a class='btn btn-small btn-default' href='article-link1'>80&nbsp;\
+                                <i class='fa fa-heart' style='color: #ff335a;'></i></a></div> <br style='clear: right;'/></div>\
+                              <a href='detailPerson/'"+ data.persons[x].id +">\
                                     <div class='overlay'>\
                                           <table >\
                                               <tr>\
                                                   <td><small>نام:</small></td>\
-                                                  <td>" + data.posts[x].first_name + "</td>\
+                                                  <td>" + data.persons[x].fname + "</td>\
                                               </tr>\
                                               <tr>\
                                                   <td><small>سن:</small></td>\
-                                                  <td>" + data.posts[x].birth_date + "</td>\
+                                                  <td>" + data.persons[x].birth_date + "</td>\
                                               </tr>\
                                               <tr>\
                                                   <td><small>سکونت:</small></td>\
-                                                  <td><span>" + data.posts[x].province_name + "</span>&nbsp;-&nbsp;<span>" + data.posts[x].city_name + "</span></td>\
+                                                  <td><span>" + data.persons[x].provinces.name + "</span>&nbsp;-&nbsp;<span>" + data.persons[x].cities.name + "</span></td>\
                                               </tr>\
                                               <tr>\
                                                   <td><small>تحصیلات:</small></td>\
-                                                  <td>" + education(data.posts[x].education) + "</td>\
+                                                  <td>" + educationStatus(data.persons[x].education) + "</td>\
                                               </tr>\
                                               <tr>\
                                                   <td><small>رشته:</small></td>\
-                                                  <td>" + data.posts[x].field + "</td>\
+                                                  <td>" + data.persons[x].field + "</td>\
                                               </tr>\
                                               <tr>\
                                                   <td><small>شغل:</small></td>\
-                                                  <td>" + data.posts[x].job + "</td>\
+                                                  <td>" + data.persons[x].job + "</td>\
                                               </tr>\
                                               <tr>\
                                                   <td><small>آخرین ورود:</small></td>\
-                                                  <td>آنلاین</td>\
+                                                  <td>" + data.persons[x].last_visit + "</td>\
+                                              </tr>\
+                                              <tr>\
+                                                  <td><small>وضعیت :</small></td>\
+                                                  <td>" + data.persons[x].online_status_label + "</td>\
                                               </tr>\
                                           </table>\
                                       </div>\
                                   </a>\
                                 </div></li>";
                         }
-                        $('#infiniteContent').append(user_posts);
+                        $('#infiniteContent').append(persons);
                         offset += 1;
 
                     } else {
@@ -220,7 +228,7 @@
 
     <div class="row">
         <div class=" col-lg-12">
-            <div class="alert alert-info">تعداد کاربران آنلاین <b style="color: red;">{{count($persons)}}&nbsp;</b>نفر
+            <div class="alert alert-info">تعداد کاربران آنلاین <b style="color: red;">{{$count}}&nbsp;</b>نفر
             </div>
         </div>
     </div>
@@ -235,25 +243,13 @@
                             <li>
                                 <div class='card'>
                                     <a class='button' href='article-link1'>
-                                        @if (\File::exists(config("constants.upload.register.imageFolder"). $person['id'] . '_main_orginal' . '.jpg'))
-                                            <img class='profile_image'
-                                                 src='{{config("constants.upload.register.imageFolder").  $person['id'] . '_main_orginal' . '.jpg'}}'>
-                                        @elseif($person['sex']=='f')
-                                            <img class='profile_image' src='/img/wman1.png'>
-
-
-                                        @elseif($person['sex']=='m')
-                                            <img class='profile_image' src='/img/me-flat.png'>
-                                        @endif
+                                        <img class='profile_image'
+                                             src='{{$person['profile_image']}}'>
                                     </a>
                                     <span style="position: absolute;top: 5px;left: 5px;">
-                                           @if ($person['onlineStatus']==true)
-                                            <img src='/img/0online.png'>
-                                        @else
-                                            <img src='/img/0offline.png'>
-                                        @endif
+                                            <img src='{{$person['online_status_icon']}}'>
                                 </span>
-                                    <div style="text-align: right;">
+                                    <div style="text-align: right;border-bottom: 1px solid #EEEEEE;">
                                         <h3>
                                             <span>{{$person['fname']}}</span>&nbsp;-&nbsp;<span>{{$person['age']}}</span>
                                         </h3>
@@ -261,15 +257,20 @@
                                             <span>{{$person['provinces']['name']}}</span>&nbsp;-&nbsp;<span>{{$person['cities']['name']}}</span>
                                         </p>
                                     </div>
-                                    <div class="row">
-                                        <a class='col-lg-4 btn btn-small btn-default' href='article-link1'>400&nbsp;<i
-                                                class="fa fa-eye " style="color: #ff335a;"></i></a>
-                                        <span class="col-lg-4"
-                                              style="color: #4ff872;padding-top: 6px;"> بازدید شده</span>
-                                        <a class='col-lg-4 btn btn-small btn-default' href='article-link1'>80&nbsp;<i
-                                                class="fa fa-heart" style="color: #ff335a;"></i></a>
+                                    <div style="width: 100%;">
+                                        <div style="float: right; width: 25%;padding-right: 0px;"><a
+                                                class='btn btn-small btn-default' href='article-link1'>{{$person['visitCount']}}&nbsp;<i
+                                                    class="fa fa-eye " style="color: #ff335a;"></i></a></div>
+                                        <div
+                                            style="float: right; width: 50%;padding-right: 0px;text-align: center;"><span
+                                                class=""
+                                                style="color: #4ff872;padding-top: 6px;"> بازدید شده</span></div>
+                                        <div style="float: right; width: 25%;padding-right: 0px;"><a
+                                                class='btn btn-small btn-default' href='article-link1'>80&nbsp;<i
+                                                    class="fa fa-heart" style="color: #ff335a;"></i></a></div>
+                                        <br style="clear: right;"/>
                                     </div>
-                                    <a href="ShowPersons/detail/4">
+                                    <a href="detailPerson/{{$person['id']}}">
                                         <div class='overlay'>
                                             <table>
                                                 <tr>
@@ -314,7 +315,13 @@
                                                     <td>
                                                         <small>آخرین ورود:</small>
                                                     </td>
-                                                    <td>آنلاین</td>
+                                                    <td>{{$person['last_visit']}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <small> وضعیت:</small>
+                                                    </td>
+                                                    <td>@php echo $person["online_status_label"]@endphp</td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -327,7 +334,6 @@
 
                 <div id="pagination_message">
                 </div>
-                <!--</ul>-->
 
             </div>
         </div>
