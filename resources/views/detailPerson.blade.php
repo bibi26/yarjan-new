@@ -7,7 +7,7 @@
     </style>
 
     <div class="row" >
-        <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+        <div class="col-lg-3 col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="media">
@@ -31,8 +31,8 @@
                         </div>
                         <div class="col-lg-8 col-md-8">
                             <div>
-                                <div><span>کد شناسایی :</span></div>
-                                <div><span>آخرین ورود  :</span></div>
+                                <div><small>کد شناسایی :</small>&nbsp;<b style="font-size: 18px;">{{$person['id']}}</b></div>
+                                <div><small>آخرین ورود  :</small>&nbsp;<b style="font-size: 18px;">{{$person['last_visit']}}</b></div>
 
                             </div>
                         </div>
@@ -474,8 +474,7 @@
             transition: 0.3s;
         }
 
-        #myImg:hover {opacity: 0.7;
-        }
+        #myImg:hover {opacity: 0.7;}
 
         /* The Modal (background) */
         .modal {
@@ -554,6 +553,39 @@
                 width: 100%;
             }
         }
+
+
+
+
+
+
+        .modal button.close {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: #000;
+            opacity: 1;
+            color: #fff;
+            z-index: 999;
+            border-radius: 50%;
+            font-size: 15px;
+            border: 2px solid #fff;
+            line-height: 25px;
+            -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.35);
+        }
+
+        .modal button.close:focus {
+            outline: none;
+        }
+
+        .modal button.close span {
+            position: relative;
+            top: -3px;
+            font-weight: lighter;
+            text-shadow: none;
+        }
+
     </style>
     </head>
     <body>
@@ -561,8 +593,8 @@
 
     <!-- The Modal -->
     <div id="myModal" class="modal">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <img class="modal-content" id="img01">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">×</span></button>        <img class="modal-content" id="img01">
         <div id="caption"></div>
     </div>
 

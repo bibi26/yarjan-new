@@ -24,7 +24,12 @@ class Sessions extends Model
 
     function lists()
     {
-    return  $this->all();
+        return $this->all();
+    }
+
+    function edit($id)
+    {
+       return $this->where('user_id',$id)->first();
     }
 
 
