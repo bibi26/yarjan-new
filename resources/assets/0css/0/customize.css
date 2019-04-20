@@ -1,0 +1,77 @@
+/*@font-face {
+    font-family:'BYekan';
+    src:url('../fonts/BYekan.eot');
+    src:local('bYekan'),
+        local('b Yekan'),
+        url('../fonts/BYekan.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/BYekan.woff') format('woff'),
+        url('../fonts/BYekan.ttf') format('truetype');
+    font-style:normal;
+    font-weight:400;
+}
+
+p,div,h1,h2,h3,h4,h5,h6{    font-family:BYekan, Tahoma, arial, verdana, sans-serif !important;}*/
+
+@font-face
+{
+    font-family: 'IRANSans';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/iransans/IRANSansWebFaNum.eot');
+    src: url('../fonts/iransans/IRANSansWebFaNum.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/iransans/IRANSansWebFaNum.woff') format('woff'),
+        url('../fonts/iransans/IRANSansWebFaNum.ttf') format('truetype');
+}
+@font-face 
+{font-family: 'IRANSans_num';
+ font-style: normal;
+ font-weight: bold;
+ src: url('../fonts/iransans/IRANSansWebFaNum.eot');
+ src: url('../fonts/iransans/IRANSansWebFaNum.eot?#iefix') format('embedded-opentype'),
+     url('../fonts/iransans/IRANSansWebFaNum.woff') format('woff'),
+     url('../fonts/iransans/IRANSansWebFaNum.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'IRANSans_bold';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/iransans/IRANSansWeb_Bold.eot');
+    src: url('../fonts/iransans/iransanseot/IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/iransans/iransanswoff/IRANSansWeb_Bold.woff') format('woff'),
+        url('../fonts/iransans/iransansttf/IRANSansWeb_Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'font_awsome';
+    src: url('../awesome/fonts/fontawesome-webfont.eot');
+    src: url('../awesome/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+        url('../awesome/fonts/fontawesome-webfont.woff') format('woff'),
+        url('../awesome/fonts/fontawesome-webfont.ttf') format('truetype');
+}
+
+body
+{
+    font-family: 'IRANSans';
+      overflow-x:hidden;
+}
+body,p,div,h1,h2,h3,h4,h5,h6,select,input{
+    font-family:IRANSans, Tahoma, arial, verdana, sans-serif !important;
+}
+
+
+
+.refesh_captcha{
+    background: url('../img/refesh_captcha2.png') no-repeat;
+    width: 27px;
+    height: 27px;
+    border: none;
+    cursor:pointer;
+}
+
+
+
+
+
+
+
+
+
