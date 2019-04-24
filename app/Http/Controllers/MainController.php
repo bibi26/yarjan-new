@@ -1,15 +1,18 @@
 <?php
 namespace App\Http\Controllers;
 use App;
-use App\User;
-use App\Role;
+
+use App\Http\Models\Cities;
 use Illuminate\Http\Request;
 class MainController extends Controller
 {
-
-
-    function ttt(){
-      session('key','val');
-        dd(session()->all());
+    public function getCity()
+    {
+        $province_id = Request::input('provinceId');
+        $result=Cities::where('province_id',$province_id)->where('id','like','%0000')->get();
+        return response([
+            'hasErr' =>  false  ,
+            'msg' => $result
+        ]);
     }
 }

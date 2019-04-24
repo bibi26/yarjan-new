@@ -13,7 +13,7 @@
                     <div class="col-lg-5">
                         <select id="s_age_from" name="s_age_from"
                                 class="form-control input-sm">
-                            <option value="-1">انتخاب کنید</option>
+                            <option value="">انتخاب کنید</option>
                             @for ($i = 15; $i <= 70; $i++)
                                 <option value="{{ $i }}">{{ $i }}</option>
                             @endfor
@@ -29,7 +29,7 @@
                         <div class="col-lg-5">
                         <select id="s_age_to" name="s_age_to"
                                 class="form-control input-sm">
-                            <option value="-1">انتخاب کنید</option>
+                            <option value="">انتخاب کنید</option>
                         @for ($i = 15; $i <= 70; $i++)
                                 <option value="{{ $i }}">{{ $i }}</option>
                             @endfor
@@ -80,7 +80,7 @@
                     </div>
                 </div>
 
-                <div class="form-group {{ $errors->has('s_location') ? 'has-error' : '' }}">
+                <div class="form-group {{ $errors->has('s_job_status') ? 'has-error' : '' }}">
                     {!! Form::label('وضعیت اشتغال :','',['class' => 'control-label input-sm col-lg-4 ']) !!}
                     <div class="col-lg-8">
                         {{ Form::select('s_job_status', [''=>'انتخاب کنید','-1'=>'مهم نیست','unemployed'=>'بیکار', 'employed'=>'شاغل', 'student'=>'دانشجو'],[''], [ 'class' => 'form-control input-sm','id'=>'s_job_status' ])}}

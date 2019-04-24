@@ -94,6 +94,9 @@ function educationStatus($value, $array = false)
         case "hozavi":
             echo "حوزوی";
             break;
+        case "":
+            echo "تعیین نشده";
+            break;
         default :
             echo 'نامشخص';
             break;
@@ -120,6 +123,9 @@ function skinColorStatus($value, $array = false)
             break;
         case "balk":
             echo "سیاه";
+            break;
+        case "":
+            echo "تعیین نشده";
             break;
         default :
             echo 'نامشخص';
@@ -151,6 +157,9 @@ function religionStatus($value, $array = false)
         case "etc":
             echo "ساير";
             break;
+        case "":
+            echo "تعیین نشده";
+            break;
         default :
             echo 'نامشخص';
             break;
@@ -174,6 +183,9 @@ function beliefStatus($value, $array = false)
             break;
         case "religious_no":
             echo "غير مذهبي";
+            break;
+        case "":
+            echo "تعیین نشده";
             break;
         default :
             echo 'نامشخص';
@@ -206,6 +218,9 @@ function incomeStatus($value, $array = false)
         case "+10M":
             echo "بیش از 10 میلیون تومان";
             break;
+        case "":
+            echo "تعیین نشده";
+            break;
         default :
             echo 'نامشخص';
             break;
@@ -215,7 +230,7 @@ function incomeStatus($value, $array = false)
 function houseStatus($value, $array = false)
 {
     if ($array) {
-        return ['0' => 'نداشته باشد', '1' => 'داشته باشد'];
+        return ['0' => 'بدون مسکن شخصي', '1' => 'داراي مسکن شخصي'];
     }
     switch ($value) {
         case "-1":
@@ -226,6 +241,9 @@ function houseStatus($value, $array = false)
             break;
         case "1":
             echo "داراي مسکن شخصي";
+            break;
+        case "":
+            echo "تعیین نشده";
             break;
         default :
             echo 'نامشخص';
@@ -265,6 +283,9 @@ function carStatus($value, $array = false)
         case "+400M":
             echo "بيش از 400 ميليون تومان";
             break;
+        case "":
+            echo "تعیین نشده";
+            break;
         default :
             echo 'نامشخص';
             break;
@@ -288,6 +309,33 @@ function healthConditionStatus($value, $array = false)
             break;
         case "defective":
             echo "دارای نقص عضو";
+            break;
+        case "":
+            echo "تعیین نشده";
+            break;
+        default :
+            echo 'نامشخص';
+            break;
+    }
+}
+
+function immigrationStatus($value, $array = false)
+{
+    if ($array) {
+        return ['0' => 'ندارم', '1' => 'دارم'];
+    }
+    switch ($value) {
+        case "-1":
+            echo "مهم نیست";
+            break;
+        case "0":
+            echo "ندارم";
+            break;
+        case "1":
+            echo "دارم";
+            break;
+        case "":
+            echo "تعیین نشده";
             break;
         default :
             echo 'نامشخص';
@@ -313,6 +361,9 @@ function jobStatus($value, $array = false)
         case "student":
             echo "دانشجو";
             break;
+        case "":
+            echo "تعیین نشده";
+            break;
         default :
             echo 'نامشخص';
             break;
@@ -331,11 +382,14 @@ function marriageStatus($value, $array = false)
         case "single":
             echo "مجرد";
             break;
-        case "deceased_spouse":
+        case "deceaed_wife":
             echo "همسر فوت شده";
             break;
         case "divorced":
             echo "طلاق گرفته";
+            break;
+        case "":
+            echo "تعیین نشده";
             break;
         default :
             echo 'نامشخص';
@@ -379,6 +433,9 @@ function nationalityStatus($value, $array = false)
         case "etc":
             echo "سایر";
             break;
+        case "":
+            echo "تعیین نشده";
+            break;
         default :
             echo 'نامشخص';
             break;
@@ -388,7 +445,7 @@ function nationalityStatus($value, $array = false)
 function lifeStyleStatus($value, $array = false)
 {
     if ($array) {
-        return    ['dependent'=>'همراه خانواده', 'independent'=>'مستقل (مجردی)'];
+        return ['dependent' => 'همراه خانواده', 'independent' => 'مستقل (مجردی)'];
 
     }
     switch ($value) {
@@ -401,6 +458,9 @@ function lifeStyleStatus($value, $array = false)
         case "independent":
             echo "مستقل (مجردی)";
             break;
+        case "":
+            echo "تعیین نشده";
+            break;
         default :
             echo 'نامشخص';
             break;
@@ -410,7 +470,7 @@ function lifeStyleStatus($value, $array = false)
 function sexStatus($value, $array = false)
 {
     if ($array) {
-        return    ['f'=>'زن', 'm'=>'مرد'];
+        return ['f' => 'زن', 'm' => 'مرد'];
 
     }
     switch ($value) {
@@ -420,6 +480,9 @@ function sexStatus($value, $array = false)
         case "m":
             echo "مرد";
             break;
+        case "":
+            echo "تعیین نشده";
+            break;
         default :
             echo 'نامشخص';
             break;
@@ -427,6 +490,28 @@ function sexStatus($value, $array = false)
 }
 
 
-
+function childStatus($value, $array = false)
+{
+    if ($array) {
+        return ['0' => 'نداشته باشد', '1' => 'داشته باشد'];
+    }
+    switch ($value) {
+        case "-1":
+            echo "مهم نیست";
+            break;
+        case "0":
+            echo "نداشته باشد";
+            break;
+        case "1":
+            echo "داشته باشد";
+            break;
+        case "":
+            echo "تعیین نشده";
+            break;
+        default :
+            echo 'نامشخص';
+            break;
+    }
+}
 
 

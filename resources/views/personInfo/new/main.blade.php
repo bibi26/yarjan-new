@@ -21,19 +21,19 @@
                         <div class="alert oaerror danger" style="margin-top: 5px;">{{Session::get('error')}}</div>
                     @endif
                     @if($step==1)
-                        @include('personInfo.step1')
+                        @include('personInfo.new.step1')
                     @endif
                     @if($step==2)
-                        @include('personInfo.step2')
+                        @include('personInfo.new.step2')
                     @endif
                     @if($step==3)
-                        @include('personInfo.step3')
+                        @include('personInfo.new.step3')
                     @endif
                     @if($step==4)
-                        @include('personInfo.step4')
+                        @include('personInfo.new.step4')
                     @endif
                     @if($step==5)
-                        @include('personInfo.step5')
+                        @include('personInfo.new.step5')
                     @endif
                 </div>
             </div>

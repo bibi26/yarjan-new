@@ -15,10 +15,10 @@ class Users extends BaseModel
 
     public $timestamps = true;
     protected $fillable = [
-        'username', 'password', 'verify_code', 'email', 'fname', 'lname', 'sex', 'birth_date', 'age', 'province', 'city', 'username',
+        'username', 'password', 'verify_code', 'email', 'fname', 'lname','nick_name', 'sex', 'birth_date', 'age', 'province', 'city', 'username',
         'mobile', 'job_status', 'job', 'marriage', 'education', 'field', 'my_income',
         'family_income', 'house', 'car', 'child_count', 'age_older_child', 'step', 'weight', 'height', 'skin_color',
-        'belief', 'health_condition', 'immigration', 'face', 'style', 'nationality', 'life_style', 'i_am', 'you_are',
+         'health_condition', 'immigration', 'face', 'style', 'nationality', 'life_style', 'i_am', 'you_are',
         's_age_from', 's_age_to', 's_education_from', 's_education_to', 's_marriage_single', 's_marriage_deceased_spouse',
         's_marriage_divorced', 's_location_fellow_citizen', 's_location_fellow_province', 's_location_homeland',
         's_location_abroad', 's_job_status', 's_height_from', 's_height_to', 's_my_income', 's_house', 's_car',
@@ -183,7 +183,6 @@ class Users extends BaseModel
                     "weight" => $input["weight"],
                     "height" => $input["height"],
                     "skin_color" => $input["skin_color"],
-                    "belief" => $input["belief"],
                     "health_condition" => $input["health_condition"],
                     "immigration" => $input["immigration"],
                     "face" => $input["face"],

@@ -12,8 +12,7 @@ use Carbon\Carbon;
 
 class DetailPersonController extends Controller
 {
-    private $limit = 10;
-    private $view = 'detailPerson';
+    private $view = 'personInfo.detail.main';
     function detailPersonView($user_id)
     {
         $sessions=[];

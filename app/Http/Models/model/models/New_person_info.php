@@ -53,7 +53,6 @@ class New_person_info extends CI_Model
             "weight" => $input["weight"],
             "height" =>  $input["height"],
             "skin_color" => $input["skin_color"],
-            "belief" => $input["belief"],
             "health_condition" => $input["health_condition"],
             "immigration" =>  $input["immigration"],
             "face" =>  $input["face"],

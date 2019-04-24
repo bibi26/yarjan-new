@@ -226,70 +226,70 @@
                     <?php
                     if (!isset($_COOKIE['YARJAN']))
                     {
-                    ?>
-                    <li id="homeTopMenu" ><a  href="/"><span ><i style="color: #00CCFF;" class="fa fa-home"></i>&nbsp;</span>صفحه نخست</a></li>
-                    <li id="rulesMenu"><a href="<?php echo "" . 'rules'; ?>"><span ><i style="color: #00CCFF;" class="fa fa-balance-scale"></i>&nbsp;</span>قوانین</a></li>
-                    <li><a href="#"><span ><i style="color: #00CCFF;" class="fa fa-check-square"></i>&nbsp;</span>امکانات</a></li>
-                    <li id="contactTopMenu" ><a href="<?php echo "" . 'contactUs'; ?>"><span ><i style="color: #00CCFF;" class="fa fa-envelope"></i>&nbsp;</span>تماس با ما</a></li>
-                    <li id="aboutTopMenu"><a href="<?php echo "" . 'about'; ?>"><span ><i style="color: #00CCFF;" class="fa fa-question-circle"></i>&nbsp;</span>درباه ما</a></li>
-                    <li ><a href="<?php echo 'questionnaire'; ?>"><span ><i style="color: #00CCFF;" class="fa fa-question-circle"></i>&nbsp;</span> پرسشنامه</a></li>
-                    <!--                   <li class="dropdown">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Candidates <b class="glyphicon sm-glyph glyphicon-chevron-down"></b></a>
-                                                            <ul class="dropdown-menu">
-                                                                <li><a href="#">Link 1</a></li>
-                                                                <li><a href="#">Link 2</a></li>
-                                                                <li><a href="#">Link 3</a></li>
-                                                                <li><a href="#">Link 4</a></li>
-                                                                <li><a href="#">Link 5</a></li>
-                                                            </ul>
-                                                        </li>-->
-                    <?php
+                        ?>
+                        <li id="homeTopMenu" ><a  href="/"><span ><i style="color: #00CCFF;" class="fa fa-home"></i>&nbsp;</span>صفحه نخست</a></li>
+                        <li id="rulesMenu"><a href="<?php echo "" . 'rules'; ?>"><span ><i style="color: #00CCFF;" class="fa fa-balance-scale"></i>&nbsp;</span>قوانین</a></li>
+                        <li><a href="#"><span ><i style="color: #00CCFF;" class="fa fa-check-square"></i>&nbsp;</span>امکانات</a></li>
+                        <li id="contactTopMenu" ><a href="<?php echo "" . 'contactUs'; ?>"><span ><i style="color: #00CCFF;" class="fa fa-envelope"></i>&nbsp;</span>تماس با ما</a></li>
+                        <li id="aboutTopMenu"><a href="<?php echo "" . 'about'; ?>"><span ><i style="color: #00CCFF;" class="fa fa-question-circle"></i>&nbsp;</span>درباه ما</a></li>
+                        <li ><a href="<?php echo 'questionnaire'; ?>"><span ><i style="color: #00CCFF;" class="fa fa-question-circle"></i>&nbsp;</span> پرسشنامه</a></li>
+                        <!--                   <li class="dropdown">
+                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Candidates <b class="glyphicon sm-glyph glyphicon-chevron-down"></b></a>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a href="#">Link 1</a></li>
+                                                                    <li><a href="#">Link 2</a></li>
+                                                                    <li><a href="#">Link 3</a></li>
+                                                                    <li><a href="#">Link 4</a></li>
+                                                                    <li><a href="#">Link 5</a></li>
+                                                                </ul>
+                                                            </li>-->
+                        <?php
                     }
                     else
                     {
-                    ?>
-                    <li id="signUpTopMenu"><a href="<?php echo "" . 'signUp'; ?>" style="color:#000;"><span ><i style="color: #00CCFF;" class="fa fa-user-plus"></i>&nbsp;</span>ثبت نام</a></li>
+                        ?>
+                        <li id="signUpTopMenu"><a href="<?php echo "" . 'signUp'; ?>" style="color:#000;"><span ><i style="color: #00CCFF;" class="fa fa-user-plus"></i>&nbsp;</span>ثبت نام</a></li>
 
-                    <?php
+                        <?php
                     }
                     ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-left" >
 
-                    @if (Cookie::get('LOGEDIN') == false)
-                        <li id="signInTopMenu"><a href="signIn" style="color:#000;"><span ><i style="color: #00CCFF;" class="fa fa-key"></i>&nbsp;</span></span>ورود</a></li>
-                        <li id="signUpTopMenu"><a href="signUp" style="color:#000;"><span ><i style="color: #00CCFF;" class="fa fa-user-plus"></i>&nbsp;</span>ثبت نام</a></li>
-                    @elseif(Cookie::get('LOGEDIN') == true)
-                        <?php
-                        $username =user()['username'];
-                        ?>
-                        <li class="dropdown mega-dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin:0px;"><img style="width: 25px;height: 25px;" src="<?php echo "/img/nobody_m.original.jpg"; ?>" /> <i class="fa fa-caret-down"></i></a>
+                    @if (Cookie::get('LOGEDIN') == false)   
+                    <li id="signInTopMenu"><a href="signIn" style="color:#000;"><span ><i style="color: #00CCFF;" class="fa fa-key"></i>&nbsp;</span></span>ورود</a></li>
+                    <li id="signUpTopMenu"><a href="signUp" style="color:#000;"><span ><i style="color: #00CCFF;" class="fa fa-user-plus"></i>&nbsp;</span>ثبت نام</a></li>
+                    @elseif(Cookie::get('LOGEDIN') == true) 
+                    <?php
+                    $username =user()['username'];
+                    ?>
+                    <li class="dropdown mega-dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin:0px;"><img style="width: 25px;height: 25px;" src="<?php echo "/img/nobody_m.original.jpg"; ?>" /> <i class="fa fa-caret-down"></i></a>
 
-                            <ul class="dropdown-menu mega-dropdown-menu row">
-                                <li class="col-lg-4">
-                                    <img src="<?php echo "/img/nobody_m.original.jpg"; ?>" />
+                        <ul class="dropdown-menu mega-dropdown-menu row">
+                            <li class="col-lg-4">
+                                <img src="<?php echo "/img/nobody_m.original.jpg"; ?>" />
 
-                                </li>
-                                <li class="col-lg-8">
-                                    <ul>
-                                        <li class="dropdown-header"><?php echo $username; ?></li>
-                                        <li id="signUpTopMenu4"><a href="<?php echo "" . 'signUp'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-arrow-left"></i>&nbsp;</span>اطلاعات حساب کاربری</a></li>
-                                        <li id="signUpTopMenu5"><a href="<?php echo "" . 'signUp'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-arrow-left"></i>&nbsp;</span>ویرایش پروفایل</a></li>
-                                        <li id="signUpTopMenu6"><a href="<?php echo "" . 'signUp'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-arrow-left"></i>&nbsp;</span>مشاهده پروفایل</a></li>
-                                        <li id="signUpTopMenu7"><a href="<?php echo "" . 'signUp'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-arrow-left"></i>&nbsp;</span>احراز هویت</a></li>
-                                        <li id="signUpTopMenu8"><a href="<?php echo "" . 'signUp'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-arrow-left"></i>&nbsp;</span>انصراف/ ثبت ازدواج</a></li>
+                            </li>
+                            <li class="col-lg-8">
+                                <ul>
+                                    <li class="dropdown-header"><?php echo $username; ?></li>
+                                    <li id="signUpTopMenu4"><a href="<?php echo "" . 'signUp'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-arrow-left"></i>&nbsp;</span>اطلاعات حساب کاربری</a></li>
+                                    <li id="signUpTopMenu5"><a href="<?php echo "" . 'signUp'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-arrow-left"></i>&nbsp;</span>ویرایش پروفایل</a></li>
+                                    <li id="signUpTopMenu6"><a href="<?php echo "" . 'signUp'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-arrow-left"></i>&nbsp;</span>مشاهده پروفایل</a></li>
+                                    <li id="signUpTopMenu7"><a href="<?php echo "" . 'signUp'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-arrow-left"></i>&nbsp;</span>احراز هویت</a></li>
+                                    <li id="signUpTopMenu8"><a href="<?php echo "" . 'signUp'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-arrow-left"></i>&nbsp;</span>انصراف/ ثبت ازدواج</a></li>
 
-                                        <li class="divider"></li>
-                                        <li class="dropdown-header" id="signUpTopMenu9"><a href="<?php echo "" . 'signOut'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-times"></i>&nbsp;</span>خروج</a></li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header" id="signUpTopMenu9"><a href="<?php echo "" . 'signOut'; ?>" ><span ><i style="color: #00CCFF;" class="fa fa-times"></i>&nbsp;</span>خروج</a></li>
 
-                                        <!--<li><a href="#">Good Typography</a></li>-->
-                                    </ul>
-                                </li>
+                                    <!--<li><a href="#">Good Typography</a></li>-->
+                                </ul>
+                            </li>
 
-                            </ul>
+                        </ul>
 
-                        </li>
+                    </li>
                     @endif
 
                 </ul>

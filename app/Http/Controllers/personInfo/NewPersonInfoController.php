@@ -12,7 +12,7 @@ use App\Http\Models\auth\Users;
 
 class NewPersonInfoController extends Controller
 {
-    private $view = 'personInfo.main';
+    private $view = 'personInfo.new.main';
 
     function step1View()
     {
@@ -90,7 +90,6 @@ class NewPersonInfoController extends Controller
             'weight' => "required",
             'height' => "required",
             'skin_color' => "required",
-            'belief' => "required",
             'health_condition' => "required",
             'immigration' => "required",
             'face' => "required",
@@ -143,28 +142,31 @@ class NewPersonInfoController extends Controller
         $_imgWidth = config("constants.upload.register.imageWidth");
         $_imgHeight = config("constants.upload.register.imageHeight");
 
-
         $validator = Validator::make($request->all(), [
-            'fileMain' => ['image', 'mimes:' . config("constants.upload.register.allowExtensionPHP"), 'max:' . config("constants.upload.register.fileSizeKiloByte")]
+            'fileAdditional' => [ 'mimes:jpeg,jpg' , 'max:' . config("constants.upload.register.fileSizeKiloByte")]
         ]);
 //dd(config("constants.upload.register.allowExtensionPHP"));
         if ($validator->fails()) {
-
+            return response([
+                'hasErr' => true,
+                'msg' => $validator->errors()->all()
+            ]);
         }
         try {
             $fileinfo = getimagesize($request->file($f));
+            $width = $fileinfo[0];
+            $height = $fileinfo[1];
+            if ($width < $_imgWidth || $height < $_imgHeight) {
+                return response([
+                    'hasErr' => true,
+                    'error' => "فایل " . " بارگذاری نشد. اندازه عکس بسیار کوچک است (حداقل " . $_imgWidth . " در " . $_imgHeight . " پیکسل)"
+                ]);
+            }
         } catch (\Exception $e) {
             \Log::channel('notify')->error("LINE => " . __LINE__ . " METHOD => " . __METHOD__ . " INFO => " . $e->getMessage());
 
         }
-        $width = $fileinfo[0];
-        $height = $fileinfo[1];
-        if ($width < $_imgWidth || $height < $_imgHeight) {
-            return response([
-                'hasErr' => true,
-                'error' => "فایل " . " بارگذاری نشد. اندازه عکس بسیار کوچک است (حداقل " . $_imgWidth . " در " . $_imgHeight . " پیکسل)"
-            ]);
-        }
+
         $f == 'fileMain' ? $fileName = user()['user_id'] . '_main_orginal' . '.jpg' : $fileName = user()['user_id'] . '_additional_orginal_' . md5(mt_rand(1000, 10000000)) . ".jpg";
         try {
             $request->file($f)->move(config("constants.upload.register.imageFolder"), $fileName);

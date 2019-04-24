@@ -44,14 +44,6 @@
                     </div>
                 </div>
 
-                <div class="form-group {{ $errors->has('belief') ? 'has-error' : '' }}">
-                    {!! Form::label('میزان اعتقادات :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
-                    <div class="col-lg-8">
-                        {{ Form::select('belief', [''=>'انتخاب کنید','religious_high'=>'مذهبي مقيد', 'religious_usual'=>'مذهبي معمولي', 'religious_no'=>'غير مذهبي'],'', [ 'class' => 'form-control input-sm','id'=>'belief' ])}}
-                        <span class="text-danger small ">{{ $errors->first('belief') }}</span>
-                    </div>
-                </div>
-
                 <div class="form-group {{ $errors->has('health_condition') ? 'has-error' : '' }}">
                     {!! Form::label('وضعیت سلامتی :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
                     <div class="col-lg-8">
@@ -151,11 +143,6 @@
         @if(isset($userInfo->skin_color))
         $("#skin_color").val("@php echo  $userInfo->skin_color @endphp");
         @endif
-
-        @if(isset($userInfo->belief))
-        $("#belief").val("@php echo  $userInfo->belief @endphp");
-        @endif
-
         @if(isset($userInfo->health_condition))
         $("#health_condition").val("@php echo  $userInfo->health_condition @endphp");
         @endif
