@@ -1,7 +1,27 @@
 @extends('home')
 @section('content')
+<script>
+    function notify(type,msg){
+        $.notify({
+            // options
+            message: msg,
+        },{
+            // settings
+            type: type,
+            onShow: function() {
+                this.css({'width':'auto','height':'auto'});
+            },
+        });
+    }
 
-    <div class="row">
+    @if(Session::has('success'))
+        notify('success','{{Session::get('success')}}' )
+    @endif
+    @if(Session::has('error'))
+    notify('danger','{{Session::get('error')}}' )
+    @endif
+</script>
+    <div class="row" id="detail_page">
         <div class="col-lg-3 col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -19,18 +39,36 @@
                 <div class="panel-body">
                     <div class="row ">
                         <div class="col-lg-4 col-md-4">
-                            <div style="margin: 5px;"><a href="" class="btn btn-default"
-                                                         style="width: 210px;text-align: right;"><i class="fa fa-envelope  " style="color: #ff335a;"></i>&nbsp;ارسال
-                                    پیام علاقه مندی</a></div>
-                            <div style="margin: 5px;"><a href="" class="btn btn-default"
-                                                         style="width: 210px;text-align: right;"><i class="fa fa-heart " style="color: #ff335a;"></i>&nbsp;افزودن
-                                    به علاقه مندی ها </a></div>
-                            <div style="margin: 5px;"><a href="" class="btn btn-default"
-                                                         style="width: 210px;text-align: right;"><i class="fa fa-exclamation-triangle"  style="color: #ff335a;"></i>&nbsp;گزارش
-                                    تخلفات </a></div>
-                            <div style="margin: 5px;"><a href="" class="btn btn-default"
-                                                         style="width: 210px;text-align: right;"><i class="fa fa-ban"  style="color: #ff335a;"></i>&nbsp;افزودن
-                                    به لیست سیاه</a></div>
+                            <div style="margin: 5px;">
+                                <a href="" class="btn btn-default" href="#" data-toggle="modal" data-target="#freeMessage"
+                                   style="width: 210px;text-align: right;"><i class="fa fa-star  "
+                                                                              style="color: #ff335a;"></i>&nbsp;ارسال
+                                   (رایگان) پیام علاقه مندی</a>
+                            </div>
+                            <div style="margin: 5px;">
+                                <a href="" class="btn btn-default" href="#" data-toggle="modal" data-target="#realMessage"
+                                   style="width: 210px;text-align: right;"><i class="fa fa-envelope  "
+                                                                              style="color: #ff335a;"></i>&nbsp;ارسال
+                                    پیام شخصی </a>
+                            </div>
+                            <div style="margin: 5px;">
+                                <a href="{{url('favorite')}}/{{$person['id']}}/{{$person['favorited']?0:1}}" class="btn btn-{{$person['favorited']?'success':'default'}}"
+                                   style="width: 210px;text-align: right;"><i class="fa fa-heart "
+                                                                              style="color: #ff335a;"></i>&nbsp;افزودن
+                                    به علاقه مندی ها </a>
+                            </div>
+                            <div style="margin: 5px;">
+                                <a href="" class="btn btn-default" href="#" data-toggle="modal" data-target="#violationReportModal"
+                                   style="width: 210px;text-align: right;"><i class="fa fa-exclamation-triangle"
+                                                                              style="color: #ff335a;"></i>&nbsp;گزارش
+                                    تخلفات </a>
+                            </div>
+                            <div style="margin: 5px;">
+                                <a href="{{url('blackList')}}/{{$person['id']}}/{{$person['blacked']?0:1}}" class="btn btn-{{$person['blacked']?'success':'default'}}"
+                                   style="width: 210px;text-align: right;"><i class="fa fa-ban"
+                                                                              style="color: #ff335a;"></i>&nbsp;افزودن
+                                    به لیست سیاه</a>
+                            </div>
 
                         </div>
                         <div class="col-lg-8 col-md-8">
@@ -60,12 +98,17 @@
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content tabs" id="dv_sign">
+
+
                     @if(Session::has('error'))
                         <div class="alert oaerror danger" style="margin-top: 5px;">{{Session::get('error')}}</div>
                     @endif
-                        @include('personInfo.detail.aboutMe')
-                        @include('personInfo.detail.spouseCriteria')
-                        @include('personInfo.detail.albumImages')
+                    @include('personInfo.detail.aboutMe')
+                    @include('personInfo.detail.spouseCriteria')
+                    @include('personInfo.detail.freeMessage')
+                    @include('personInfo.detail.realMessage')
+                    @include('personInfo.detail.albumImages')
+                    @include('personInfo.detail.violationReport')
                 </div>
             </div>
         </div>
@@ -75,6 +118,7 @@
         .form-group {
             border-bottom: 1px solid #00CCFF;
         }
+
         .val {
             font-weight: bolder;
             color: #000;
@@ -437,8 +481,8 @@
             modal.style.display = "none";
         }
 
-    </script>
 
+    </script>
 
 @stop
 

@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sessions extends Model
 {
     public $timestamps = true;
-    protected $fillable = [
-        'visited_user', 'visitor_user'];
+    protected $fillable = [];
     private static $_instance = null;
 
     public static function _()
@@ -27,7 +26,7 @@ class Sessions extends Model
         return $this->all();
     }
 
-    function edit($id)
+    function show($id)
     {
        return $this->where('user_id',$id)->first();
     }

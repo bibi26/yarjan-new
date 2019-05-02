@@ -10,7 +10,7 @@ class Visits extends Model
 {
     public $timestamps = true;
     protected $fillable = [
-        'visited_user', 'visitor_user'];
+        'visited_user_id', 'visitor_user_id'];
     private static $_instance = null;
 
     public static function _()
@@ -22,9 +22,20 @@ class Visits extends Model
 
     }
 
-    function lists()
+    function iVisited()
     {
-        return  $this->select(DB::Raw('visitor_user, COUNT(*) as visitCount'))->groupBy('visitor_user')->get();
+        return  $this->select('visited_user_id')->where('visitor_user_id',user()['user_id'])->distinct('visited_user_id')->get();
+    }
+
+    function visitCount()
+    {
+        return  $this->select(DB::Raw('visited_user_id, COUNT(visited_user_id) as visitCount'))->groupBy('visited_user_id')->get();
+    }
+
+
+    function myVisitors()
+    {
+        return $this->select( DB::raw('distinct visitor_user_id'))->where('visited_user_id', user()['user_id'])->get();
     }
 
     function store($visited_user)
@@ -32,12 +43,13 @@ class Visits extends Model
         try {
           Visits::create(
                 [
-                    "visited_user" => $visited_user,
-                    "visitor_user" => user()['user_id'],
+                    "visited_user_id" => $visited_user,
+                    "visitor_user_id" => user()['user_id'],
                 ]);
 
             return ['hasErr' => false, 'msg' => ''];
         } catch (\Exception $e) {
+            dd($e->getMessage());
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
             return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
         }

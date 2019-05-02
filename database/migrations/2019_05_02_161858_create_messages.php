@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVisitsTable extends Migration
+class CreateMessages extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateVisitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('visitor_user_id');
-            $table->integer('visited_user_id');
+            $table->integer('sender_user_id');
+            $table->integer('reciever_user_id');
+            $table->text('text');
+            $table->tinyInteger('free');
+            $table->tinyInteger('delete')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateVisitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('messages');
     }
 }

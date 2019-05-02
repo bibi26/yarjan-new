@@ -1,6 +1,8 @@
 @extends('home')
 @section('content')
-
+    @if(Session::has('error'))
+        notify('danger','{{Session::get('error')}}' )
+    @endif
 
         <div class="container gal-container">
             <div class="col-md-8 col-sm-12 co-xs-12 gal-item">
@@ -28,31 +30,31 @@
 
         <div class="row">
             <p  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <a class="quick-btn" href="#">
+                <a class="quick-btn" href="{{url('show_persons/visits')}}">
                     <i class="fa fa-eye fa-2x"></i><br/>
                     <span> بازدید کنندگان</span>
-                    <span class="label btn-danger">9999</span>
+                    <span class="label btn-danger">{{$visit_count}}</span>
                 </a>
             </p>
             <p  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <a class="quick-btn" href="#">
+                <a class="quick-btn" href="{{url('show_persons/favorites')}}">
                     <i class="fa fa-heart fa-2x "></i><br/>
                     <span> علاقه مندی ها</span>
-                    <span class="label btn-danger">200</span>
+                    <span class="label btn-danger">{{$favorite_count}}</span>
                 </a>
             </p>
             <p  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <a class="quick-btn" href="#">
+                <a class="quick-btn" href="{{url('show_persons/blacks')}}">
                     <i class="fa fa-ban fa-2x"></i><br/>
                     <span>لیست سیاه</span>
-                    <span class="label btn-danger">8974</span>
+                    <span class="label btn-danger">{{$black_count}}</span>
                 </a>
             </p>
             <p  class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                 <a class="quick-btn img-hover-zoom" href="#">
                     <i class="fa fa-exclamation-triangle fa-2x"></i><br/>
                     <span>متخلفین</span>
-                    <span class="label  btn btn-danger ">3</span>
+                    <span class="label  btn btn-danger "></span>
                 </a>
             </p>
         </div>

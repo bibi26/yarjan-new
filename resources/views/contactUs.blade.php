@@ -98,8 +98,27 @@
         </div>
     </div>
     </div>
-
+<input value="eferfergf" type="button" onclick=' '>
     <script>
+        $.notify({
+            icon: 'https://randomuser.me/api/portraits/med/men/77.jpg',
+            title: 'Byron Morgan',
+            message: 'Momentum reduce child mortality effectiveness incubation empowerment connect.'
+        },{
+            delay: 5,    animate: {
+                enter: 'animated bounceInDown',
+                exit: 'animated bounceOutUp'
+            },
+            type: 'warning',
+
+            icon_type: 'image',
+            template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                '<img data-notify="icon" class="img-circle pull-left">' +
+                '<span data-notify="title">{1}</span>' +
+                '<span data-notify="message">{2}</span>' +
+                '</div>'
+        });
+
         $(document).ready(function () {
 
             $("#refesh_captcha").click(function (event) {

@@ -14,6 +14,7 @@ class Users extends BaseModel
 {
 
     public $timestamps = true;
+
     protected $fillable = [
         'username', 'password', 'verify_code', 'email', 'fname', 'lname','nick_name', 'sex', 'birth_date', 'age', 'province', 'city', 'username',
         'mobile', 'job_status', 'job', 'marriage', 'education', 'field', 'my_income',
@@ -44,21 +45,38 @@ class Users extends BaseModel
         return $this->belongsTo(Cities::class,'city_id','id');
     }
 
-    public function getUser($user_id)
+    public function getCurrentUser()
     {
-        return Users::with(['provinces','cities'])->where('id',$user_id)->first();
-
+        return Users::with(['provinces','cities'])->where('id',user()['user_id'])->first();
     }
 
-    public function getUsers($limit,$offset)
+    public function getUserById($user_id)
     {
-       $total=  Users::with(['provinces','cities']);
+        return Users::with(['provinces','cities'])->where('id',$user_id)->first();
+    }
+
+    public function getUsers($flag,$data,$sex,$limit,$offset)
+    {
+        if($flag==''){
+            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex);
+        }
+        elseif($flag=='visits'){
+            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->whereIn('id',$data);
+        }
+        elseif($flag=='favorites'){
+            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->whereIn('id',$data);
+        }
+        elseif($flag=='blacks'){
+            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->whereIn('id',$data);
+        }
+        elseif($flag=='onlines'){
+            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->whereIn('id',$data);
+        }
        return[
            'count'=>$total->count(),
            'total'=>$total->limit($limit)->offset($offset)->get()
         ];
     }
-
 
     public function getUserbyUserId($userId)
     {
@@ -69,7 +87,6 @@ class Users extends BaseModel
     {
         return Users::where(['username' => $username])->first();
     }
-
 
     public function addUser($input)
     {

@@ -53,11 +53,12 @@ class UsersTableSeeder extends Seeder
             $province = Provinces::where('id', mt_rand(1, Provinces::count()))->get()->toArray()[0]['id'];
             $countCity = Cities::where('province_id', $province)->count();
             $itemsCity = Cities::where('province_id', $province)->get()->toArray();
+           $email=str_random(8) ;
             $city=$itemsCity[mt_rand(0, $countCity - 1)]['id'];
             \App\Http\Models\auth\Users::insert([
 //                    'username' => "0937".generateRandomString(7,'number'),
-                'username' => str_random(30) . '@gmail.com',
-                'email' => str_random(3) . '@gmail.com',
+                'username' => $email . '@gmail.com',
+                'email' =>$email. '@gmail.com',
                 'password' => bcrypt('123456'),
                 'status' => mt_rand(0, 2),
                 'active' => mt_rand(0, 1),

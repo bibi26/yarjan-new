@@ -136,9 +136,9 @@
             ajax_is_on = true;
             $("#loading-gif").removeClass('hideGif')
                 .addClass('displayGif');
-
+            var detail_url = '{{url("/detailPerson")}}'
             $.ajax({
-                url: 'show_persons',
+                url: '{{url('/show_persons')}}',
                 data: {
                     _token: _TOKEN,
                     page_number: offset,
@@ -147,6 +147,7 @@
                 async: false,
                 dataType: 'JSON',
                 success: function (data) {
+
                     $("#loading-gif").removeClass('displayGif').addClass('hideGif');
                     if (data.count != 0) {
                         for (var x = 0; x < data.persons.length; x++) {
@@ -166,10 +167,10 @@
                                   <div style='float: right; width: 25%;padding-right: 0px;'><a class='btn btn-small btn-default' href='article-link1'>400&nbsp;\
                                   <i class='fa fa-eye ' style='color: #ff335a;'></i></a></div>\
                                 <div style='float: right; width: 50%;padding-right: 0px;text-align: center;'>\
-                                <span class=''  style='color: #4ff872;padding-top: 6px;'> بازدید شده</span></div>\
+                                <span class=''  style='color: #4ff872;padding-top: 6px;'>"+data.persons[x].i_visited+"</span></div>\
                                 <div style='float: right; width: 25%;padding-right: 0px;'><a class='btn btn-small btn-default' href='article-link1'>80&nbsp;\
                                 <i class='fa fa-heart' style='color: #ff335a;'></i></a></div> <br style='clear: right;'/></div>\
-                              <a href='detailPerson/'"+ data.persons[x].id +">\
+                              <a href='" + detail_url + "/" + data.persons[x].id + "'>\
                                     <div class='overlay'>\
                                           <table >\
                                               <tr>\
@@ -225,10 +226,27 @@
         });
 
     </script>
-
+    @if(isset($error))
+        <div class="alert oaerror danger" style="margin-top: 5px;">{{$error}}</div>
+    @endif
     <div class="row">
         <div class=" col-lg-12">
-            <div class="alert alert-info">تعداد کاربران آنلاین <b style="color: red;">{{$count}}&nbsp;</b>نفر
+            @php
+                $f='';
+                if($flag==''){
+                    $f='کاربران';
+                }
+                if($flag=='visits'){
+                    $f='بازدیدکنندگان من';
+                }
+                if($flag=='favorites'){
+                    $f='علاقه مندی های من';
+                }
+                if($flag=='blacks'){
+                    $f='لیست سیاه من';
+                }
+            @endphp
+            <div class="alert alert-info">تعداد {{$f}} <b style="color: red;">{{isset($count)?$count:0}}&nbsp;</b>نفر
             </div>
         </div>
     </div>
@@ -259,18 +277,19 @@
                                     </div>
                                     <div style="width: 100%;">
                                         <div style="float: right; width: 25%;padding-right: 0px;"><a
-                                                class='btn btn-small btn-default' href='article-link1'>{{$person['visitCount']}}&nbsp;<i
+                                                class='btn btn-small btn-default'
+                                                href='article-link1'>{{$person['visitCount']}}&nbsp;<i
                                                     class="fa fa-eye " style="color: #ff335a;"></i></a></div>
                                         <div
                                             style="float: right; width: 50%;padding-right: 0px;text-align: center;"><span
                                                 class=""
-                                                style="color: #4ff872;padding-top: 6px;"> بازدید شده</span></div>
+                                                style="color: #4ff872;padding-top: 6px;">{{$person['i_visited']}}</span></div>
                                         <div style="float: right; width: 25%;padding-right: 0px;"><a
                                                 class='btn btn-small btn-default' href='article-link1'>80&nbsp;<i
                                                     class="fa fa-heart" style="color: #ff335a;"></i></a></div>
                                         <br style="clear: right;"/>
                                     </div>
-                                    <a href="detailPerson/{{$person['id']}}">
+                                    <a href="{{url('detailPerson/'.$person['id'])}}">
                                         <div class='overlay'>
                                             <table>
                                                 <tr>

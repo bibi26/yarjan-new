@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVisitsTable extends Migration
+class BlackLists extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateVisitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create('black_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('visitor_user_id');
-            $table->integer('visited_user_id');
+            $table->integer('blacker_user_id');
+            $table->integer('blacked_user_id');
+            $table->tinyInteger('blacked');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateVisitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('black_lists');
     }
 }

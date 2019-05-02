@@ -1,8 +1,3 @@
-</div>
-</div>
-<div class="col-lg-1">
-</div>
-</div>
 <style>
     footer {
         background-color: white !important;

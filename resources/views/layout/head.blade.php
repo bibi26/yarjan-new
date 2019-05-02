@@ -9,11 +9,15 @@
     <script type="text/javascript" src="{{ URL::asset('/js/select2.js') }}"></script>
     <link href="{{ URL::asset('/css/fileinput.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/css/theme.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('/css/animate.css') }}" rel="stylesheet" type="text/css">
     <script src="{{ URL::asset('/js/fileinput.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('/js/theme.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('/js/fa.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('/js/functions.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('/js/piexif.min.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::asset('/js/bootstrap-notify.min.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::asset('/js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
+    <script src="{{ URL::asset('/js/dataTables.bootstrap.js') }}" type="text/javascript"></script>
 
 <script>
 </script>
