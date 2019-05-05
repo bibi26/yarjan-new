@@ -31,14 +31,14 @@
                     <li><a href="#"><span><i style="color: #00CCFF;" class="fa fa-check-square"></i>&nbsp;</span>امکانات</a>
                     </li>
                     <li id="contactTopMenu"><a href="{{url('contactUs')}}"><span><i style="color: #00CCFF;"
-                                                                                    class="fa fa-envelope"></i>&nbsp;</span>تماس
+                                                                                    class="fa fa-comment"></i>&nbsp;</span>تماس
                             با ما</a></li>
                     <li id="aboutTopMenu"><a href="<?php echo "" . 'about'; ?>"><span><i style="color: #00CCFF;"
                                                                                          class="fa fa-question-circle"></i>&nbsp;</span>درباه
                             ما</a></li>
-                    <li><a href="<?php echo 'questionnaire'; ?>"><span><i style="color: #00CCFF;"
-                                                                          class="fa fa-question-circle"></i>&nbsp;</span>
-                            پرسشنامه</a></li>
+                    <li><a href="{{url('message/all')}}"><span><i style="color: #00CCFF;"
+                                                                          class="fa fa-envelope"></i>&nbsp;</span>
+                            پیام ها</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i style="color: #00CCFF;"
                                                                                        class="fa fa-caret-down"></i>&nbsp;جستجو

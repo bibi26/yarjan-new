@@ -1,6 +1,38 @@
 @extends('home')
 @section('content')
+<script>
 
+    $(function() {
+        var wtf    = $('#content_chat');
+        var height = wtf[0].scrollHeight;
+        wtf.scrollTop(height);
+    });
+    function getConversation(offset){
+        $.ajax({
+            url: '{{route('getConversation')}}',
+            data: {
+                _token: _TOKEN,
+                page_number: 2,
+                user_id: '{{$reciever['id']}}'
+            },
+            type: 'POST',
+            async: false,
+            dataType: 'JSON',
+            success: function (data) {
+                console.log(data);
+                if (data.count != 0) {
+                    for (var x = 0; x < data.persons.length; x++) {
+                    }
+                } else {
+                    // $("#pagination_message").addClass('alert alert-danger');
+                    // $("#pagination_message").html('رکوردی دیگر یافت نشد!');
+                }
+            }
+        });
+    }
+
+
+</script>
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
             <div class="portlet portlet-default">
@@ -21,8 +53,10 @@
                 </div>
                 <div id="chat" class="panel-collapse collapse in">
                     <div>
-                        <div class="portlet-body chat-widget" style="overflow-y: auto; width: auto; height: 500px;">
+                        <div id="content_chat" class="portlet-body chat-widget" style="overflow-y: auto; width: auto; height: 500px;">
                             @if(isset($messages))
+                                <button type="button" class="btn btn-danger pull-right"
+                                        onclick="javascrit:getConversation(10)">ارسال</button>
                                 @foreach($messages as $message)
                                     @if($message['sender_user_id']==$reciever['id'])
                                         <div class="row">
@@ -75,7 +109,8 @@
                                 <textarea class="form-control" placeholder="بنویس . . ."></textarea>
                             </div>
                             <div class="form-group">
-                                <button type="button" class="btn btn-default pull-right">ارسال</button>
+                                <button type="button" class="btn btn-default pull-right"
+                                        onclick="javascrit:getConversation(10)">ارسال</button>
                                 <div class="clearfix"></div>
                             </div>
                         </form>
@@ -250,25 +285,6 @@
             height: 100px;
         }
     </style>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
+
 
 @stop
