@@ -2,7 +2,7 @@
     <div class="form-group row">
         <label class="control-label col-lg-2 col-md-2 col-sm-3 ">نام :</label>
         <div
-            class="col-lg-10 col-md-10 col-sm-9  val">@php   echo!empty($person['nick_name']) ? $person['nick_name'] :$person['fname']; @endphp</div>
+            class="col-lg-10 col-md-10 col-sm-9  val">@php   echo !empty($person['nick_name']) ? $person['nick_name'] :$person['fname']; @endphp</div>
     </div>
 
     <div class="form-group row">

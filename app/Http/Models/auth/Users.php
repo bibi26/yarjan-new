@@ -55,12 +55,10 @@ class Users extends BaseModel
         return Users::with(['provinces','cities'])->where('id',$user_id)->first();
     }
 
-    public function getUsers($flag,$data,$sex,$limit,$offset)
+    public function lists($flag='',$data='',$sex='',$limit=0,$offset=18446744073709551615)
     {
-        if($flag==''){
-            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex);
-        }
-        elseif($flag=='visits'){
+
+        if($flag=='visits'){
             $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->whereIn('id',$data);
         }
         elseif($flag=='favorites'){
@@ -71,11 +69,11 @@ class Users extends BaseModel
         }
         elseif($flag=='onlines'){
             $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->whereIn('id',$data);
-        }
-       return[
-           'count'=>$total->count(),
-           'total'=>$total->limit($limit)->offset($offset)->get()
-        ];
+        }else{
+
+        return  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->get();
+    }
+       return $total->limit($limit)->offset($offset)->get();
     }
 
     public function getUserbyUserId($userId)

@@ -93,14 +93,14 @@ class ShowPersonsController extends Controller
 
         if ($request->ajax()) {
             $pageNumber = $request['page_number'];
-            $getUsers = Users::_()->getUsers($flag, $data, $sex, $this->limit, ($pageNumber - 1) * $this->limit);
+            $getUsers = Users::_()->lists($flag, $data, $sex, $this->limit, ($pageNumber - 1) * $this->limit);
         } else {
             $pageNumber = 0;
-            $getUsers = Users::_()->getUsers($flag, $data, $sex, $this->limit, $pageNumber);
+            $getUsers = Users::_()->lists($flag, $data, $sex, $this->limit, $pageNumber);
         }
 
-        $totalCount = $getUsers['count'];
-        $getUsers = $getUsers['total']->toArray();
+        $totalCount = $getUsers->count();
+        $getUsers = $getUsers->toArray();
 
         foreach ($getUsers as $key => $val) {
             if (in_array($val['id'], $onlineUsers)) {

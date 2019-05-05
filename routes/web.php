@@ -46,6 +46,11 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::get('/favorite/{id}/{favorited}', 'DetailPersonController@favorite')->name("blackList");
     Route::post('/send_free_message', 'MessageController@freeMessage')->name("sendFreeMessage");
     Route::post('/send_real_message', 'MessageController@realMessage')->name("sendRealMessage");
+    Route::get('/message/all', 'MessageController@messageView')->defaults('type', 'all');
+    Route::get('/message/inbox', 'MessageController@messageView')->defaults('type', 'inbox');
+    Route::get('/message/outbox', 'MessageController@messageView')->defaults('type', 'outbox');
+    Route::get('/message/unread', 'MessageController@messageView')->defaults('type', 'unread');
+    Route::get('/conversation/{user_id}', 'MessageController@conversationView');
 //    Route::get('/table', 'DetailPersonController@table')->name("table");
 
 });

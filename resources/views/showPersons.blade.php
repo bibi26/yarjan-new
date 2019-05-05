@@ -262,7 +262,7 @@
                                 <div class='card'>
                                     <a class='button' href='article-link1'>
                                         <img class='profile_image'
-                                             src='{{$person['profile_image']}}'>
+                                             src='{{asset($person['profile_image'].'?'.mt_rand(1,100000))}}'>
                                     </a>
                                     <span style="position: absolute;top: 5px;left: 5px;">
                                             <img src='{{$person['online_status_icon']}}'>
