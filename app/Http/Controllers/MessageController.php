@@ -14,6 +14,7 @@ class MessageController extends Controller
 {
     private $manageView = 'message.manage.main';
     private $conversationView = 'message.conversation';
+    private $limit = 10;
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -21,7 +22,7 @@ class MessageController extends Controller
     function messageView($flag)
     {
         $users = [];
-        $getMessages = Messages::_()->get($flag, user()['user_id']);
+        $getMessages = Messages::_()->getc($flag, user()['user_id'],100,0);
         if ($getMessages->count() == 0) {
             return view($this->manageView, ['error' => 'رکوردی یافت نشد!']);
         }
@@ -76,7 +77,7 @@ class MessageController extends Controller
     function conversationView($user_id)
     {
         $getUserInfo = Users::_()->getUserById($user_id);
-        $getMessages = Messages::_()->get('', $user_id);
+        $getMessages = Messages::_()->getc('', $user_id,100,0);
         $getSessionUsers = Sessions::_()->lists();
 
         if (\File::exists(config("constants.upload.register.imageFolder") . $user_id . '_main_orginal' . '.jpg')) {
@@ -95,22 +96,48 @@ class MessageController extends Controller
             $getUserInfo['sender_image'] = '/img/me-flat.png';
         }
 
-        $getUserInfo['online_status_icon'] = '/img/0offline.png';
+                    $getUserInfo['online_status_icon'] = '/img/0offline.png';
         foreach ($getSessionUsers as $se) {
-                if ($user_id == $se['user_id']) {
-                    if ($se->last_activity + config('constants.userOnlinetime') <= time()) {
-                        $getUserInfo['online_status_icon'] = '/img/0online.png';
-                    }
+            if ($user_id == $se['user_id']) {
+                if ($se->last_activity + config('constants.userOnlinetime') > time()) {
+        $getUserInfo['online_status_icon'] = '/img/0online.png';
                 }
             }
+        }
 
 
-            foreach ($getMessages as $key => $val) {
-                $getMessages[$key]['time'] = \Morilog\Jalali\Jalalian::forge($val['created_at'])->ago();
+        foreach ($getMessages as $key => $val) {
+            $getMessages[$key]['time'] = \Morilog\Jalali\Jalalian::forge($val['created_at'])->ago();
 
-            }
-            return view($this->conversationView, ['messages' => $getMessages, 'reciever' => $getUserInfo]);
+        }
+        return view($this->conversationView, ['messages' => $getMessages, 'reciever' => $getUserInfo]);
 
+    }
+
+    function getConversation(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'page_number' => ['required','integer'],
+            'user_id' => ['required', 'integer'],
+        ]);
+        if ($validator->fails()) {
+            return response([
+                'hasErr' => true,
+                'error' => $validator->errors()->all()
+            ]);
+        }
+        $result = Messages::_()->get('',$request['user_id'],$this->limit,($request['page_number'] - 1) * $this->limit);
+        if (empty($result)) {
+            return response([
+                'hasErr' => true,
+                'error' => 'خطای سیستمی'
+            ]);
+        }
+        return response([
+            'hasErr' => false,
+            'count' => $result->count(),
+            'result' =>$result
+        ]);
     }
 
     function freeMessage(Request $request)

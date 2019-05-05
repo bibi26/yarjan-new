@@ -11,7 +11,7 @@ class Messages extends Model
 {
     public $timestamps = true;
     protected $fillable = [
-        'sender_user_id', 'reciever_user_id', 'text', 'free', 'delete'];
+        'sender_user_id', 'reciever_user_id', 'text'];
     private static $_instance = null;
 
     public static function _()
@@ -45,24 +45,30 @@ class Messages extends Model
         }
     }
 
-    function get($flag='',$user_id)
+    function getc($flag='',$user_id,$limit,$offset)
     {
         if ($flag == 'outbox') {
             return $this
-                ->select('reciever_user_id', 'sender_user_id')
+                ->select('id','reciever_user_id', 'sender_user_id')
                 ->with('users')
                 ->where('delete', 0)
                 ->where('sender_user_id',$user_id)
                 ->distinct('reciever_user_id')
+                ->limit($limit)
+                ->offset($offset)
+                ->orderBy('id','desc')
                 ->get();
 
         }else if($flag=='all' || $flag=='inbox') {
             return $this
-                ->select('reciever_user_id', 'sender_user_id')
+                ->select('id','reciever_user_id', 'sender_user_id')
                 ->with('users')
                 ->where('delete', 0)
                 ->where('reciever_user_id', $user_id)
                 ->distinct('sender_user_id')
+                ->limit($limit)
+                ->offset($offset)
+                ->orderBy('id','desc')
                 ->get();
         }else{
             return $this
@@ -71,9 +77,13 @@ class Messages extends Model
                 ->where('delete', 0)
                 ->where('reciever_user_id', $user_id)
                 ->orWhere('sender_user_id', $user_id)
+                ->limit($limit)
+                ->offset($offset)
+                ->orderBy('id','desc')
                 ->get();
         }
     }
+
 
     function lastMessage($users, $flag)
     {

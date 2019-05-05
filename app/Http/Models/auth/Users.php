@@ -55,7 +55,7 @@ class Users extends BaseModel
         return Users::with(['provinces','cities'])->where('id',$user_id)->first();
     }
 
-    public function lists($flag='',$data='',$sex='',$limit=0,$offset=18446744073709551615)
+    public function lists($flag='',$data='',$sex='',$limit=1000000000,$offset=0)
     {
 
         if($flag=='visits'){
