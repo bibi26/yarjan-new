@@ -22,7 +22,7 @@ class MessageController extends Controller
     function messageView($flag)
     {
         $users = [];
-        $getMessages = Messages::_()->getc($flag, user()['user_id'],100,0);
+        $getMessages = Messages::_()->getc($flag, user()['user_id'], $this->limit, 0);
         if ($getMessages->count() == 0) {
             return view($this->manageView, ['error' => 'رکوردی یافت نشد!']);
         }
@@ -72,35 +72,57 @@ class MessageController extends Controller
         }
 
         return view($this->manageView, ['messages' => $getMessages->toArray(), 'flag' => $flag]);
+
+
     }
 
-    function conversationView($user_id)
+    function conversations($user_id = '', Request $request)
     {
-        $getUserInfo = Users::_()->getUserById($user_id);
-        $getMessages = Messages::_()->getc('', $user_id,100,0);
+        $getSenderInfo = Users::_()->getUserById(user()['user_id']);
+        $getReceiverInfo = Users::_()->getUserById($user_id);
+        if ($request->ajax()) {
+            $validator = Validator::make($request->all(), [
+                'page_number' => ['required', 'integer'],
+                'user_id' => ['required', 'integer'],
+            ]);
+            if ($validator->fails()) {
+                return response([
+                    'hasErr' => true,
+                    'error' => $validator->errors()->all()
+                ]);
+            }
+            $user_id = $request['user_id'];
+            $pageNumber = $request['page_number'];
+            $getMessages = Messages::_()->getc('', $user_id, $this->limit, ($pageNumber - 1) * $this->limit);
+
+        } else {
+            $pageNumber = 0;
+            $getMessages = Messages::_()->getc('', $user_id, $this->limit, $pageNumber);
+
+        }
         $getSessionUsers = Sessions::_()->lists();
 
         if (\File::exists(config("constants.upload.register.imageFolder") . $user_id . '_main_orginal' . '.jpg')) {
-            $getUserInfo['receiver_image'] = config("constants.upload.register.imageFolder") . $user_id . '_main_orginal' . '.jpg';
-        } elseif ($getUserInfo['sex'] == 'f') {
-            $getUserInfo['receiver_image'] = '/img/wman1.png';
-        } elseif ($getUserInfo['sex'] == 'm') {
-            $getUserInfo['receiver_image'] = '/img/me-flat.png';
+            $getReceiverInfo['receiver_image'] = config("constants.upload.register.imageFolder") . $user_id . '_main_orginal' . '.jpg';
+        } elseif ($getReceiverInfo['sex'] == 'f') {
+            $getReceiverInfo['receiver_image'] = '/img/wman1.png';
+        } elseif ($getReceiverInfo['sex'] == 'm') {
+            $getReceiverInfo['receiver_image'] = '/img/me-flat.png';
         }
 
         if (\File::exists(config("constants.upload.register.imageFolder") . user()['user_id'] . '_main_orginal' . '.jpg')) {
-            $getUserInfo['sender_image'] = config("constants.upload.register.imageFolder") . user()['user_id'] . '_main_orginal' . '.jpg';
-        } elseif ($getUserInfo['sex'] == 'f') {
-            $getUserInfo['sender_image'] = '/img/wman1.png';
-        } elseif ($getUserInfo['sex'] == 'm') {
-            $getUserInfo['sender_image'] = '/img/me-flat.png';
+            $getReceiverInfo['sender_image'] = config("constants.upload.register.imageFolder") . user()['user_id'] . '_main_orginal' . '.jpg';
+        } elseif ($getReceiverInfo['sex'] == 'f') {
+            $getReceiverInfo['sender_image'] = '/img/wman1.png';
+        } elseif ($getReceiverInfo['sex'] == 'm') {
+            $getReceiverInfo['sender_image'] = '/img/me-flat.png';
         }
 
-                    $getUserInfo['online_status_icon'] = '/img/0offline.png';
+        $getReceiverInfo['online_status_icon'] = '/img/0offline.png';
         foreach ($getSessionUsers as $se) {
             if ($user_id == $se['user_id']) {
                 if ($se->last_activity + config('constants.userOnlinetime') > time()) {
-        $getUserInfo['online_status_icon'] = '/img/0online.png';
+                    $getReceiverInfo['online_status_icon'] = '/img/0online.png';
                 }
             }
         }
@@ -110,35 +132,18 @@ class MessageController extends Controller
             $getMessages[$key]['time'] = \Morilog\Jalali\Jalalian::forge($val['created_at'])->ago();
 
         }
-        return view($this->conversationView, ['messages' => $getMessages, 'reciever' => $getUserInfo]);
+        $content= view("partials.conversationsPartial", ['messages' => $getMessages, 'reciever' => $getReceiverInfo,'sender'=>$getSenderInfo])->render();
+        if ($request->ajax()) {
+            return response([
+                'messages' => $content,
+                'count' => $getMessages->count(),
+            ]);
+        }
+        return view($this->conversationView, ['content' =>$content, 'reciever' => $getReceiverInfo,'sender'=>$getSenderInfo]);
+
 
     }
 
-    function getConversation(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'page_number' => ['required','integer'],
-            'user_id' => ['required', 'integer'],
-        ]);
-        if ($validator->fails()) {
-            return response([
-                'hasErr' => true,
-                'error' => $validator->errors()->all()
-            ]);
-        }
-        $result = Messages::_()->get('',$request['user_id'],$this->limit,($request['page_number'] - 1) * $this->limit);
-        if (empty($result)) {
-            return response([
-                'hasErr' => true,
-                'error' => 'خطای سیستمی'
-            ]);
-        }
-        return response([
-            'hasErr' => false,
-            'count' => $result->count(),
-            'result' =>$result
-        ]);
-    }
 
     function freeMessage(Request $request)
     {

@@ -25,7 +25,7 @@ class Messages extends Model
 
     public function users()
     {
-        return $this->belongsTo(Users::class, 'reciever_user_id', 'id');
+        return $this->belongsTo(Users::class, 'sender_user_id', 'id');
     }
 
     function store($sender_user_id, $reciever_user_id, $text, $free)
@@ -71,12 +71,15 @@ class Messages extends Model
                 ->orderBy('id','desc')
                 ->get();
         }else{
+            $re=[
+                $user_id.user()['user_id'],
+                user()['user_id'].$user_id
+            ];
             return $this
                 ->select('*')
                 ->with('users')
                 ->where('delete', 0)
-                ->where('reciever_user_id', $user_id)
-                ->orWhere('sender_user_id', $user_id)
+                ->whereIn(DB::Raw("CONCAT(reciever_user_id,sender_user_id)"),$re)
                 ->limit($limit)
                 ->offset($offset)
                 ->orderBy('id','desc')

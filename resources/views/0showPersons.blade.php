@@ -147,11 +147,12 @@
                 async: false,
                 dataType: 'JSON',
                 success: function (data) {
-
                     $("#loading-gif").removeClass('displayGif').addClass('hideGif');
+                    console.log(data);
                     if (data.count != 0) {
-                        $('#infiniteContent').append(data.persons);
+                        $('#infiniteContent').append(persons);
                         offset += 1;
+
                     } else {
 
                         request_ajax = false;
@@ -194,7 +195,7 @@
             <div class='posts-box'>
                 <!--<ul>-->
                 <div id="infiniteContent">
-                 {!! $content !!}
+                    <div id="content"> {!! $content !!}</div>
                 </div>
 
                 <div id="pagination_message">
@@ -203,7 +204,5 @@
             </div>
         </div>
     </div>
-
-
 @stop
 

@@ -36,7 +36,7 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::get('/cartable', 'CartableController@cartableView')->name("cartableView");
     Route::post('/cartable', 'CartableController@delete_img')->name("personInfo.uploadImg.delete");
     Route::get('/show_persons', 'ShowPersonsController@showPersonsView')->name("personInfo.showPersons");
-    Route::get('/show_persons', 'ShowPersonsController@showPersonsView')->name("personInfo.showPersons");
+    Route::post('/show_persons', 'ShowPersonsController@showPersonsView')->name("personInfo.showPersons");
     Route::get('/show_persons/online', 'ShowPersonsController@showPersonsView')->defaults('type', 'onlines');
     Route::get('/show_persons/visits', 'ShowPersonsController@showPersonsView')->defaults('type', 'visits');
     Route::get('/show_persons/favorites', 'ShowPersonsController@showPersonsView')->defaults('type', 'favorites');
@@ -50,8 +50,8 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::get('/message/inbox', 'MessageController@messageView')->defaults('type', 'inbox');
     Route::get('/message/outbox', 'MessageController@messageView')->defaults('type', 'outbox');
     Route::get('/message/unread', 'MessageController@messageView')->defaults('type', 'unread');
-    Route::get('/conversation/{user_id}', 'MessageController@conversationView');
-    Route::post('/get_conversation', 'MessageController@getConversation')->name('getConversation');
+    Route::get('/conversation/{user_id}', 'MessageController@conversations');
+    Route::post('/conversation', 'MessageController@conversations');
 //    Route::get('/table', 'DetailPersonController@table')->name("table");
 
 });

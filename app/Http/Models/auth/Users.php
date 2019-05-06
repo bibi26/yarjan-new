@@ -55,7 +55,7 @@ class Users extends BaseModel
         return Users::with(['provinces','cities'])->where('id',$user_id)->first();
     }
 
-    public function lists($flag='',$data='',$sex='',$limit=1000000000,$offset=0)
+    public function lists($flag='',$data='',$sex='',$limit=100000000,$offset=0)
     {
 
         if($flag=='visits'){
@@ -71,7 +71,7 @@ class Users extends BaseModel
             $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->whereIn('id',$data);
         }else{
 
-        return  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->get();
+            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex);
     }
        return $total->limit($limit)->offset($offset)->get();
     }

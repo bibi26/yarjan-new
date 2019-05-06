@@ -55,7 +55,7 @@ class UsersTableSeeder extends Seeder
             $itemsCity = Cities::where('province_id', $province)->get()->toArray();
            $email=str_random(8) ;
             $city=$itemsCity[mt_rand(0, $countCity - 1)]['id'];
-            \App\Http\Models\auth\Users::insert([
+            \App\Http\Models\auth\Users::create([
 //                    'username' => "0937".generateRandomString(7,'number'),
                 'username' => $email . '@gmail.com',
                 'email' =>$email. '@gmail.com',

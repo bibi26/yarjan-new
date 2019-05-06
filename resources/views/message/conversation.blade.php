@@ -1,38 +1,38 @@
 @extends('home')
 @section('content')
-<script>
+    <script>
 
-    $(function() {
-        var wtf    = $('#content_chat');
-        var height = wtf[0].scrollHeight;
-        wtf.scrollTop(height);
-    });
-    function getConversation(offset){
-        $.ajax({
-            url: '{{route('getConversation')}}',
-            data: {
-                _token: _TOKEN,
-                page_number: 2,
-                user_id: '{{$reciever['id']}}'
-            },
-            type: 'POST',
-            async: false,
-            dataType: 'JSON',
-            success: function (data) {
-                console.log(data);
-                if (data.count != 0) {
-                    for (var x = 0; x < data.persons.length; x++) {
-                    }
-                } else {
-                    // $("#pagination_message").addClass('alert alert-danger');
-                    // $("#pagination_message").html('رکوردی دیگر یافت نشد!');
-                }
-            }
+        $(function () {
+
+            var wtf = $('#content_chat');
+            var height = wtf[0].scrollHeight;
+            wtf.scrollTop(height);
+
         });
-    }
+        var offset = 2;
 
-
-</script>
+        function getConversation() {
+            $.ajax({
+                url: '{{url('/conversation')}}',
+                data: {
+                    _token: _TOKEN,
+                    page_number: offset,
+                    user_id: '{{$reciever['id']}}'
+                },
+                type: 'POST',
+                async: false,
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.count != 0) {
+                        offset += 1;
+                        $('#content').prepend(data.messages);
+                    } else {
+                        $("#etc_button").hide();
+                    }
+                }
+            });
+        }
+    </script>
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
             <div class="portlet portlet-default">
@@ -53,54 +53,15 @@
                 </div>
                 <div id="chat" class="panel-collapse collapse in">
                     <div>
-                        <div id="content_chat" class="portlet-body chat-widget" style="overflow-y: auto; width: auto; height: 500px;">
-                            @if(isset($messages))
-                                <button type="button" class="btn btn-danger pull-right"
-                                        onclick="javascrit:getConversation(10)">ارسال</button>
-                                @foreach($messages as $message)
-                                    @if($message['sender_user_id']==$reciever['id'])
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="media">
-                                                    <a class="pull-right" href="#">
-                                                        <img class="media-object img-circle img-chat"
-                                                             src="{{asset($reciever['sender_image'].'?'.mt_rand(1,100000))}}"
-                                                             alt="">
-                                                    </a>
-                                                    <div class="media-body" style="text-align: right;padding-left: 35%;text-align: justify;">
-                                                        <h4 class="media-heading">
-                                                            <p class="small">{{persianNum($message['time'])}}</p>
-                                                            <p>@php  echo !empty($message['users']['nick_name']) ? $message['users']['nick_name'] :$message['users']['fname']; @endphp</p>
-                                                        </h4>
-                                                        <p style="background-color: rgba(27,255,20,0.22);border-radius:10px;padding: 10px;">{{$message['text']}}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="row">
-                                            <div class="col-lg-12" style="width:100%;padding-right: 35%;">
-                                                <div class="media">
-                                                    <a class="pull-right" href="#">
-                                                        <img class="media-object img-circle img-chat"
-                                                             src="{{asset($reciever['receiver_image'].'?'.mt_rand(1,100000))}}"
-                                                             alt="">
-                                                    </a>
-                                                    <div class="media-body" style="text-align: right;border-radius:10px;text-align: justify;">
-                                                        <h4 class="media-heading">
-                                                            <p class="small">{{persianNum($message['time'])}}</p>
-                                                            <p>@php  echo !empty($message['users']['nick_name']) ? $message['users']['nick_name'] :$message['users']['fname']; @endphp</p>
-                                                        </h4>
-                                                        <p style="background-color: #f9e7eb;border-radius:10px;padding: 10px;">{{$message['text']}}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            @endif
-
-
+                        <div id="content_chat" class="portlet-body chat-widget"
+                             style="overflow-y: auto; width: auto; height: 500px;">
+                            <div style="  display: flex;align-items: center; justify-content: center;width:100%;">
+                                <button id="etc_button" type="button" class="btn btn-warning pull-right btn-sm"
+                                        onclick="javascrit:getConversation()">پیام های بیشتر
+                                </button>
+                            </div>
+                            <br/>
+                            <div id="content"> {!! $content !!}</div>
                         </div>
                     </div>
                     <div class="portlet-footer">
@@ -110,7 +71,8 @@
                             </div>
                             <div class="form-group">
                                 <button type="button" class="btn btn-default pull-right"
-                                        onclick="javascrit:getConversation(10)">ارسال</button>
+                                        onclick="javascrit:send()">ارسال
+                                </button>
                                 <div class="clearfix"></div>
                             </div>
                         </form>
