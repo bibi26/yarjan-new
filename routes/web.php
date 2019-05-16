@@ -12,6 +12,8 @@ App::setLocale('fa');
 */
 Route::post('/violationReport', 'DetailPersonController@violationReport')->name("violationReport");
 
+Route::group(['middleware' => [ 'cors']], function ()
+{
 Route::group(['middleware' => [ 'web']], function ()
 {
 Route::group(['middleware' => ['is-admin']], function () {
@@ -100,3 +102,25 @@ Route::post('/resetPass','auth\ResetPassController@store')->name('resetPass.stor
 Route::get('/signOut', 'auth\SignOutController@signOut')->name("signOut");
 
 });
+});
+Route::post('/broadcasting/auth', function (){
+    return response([
+        'messages' => '',
+        'count' => '',
+    ]);
+});
+Route::get('/event', function (){
+    event( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
+    broadcast( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
+    return view('test');
+
+});
+Route::post('/laravel-websockets/event', function (){
+    event( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
+    broadcast( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
+
+
+});
+//Route::post('/broadcasting/auth ', function (){
+//  return true;
+//});

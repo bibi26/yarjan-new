@@ -212,7 +212,7 @@
                     <span class="icon-bar"></span>
                 </a>
 
-                <a href="#" class="navbar-right"><img src="/img/yarjan.png"></a>
+                <a href="#" class="navbar-right"><img src="{{asset('img/yarjan.png')}}"></a>
             </div>
             <div id="slidemenu">
                 <form class="navbar-form navbar-right" role="form">

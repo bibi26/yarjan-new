@@ -13,7 +13,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="#"><img src="/img/yarjan.png"></a>
+                <a href="#"><img src="{{asset('img/yarjan.png')}}"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

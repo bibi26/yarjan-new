@@ -79,11 +79,10 @@ class MessageController extends Controller
     function conversations($user_id = '', Request $request)
     {
         $getSenderInfo = Users::_()->getUserById(user()['user_id']);
-        $getReceiverInfo = Users::_()->getUserById($user_id);
         if ($request->ajax()) {
             $validator = Validator::make($request->all(), [
                 'page_number' => ['required', 'integer'],
-                'user_id' => ['required', 'integer'],
+                'reciever_user_id' => ['required', 'integer'],
             ]);
             if ($validator->fails()) {
                 return response([
@@ -100,6 +99,7 @@ class MessageController extends Controller
             $getMessages = Messages::_()->getc('', $user_id, $this->limit, $pageNumber);
 
         }
+        $getReceiverInfo = Users::_()->getUserById($user_id);
         $getSessionUsers = Sessions::_()->lists();
 
         if (\File::exists(config("constants.upload.register.imageFolder") . $user_id . '_main_orginal' . '.jpg')) {
@@ -109,7 +109,6 @@ class MessageController extends Controller
         } elseif ($getReceiverInfo['sex'] == 'm') {
             $getReceiverInfo['receiver_image'] = '/img/me-flat.png';
         }
-
         if (\File::exists(config("constants.upload.register.imageFolder") . user()['user_id'] . '_main_orginal' . '.jpg')) {
             $getReceiverInfo['sender_image'] = config("constants.upload.register.imageFolder") . user()['user_id'] . '_main_orginal' . '.jpg';
         } elseif ($getReceiverInfo['sex'] == 'f') {
@@ -190,9 +189,13 @@ class MessageController extends Controller
                 'error' => 'خطای سیستمی'
             ]);
         }
+        event( new \App\Events\NewMessage( $request['text']));
+
         return response([
             'hasErr' => false,
             'error' => ''
         ]);
     }
+
+
 }

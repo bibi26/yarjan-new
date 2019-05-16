@@ -18,7 +18,14 @@
     <script src="{{ URL::asset('/js/bootstrap-notify.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('/js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('/js/dataTables.bootstrap.js') }}" type="text/javascript"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<script>
-</script>
+
+    <script>
+        // Echo.channel('home')
+        //     .listen('NewMessage', (e) => {
+        //        console.log(e.message);
+        //     });
+    </script>
 </head>
+

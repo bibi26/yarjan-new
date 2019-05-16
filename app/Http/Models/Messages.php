@@ -91,8 +91,6 @@ class Messages extends Model
     function lastMessage($users, $flag)
     {
 
-
-
         if ($flag == 'outbox') {
             return DB::table('messages AS m1')->select('m1.*')
                 ->leftJoin('messages as m2', function ($join) {

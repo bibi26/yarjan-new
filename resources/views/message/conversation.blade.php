@@ -10,14 +10,22 @@
 
         });
         var offset = 2;
-
+        Echo.channel('home')
+            .listen('NewMessage', (e) => {
+                $('#content').prepend(e.message);
+            });
         function getConversation() {
+            $('#content_chat').block({
+                message: '<h6><img src="{{asset('img/loading.gif')}}" />در حال بررسی اطلاعات...',
+                css: {backgroundColor: '#FFA500'}
+            });
+
             $.ajax({
                 url: '{{url('/conversation')}}',
                 data: {
                     _token: _TOKEN,
                     page_number: offset,
-                    user_id: '{{$reciever['id']}}'
+                    reciever_user_id: '{{$reciever['id']}}'
                 },
                 type: 'POST',
                 async: false,
@@ -26,6 +34,8 @@
                     if (data.count != 0) {
                         offset += 1;
                         $('#content').prepend(data.messages);
+
+                        setTimeout(function(){   $('#content_chat').unblock(); }, 2000);
                     } else {
                         $("#etc_button").hide();
                     }
@@ -67,7 +77,7 @@
                     <div class="portlet-footer">
                         <form role="form">
                             <div class="form-group">
-                                <textarea class="form-control" placeholder="بنویس . . ."></textarea>
+                                <textarea id="message" class="form-control" placeholder="بنویس . . ."></textarea>
                             </div>
                             <div class="form-group">
                                 <button type="button" class="btn btn-default pull-right"
@@ -82,6 +92,28 @@
         </div>
         <!-- /.col-md-4 -->
     </div>
+
+    <script>
+
+        function send() {
+            $.ajax({
+                url: '{{url('/send_real_message')}}',
+                data: {
+                    _token: _TOKEN,
+                    reciever_user_id: '{{$reciever['id']}}',
+                    text: $('#message').val()
+                },
+                type: 'post',
+                success: function (data, textStatus) {
+                    $('#content').prepend($('#message').val());
+
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('request failed');
+                }
+            });
+        }
+    </script>
     <style>
 
 
@@ -146,7 +178,7 @@
 
         .portlet .portlet-footer {
             padding: 10px 15px;
-            background: #e0e7e8;
+            background-color: #00CCFC;
         }
 
         .portlet .portlet-footer ul {

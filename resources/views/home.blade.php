@@ -10,7 +10,7 @@
         $('#homeTopMenu').addClass('active');
     });
 </script>
-<div class="container-fluid" style="margin: 0px;padding: 0px;">
+<div class="container-fluid" style="margin: 0px;padding: 0px;" id="app">
     @include('layout.menu')
     <div class="row" style="padding: 0px;  margin-top: 15px;">
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">

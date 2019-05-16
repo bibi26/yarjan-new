@@ -752,7 +752,7 @@
               }
           }
             $('#dv_sign').block({
-                message: '<h6><img src="' + BASE_URL + '/assets/img/loading.gif" />در حال بررسی اطلاعات...',
+                message: '<h6><img src="views" />در حال بررسی اطلاعات...',
                 css: {backgroundColor: '#FFA500'}
             });
             $.ajax({
@@ -795,7 +795,7 @@
                 return;
             }
             $('#dv_sign').block({
-                message: '<h6><img src="' + BASE_URL + '/assets/img/loading.gif" />در حال بررسی اطلاعات...</h6 > ',
+                message: '<h6><img src="{{asset('img/loading.gif')}}" />در حال بررسی اطلاعات...',
                 css: {backgroundColor: '#FFA500'}
             });
             $.ajax({
