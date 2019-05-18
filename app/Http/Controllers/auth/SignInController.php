@@ -50,12 +50,25 @@ class SignInController extends Controller
         }
 
         LogLogin::_()->addLog("signIn",$res_login['id'],config('constants.UserLogErrCode.successLogin'),'successLogin');
+
+
         $session_login = array(
             'user_type' => 'user',
             'user_id' => $res_login['id'],
-            'username' => $request['username'],
+            'username' => $res_login['username'],
+            'sex' => $res_login['sex'],
+            'nick_name' => $res_login['nick_name'],
+            'fname' => $res_login['fname'],
+            'lname' => $res_login['lname'],
             'role' => $res_login['roleName'],
         );
+        if (\File::exists(config("constants.upload.register.imageFolder") . $res_login['id'] . '_main_orginal' . '.jpg')) {
+            $session_login['avatar'] = config("constants.upload.register.imageFolder") . $res_login['id']. '_main_orginal' . '.jpg';
+        } elseif ($res_login['sex'] == 'f') {
+            $session_login['avatar'] = '/img/wman1.png';
+        } elseif ($res_login['sex'] == 'm') {
+            $session_login['avatar'] = '/img/me-flat.png';
+        }
         session('ff','key');
         $cookie = cookie('LOGEDIN', serialize($session_login), config('constants.cookieAliveTime'));
         return \Redirect::to('/step1')->cookie($cookie);

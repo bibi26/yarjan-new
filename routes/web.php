@@ -109,18 +109,18 @@ Route::post('/broadcasting/auth', function (){
         'count' => '',
     ]);
 });
-Route::get('/event', function (){
-    event( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
-    broadcast( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
-    return view('test');
-
-});
-Route::post('/laravel-websockets/event', function (){
-    event( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
-    broadcast( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
-
-
-});
+//Route::get('/event', function (){
+//    event( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
+//    broadcast( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
+//    return view('test');
+//
+//});
+//Route::post('/laravel-websockets/event', function (){
+//    event( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
+//    broadcast( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
+//
+//
+//});
 //Route::post('/broadcasting/auth ', function (){
 //  return true;
 //});

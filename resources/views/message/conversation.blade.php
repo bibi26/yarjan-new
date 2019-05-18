@@ -10,9 +10,12 @@
 
         });
         var offset = 2;
-        Echo.channel('home')
+        Echo.channel('home{{user()["user_id"]}}')
             .listen('NewMessage', (e) => {
-                $('#content').prepend(e.message);
+                $( e.message ).appendTo( $( "#content" ) );
+                var wtf = $('#content_chat');
+                var height = wtf[0].scrollHeight;
+                wtf.scrollTop(height);
             });
         function getConversation() {
             $('#content_chat').block({
@@ -33,8 +36,7 @@
                 success: function (data) {
                     if (data.count != 0) {
                         offset += 1;
-                        $('#content').prepend(data.messages);
-
+                        $( data.message ).appendTo( $( "#content" ) );
                         setTimeout(function(){   $('#content_chat').unblock(); }, 2000);
                     } else {
                         $("#etc_button").hide();
@@ -105,7 +107,10 @@
                 },
                 type: 'post',
                 success: function (data, textStatus) {
-                    $('#content').prepend($('#message').val());
+                    $( data.content).appendTo( $( "#content" ) );
+                    var wtf = $('#content_chat');
+                    var height = wtf[0].scrollHeight;
+                    wtf.scrollTop(height);
 
                 },
                 error: function (xhr, textStatus, errorThrown) {
