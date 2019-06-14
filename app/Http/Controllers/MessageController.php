@@ -38,7 +38,7 @@ class MessageController extends Controller
         $getLastMessage = Messages::_()->lastMessage($users, $flag);
         $getSessionUsers = Sessions::_()->lists();
         foreach ($getMessages as $key => $val) {
-            dd($val->toArray());
+//            dd($val->toArray());
             if (\File::exists(config("constants.upload.register.imageFolder") . $val['reciever_user_id'] . '_main_orginal' . '.jpg')) {
                 $getMessages[$key]['profile_image'] = config("constants.upload.register.imageFolder") . $val['reciever_user_id'] . '_main_orginal' . '.jpg';
             } elseif ($val['users']['sex'] == 'f') {
@@ -71,6 +71,7 @@ class MessageController extends Controller
                 }
             }
         }
+
         return view($this->manageView, ['messages' => $getMessages->toArray(), 'flag' => $flag]);
 
 
@@ -109,6 +110,7 @@ return $getReceiverInfo;
     function conversations($user_id = '', Request $request)
     {
         if ($request->ajax()) {
+            
             $validator = Validator::make($request->all(), [
                 'page_number' => ['required', 'integer'],
                 'reciever_user_id' => ['required', 'integer'],
@@ -119,8 +121,9 @@ return $getReceiverInfo;
                     'error' => $validator->errors()->all()
                 ]);
             }
-            $user_id = $request['user_id'];
+            $user_id = $request['reciever_user_id'];
             $pageNumber = $request['page_number'];
+
             $getMessages = Messages::_()->getc('', $user_id, $this->limit, ($pageNumber - 1) * $this->limit);
 
         } else {
@@ -133,7 +136,7 @@ return $getReceiverInfo;
         foreach ($getMessages as $key => $val) {
             $getMessages[$key]['time'] = \Morilog\Jalali\Jalalian::forge($val['created_at'])->ago();
         }
-       ;
+       
         $content= view("partials.conversationsPartial", ['messages' =>  array_reverse($getMessages->toArray()), 'reciever' => $this->getRecieverInfo($user_id),'re'=>false])->render();
         if ($request->ajax()) {
             return response([

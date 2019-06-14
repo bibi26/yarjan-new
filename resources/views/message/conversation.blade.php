@@ -36,12 +36,15 @@
                 success: function (data) {
                     if (data.count != 0) {
                         offset += 1;
-                        $( data.message ).appendTo( $( "#content" ) );
+                        console.log(data.messages);
+                        $($( "#content" ) ).prepend(   data.messages );
                         setTimeout(function(){   $('#content_chat').unblock(); }, 2000);
                     } else {
                         $("#etc_button").hide();
                     }
-                }
+                } , error: function (xhr, textStatus, errorThrown) {
+                            $('#content_chat').unblock();
+                            }
             });
         }
     </script>

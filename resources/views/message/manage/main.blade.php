@@ -36,6 +36,7 @@
             <table class="table  table-hover">
                 @if(isset($messages))
                     @foreach($messages as $message)
+                    @dd($message);
                         <tr>
                             <td class=" col-xs-2" style="position: relative;">
                                 <a href="{{url('conversation/'.$message['users']['id'])}}">
