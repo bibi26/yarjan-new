@@ -7,6 +7,7 @@ use App\Http\Models\Cities;
 
 class UsersTableSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -26,10 +27,44 @@ class UsersTableSeeder extends Seeder
         ];
     }
 
+    function nameSex()
+    {
+
+        return [
+      'حمید' => 'm',
+        'علی' => 'm',
+        'المیرا' => 'f',
+        'سحر' => 'f',
+        'حسام' => 'm',
+        'پروانه' => 'f',
+        'ترانه' => 'f',
+        'عطیه' => 'f',
+        'شیما' => 'f',
+        'لیلا' => 'f',
+        'مهدی' => 'm',
+        'پرستو' => 'f',
+        'عباس' => 'm',
+        'مریم' => 'f',
+        'منیر' => 'f',
+        'نگار' => 'f',
+        'شایان' => 'm',
+        'علیرضا' => 'm',
+        'وحید' => 'm',
+        'حسن' => 'm',
+        'سجاد' => 'm',
+        'شقایق' => 'f',
+        'ریحانه' => 'f',
+        'مرجان' => 'f',
+        'شاهرخ' => 'm',
+        'زهرا' =>'f'
+        ];
+    }
+
     function convert($array)
     {
         $data = [];
-        foreach ($array as $key => $value) {
+        foreach ($array as $key => $value)
+        {
             $data[] = $key;
         }
         return $data;
@@ -37,36 +72,45 @@ class UsersTableSeeder extends Seeder
 
     public function run()
     {
-        $jobStatus = $this->convert(jobStatus('', true));
-        $marriageStatus = $this->convert(marriageStatus('', true));
-        $educationStatus = $this->convert(educationStatus('', true));
-        $incomeStatus = $this->convert(incomeStatus('', true));
-        $houseStatus = $this->convert(houseStatus('', true));
-        $carStatus = $this->convert(carStatus('', true));
-        $skinColorStatus = $this->convert(skinColorStatus('', true));
-        $beliefStatus = $this->convert(beliefStatus('', true));
+        $jobStatus             = $this->convert(jobStatus('', true));
+        $marriageStatus        = $this->convert(marriageStatus('', true));
+        $educationStatus       = $this->convert(educationStatus('', true));
+        $incomeStatus          = $this->convert(incomeStatus('', true));
+        $houseStatus           = $this->convert(houseStatus('', true));
+        $carStatus             = $this->convert(carStatus('', true));
+        $skinColorStatus       = $this->convert(skinColorStatus('', true));
+        $beliefStatus          = $this->convert(beliefStatus('', true));
         $healthConditionStatus = $this->convert(healthConditionStatus('', true));
-        $nationalityStatus = $this->convert(nationalityStatus('', true));
-        $lifeStyleStatus = $this->convert(lifeStyleStatus('', true));
-        $sexStatus = $this->convert(sexStatus('', true));
-        for ($i = 0; $i < 300; $i++) {
-            $province = Provinces::where('id', mt_rand(1, Provinces::count()))->get()->toArray()[0]['id'];
+        $nationalityStatus     = $this->convert(nationalityStatus('', true));
+        $lifeStyleStatus       = $this->convert(lifeStyleStatus('', true));
+        $sexStatus             = $this->convert(sexStatus('', true));
+        for ($i = 0; $i < 50; $i++)
+        {
+            $province  = Provinces::where('id', mt_rand(1, Provinces::count()))->get()->toArray()[0]['id'];
             $countCity = Cities::where('province_id', $province)->count();
             $itemsCity = Cities::where('province_id', $province)->get()->toArray();
+<<<<<<< HEAD
            $email=str_random(8) ;
             $city=$itemsCity[mt_rand(0, $countCity - 1)]['id'];
             \App\Http\Models\auth\Users::create([
 //                    'username' => "0937".generateRandomString(7,'number'),
+=======
+            $email     = str_random(8);
+            $city      = $itemsCity[mt_rand(0, $countCity - 1)]['id'];
+           $name=Faker::firstname();
+          
+            \App\Http\Models\auth\Users::insert([
+>>>>>>> master
                 'username' => $email . '@gmail.com',
-                'email' =>$email. '@gmail.com',
+                'email' => $email . '@gmail.com',
                 'password' => bcrypt('123456'),
                 'status' => mt_rand(0, 2),
                 'active' => mt_rand(0, 1),
                 'mobile' => Faker::mobile(),
-                'sex' =>  $sexStatus[mt_rand(0, count($sexStatus) - 1)],
-                'province_id' =>$province,
+                'sex' =>   isset( $this->nameSex()[$name])?$this->nameSex()[$name]:null,
+                'province_id' => $province,
                 'city_id' => $city,
-                'fname' => Faker::firstname(),
+                'fname' => $name,
                 'lname' => Faker::lastname(),
                 'age' => Faker::age(),
                 'birth_date' => mt_rand(1350, 1375) . '-' . mt_rand(1, 12) . '-' . mt_rand(1, 30),
@@ -85,7 +129,7 @@ class UsersTableSeeder extends Seeder
                 'child_count' => mt_rand(1, 3),
                 'age_older_child' => mt_rand(1, 30),
                 'skin_color' => $skinColorStatus[mt_rand(0, count($skinColorStatus) - 1)],
-                'belief' => $beliefStatus[mt_rand(0, count($beliefStatus) - 1)],
+                // 'belief' => $beliefStatus[mt_rand(0, count($beliefStatus) - 1)],
                 'health_condition' => $healthConditionStatus[mt_rand(0, count($healthConditionStatus) - 1)],
                 'immigration' => mt_rand(0, 1),
                 'face' => mt_rand(1, 5),
@@ -127,4 +171,5 @@ class UsersTableSeeder extends Seeder
             ]);
         }
     }
+
 }

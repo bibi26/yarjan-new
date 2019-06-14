@@ -38,6 +38,7 @@ class MessageController extends Controller
         $getLastMessage = Messages::_()->lastMessage($users, $flag);
         $getSessionUsers = Sessions::_()->lists();
         foreach ($getMessages as $key => $val) {
+            dd($val->toArray());
             if (\File::exists(config("constants.upload.register.imageFolder") . $val['reciever_user_id'] . '_main_orginal' . '.jpg')) {
                 $getMessages[$key]['profile_image'] = config("constants.upload.register.imageFolder") . $val['reciever_user_id'] . '_main_orginal' . '.jpg';
             } elseif ($val['users']['sex'] == 'f') {
@@ -70,7 +71,6 @@ class MessageController extends Controller
                 }
             }
         }
-
         return view($this->manageView, ['messages' => $getMessages->toArray(), 'flag' => $flag]);
 
 

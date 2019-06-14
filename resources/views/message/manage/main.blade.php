@@ -1,5 +1,6 @@
 @extends('home')
 @section('content')
+
     @if(Session::has('error'))
         notify('danger','{{Session::get('error')}}' )
     @endif
@@ -60,6 +61,7 @@
             </table>
         </div>
         <script>
+        @if(isset($flag))
             @if($flag=='all')
             openCity('messageContent', 'allMessageMenu');
             @endif
@@ -72,6 +74,7 @@
             @if($flag=='unread')
             openCity('messageContent', 'unreadMessageMenu');
             @endif
+             @endif
         </script>
 
     </div>

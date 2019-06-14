@@ -27,7 +27,7 @@
                                 @if(Session::has('error'))
                                     <div class="alert oaerror danger" style="margin-top: 5px;" >{{Session::get('error')}}</div>
                                 @endif
-                                {!! Form::open(['route'=>'signIn.store','style'=>'padding: 10px','id'=>'sigInForm']) !!}
+                                {!! Form::open(['route'=>'signIn.login','style'=>'padding: 10px','id'=>'sigInForm']) !!}
 
                                     <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
                                     {!! Form::label('ایمیل :') !!}

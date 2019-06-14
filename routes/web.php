@@ -78,7 +78,7 @@ Route::post('/refreshCaptcha','contact_us\ContactUsController@refreshCaptcha');
 
 //---------------sign_in-----------------------
 Route::get('/signIn','auth\SignInController@view')->name('signIn.view');
-Route::post('/signIn','auth\SignInController@store')->name("signIn.store");
+Route::post('/signIn','auth\SignInController@login')->name("signIn.login");
 
 //---------------sign_up-----------------------
 

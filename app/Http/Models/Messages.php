@@ -36,7 +36,7 @@ class Messages extends Model
                     "sender_user_id" => $sender_user_id,
                     "reciever_user_id" => $reciever_user_id,
                     "text" => $text,
-                    "free" => $free
+                    "is_free" => $free
                 ]);
             return ['hasErr' => false, 'msg' => ''];
         } catch (\Exception $e) {
@@ -51,7 +51,7 @@ class Messages extends Model
             return $this
                 ->select('id','reciever_user_id', 'sender_user_id')
                 ->with('users')
-                ->where('delete', 0)
+                ->where('is_delete', 0)
                 ->where('sender_user_id',$user_id)
                 ->distinct('reciever_user_id')
                 ->limit($limit)
@@ -63,7 +63,7 @@ class Messages extends Model
             return $this
                 ->select('id','reciever_user_id', 'sender_user_id')
                 ->with('users')
-                ->where('delete', 0)
+                ->where('is_delete', 0)
                 ->where('reciever_user_id', $user_id)
                 ->distinct('sender_user_id')
                 ->limit($limit)
@@ -78,8 +78,13 @@ class Messages extends Model
             return $this
                 ->select('*')
                 ->with('users')
-                ->where('delete', 0)
+                ->where('is_delete', 0)
                 ->whereIn(DB::Raw("CONCAT(reciever_user_id,sender_user_id)"),$re)
+//=======
+//                ->where('is_delete', 0)
+//                ->where('reciever_user_id', $user_id)
+//                ->orWhere('sender_user_id', $user_id)
+//>>>>>>> master
                 ->limit($limit)
                 ->offset($offset)
                 ->orderBy('id','desc')
@@ -99,7 +104,7 @@ class Messages extends Model
                 })
                 ->whereNull('m2.id')
                 ->whereIn("m1.reciever_user_id", $users)
-                ->where("m1.delete", 0)
+                ->where("m1.is_delete", 0)
                 ->get();
         }
 
@@ -111,7 +116,7 @@ class Messages extends Model
                 })
                 ->whereNull('m2.id')
                 ->whereIn("m1.sender_user_id", $users)
-                ->where("m1.delete", 0)
+                ->where("m1.is_delete", 0)
                 ->get();
         }
     }
@@ -122,7 +127,7 @@ class Messages extends Model
         return $this
             ->where("reciever_user_id", user()['user_id'])
             ->orWhere("sender_user_id", user()['user_id'])
-            ->where("delete", 0)
+            ->where("is_delete", 0)
             ->distinct("sender_user_id", 'reciever_user_id')
             ->orderBy('id', 'DESC')
             ->get();
