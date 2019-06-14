@@ -42,10 +42,10 @@ class MessagesTableSeeder extends Seeder
     public function run()
     {
 
-        for ($i = 0; $i < 30000; $i++) {
+        for ($i = 0; $i < 500; $i++) {
             \App\Http\Models\Messages::insert([
-                'sender_user_id' => mt_rand(1,4),
-                'reciever_user_id' => mt_rand(1,4),
+                'sender_user_id' => mt_rand(26000,26004),
+                'reciever_user_id' => mt_rand(26000,26004),
                 'text' => $this->messageFaker()[mt_rand(0, count($this->messageFaker()) - 1)],
             ]);
         }

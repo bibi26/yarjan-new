@@ -25,7 +25,6 @@ class SignInController extends Controller
         ]);
 
         $res_login = Users::_()->getUserInfo($request['username']);
-
         if (!isset($res_login->id) or !\Hash::check($request['pass'], $res_login->password)) {
             $msg_incorrect = Lang::get('errors.failLogin') ;
             LogLogin::_()->addLog("signIn",NULL,'incorrect',$msg_incorrect);
@@ -42,7 +41,6 @@ class SignInController extends Controller
             LogLogin::_()->addLog("signIn",$res_login['id'],config('constants.UserLogErrCode.noActive'),$msg_inactive);
             return back()->withInput()->with('error', $msg_inactive);
         }
-
         if ($res_login['roleName']==null) {
             $msg_no_role =Lang::get('errors.noRole');
             LogLogin::_()->addLog("signIn",$res_login['id'],config('constants.UserLogErrCode.noRole'),$msg_no_role);

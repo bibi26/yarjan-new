@@ -70,7 +70,6 @@ class MessageController extends Controller
                 }
             }
         }
-
         return view($this->manageView, ['messages' => $getMessages->toArray(), 'flag' => $flag]);
     }
 
