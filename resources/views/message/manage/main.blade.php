@@ -1,5 +1,6 @@
 @extends('home')
 @section('content')
+
     @if(Session::has('error'))
         notify('danger','{{Session::get('error')}}' )
     @endif
@@ -35,6 +36,7 @@
             <table class="table  table-hover">
                 @if(isset($messages))
                     @foreach($messages as $message)
+                    @dd($message);
                         <tr>
                             <td class=" col-xs-2" style="position: relative;">
                                 <a href="{{url('conversation/'.$message['users']['id'])}}">
@@ -60,6 +62,7 @@
             </table>
         </div>
         <script>
+        @if(isset($flag))
             @if($flag=='all')
             openCity('messageContent', 'allMessageMenu');
             @endif
@@ -72,6 +75,7 @@
             @if($flag=='unread')
             openCity('messageContent', 'unreadMessageMenu');
             @endif
+             @endif
         </script>
 
     </div>

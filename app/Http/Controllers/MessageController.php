@@ -38,6 +38,7 @@ class MessageController extends Controller
         $getLastMessage = Messages::_()->lastMessage($users, $flag);
         $getSessionUsers = Sessions::_()->lists();
         foreach ($getMessages as $key => $val) {
+//            dd($val->toArray());
             if (\File::exists(config("constants.upload.register.imageFolder") . $val['reciever_user_id'] . '_main_orginal' . '.jpg')) {
                 $getMessages[$key]['profile_image'] = config("constants.upload.register.imageFolder") . $val['reciever_user_id'] . '_main_orginal' . '.jpg';
             } elseif ($val['users']['sex'] == 'f') {
@@ -110,6 +111,7 @@ class MessageController extends Controller
     function conversations($user_id = '', Request $request)
     {
         if ($request->ajax()) {
+            
             $validator = Validator::make($request->all(), [
                 'page_number' => ['required', 'integer'],
                 'reciever_user_id' => ['required', 'integer'],
@@ -122,7 +124,12 @@ class MessageController extends Controller
             }
             $user_id = $request['reciever_user_id'];
             $pageNumber = $request['page_number'];
+<<<<<<< HEAD
             $getMessages = Messages::_()->getc('', $user_id, $this->limit, $pageNumber);
+=======
+
+            $getMessages = Messages::_()->getc('', $user_id, $this->limit, ($pageNumber - 1) * $this->limit);
+>>>>>>> a2a44fa7d879482c48de84a1df94c473fad69a31
 
         } else {
             $pageNumber = 0;
@@ -133,8 +140,14 @@ class MessageController extends Controller
 
         foreach ($getMessages as $key => $val) {
             $getMessages[$key]['time'] = \Morilog\Jalali\Jalalian::forge($val['created_at'])->ago();
+<<<<<<< HEAD
         };
         $content = view("partials.conversationsPartial", ['messages' => array_reverse($getMessages->toArray()), 'reciever' => $this->getRecieverInfo($user_id), 're' => false])->render();
+=======
+        }
+       
+        $content= view("partials.conversationsPartial", ['messages' =>  array_reverse($getMessages->toArray()), 'reciever' => $this->getRecieverInfo($user_id),'re'=>false])->render();
+>>>>>>> a2a44fa7d879482c48de84a1df94c473fad69a31
         if ($request->ajax()) {
             return response([
                 'messages' => $content,

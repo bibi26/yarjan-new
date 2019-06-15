@@ -42,7 +42,7 @@ class MessagesTableSeeder extends Seeder
     public function run()
     {
 
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 500; $i++) {
             $s=mt_rand(1,4);
             $r=mt_rand(1,4);
             if($r!=$s) {

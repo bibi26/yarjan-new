@@ -59,6 +59,7 @@
                 success: function (data) {
                     $('#content_chat').unblock()
                     if (data.count != 0) {
+<<<<<<< HEAD
                         offset = offset + data.limit;
                         $("#content").prepend(data.messages);
                     } else {
@@ -67,6 +68,18 @@
                 }, error: function (xhr, textStatus, errorThrown) {
                     $('#content_chat').unblock()
                 }
+=======
+                        offset += 1;
+                        console.log(data.messages);
+                        $($( "#content" ) ).prepend(   data.messages );
+                        setTimeout(function(){   $('#content_chat').unblock(); }, 2000);
+                    } else {
+                        $("#etc_button").hide();
+                    }
+                } , error: function (xhr, textStatus, errorThrown) {
+                            $('#content_chat').unblock();
+                            }
+>>>>>>> a2a44fa7d879482c48de84a1df94c473fad69a31
             });
         }
     </script>

@@ -18,7 +18,7 @@ class CreateMessages extends Migration
             $table->integer('sender_user_id');
             $table->integer('reciever_user_id');
             $table->text('text');
-            $table->tinyInteger('free');
+            $table->tinyInteger('is_free')->default(0);
             $table->tinyInteger('is_read')->default(0);
             $table->timestamp('read_at')->nullable();
             $table->tinyInteger('is_delete')->default(0);
