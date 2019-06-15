@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-12" style="width:100%;padding-right: 35%;">
                     <div class="media">
-                        <a class="pull-right" href="#">
+                        <a class="pull-right" href="{{url('detailPerson/'. $reciever['id'])}}">
                             <img class="media-object img-circle img-chat"
                                  src="{{asset($reciever['receiver_image'].'?'.mt_rand(1,100000))}}"
                                  alt="">
@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="media">
-                        <a class="pull-right" href="#">
+                        <a class="pull-right" href="{{url('detailPerson/'. user()['user_id'])}}">
                             <img class="media-object img-circle img-chat"
                                  src="{{asset($reciever['sender_image'].'?'.mt_rand(1,100000))}}"
                                  alt="">
@@ -47,7 +47,7 @@
             <div class="row">
                 <div class="col-lg-12" style="width:100%;padding-right: 35%;">
                     <div class="media">
-                        <a class="pull-right" href="#">
+                        <a class="pull-right" href="{{url('detailPerson/'. $reciever['id'])}}">
                             <img class="media-object img-circle img-chat"
                                  src="{{asset($reciever['receiver_image'].'?'.mt_rand(1,100000))}}"
                                  alt="">

@@ -9,14 +9,37 @@
             wtf.scrollTop(height);
 
         });
-        var offset = 2;
-        Echo.channel('home{{user()["user_id"]}}')
-            .listen('NewMessage', (e) => {
-                $( e.message ).appendTo( $( "#content" ) );
-                var wtf = $('#content_chat');
-                var height = wtf[0].scrollHeight;
-                wtf.scrollTop(height);
+        var offset = {{$limit}};
+
+
+        $(document).ready(function () {
+
+
+            window.Echo.channel('home{{user()["user_id"]}}')
+                .listen('NewMessage', (e) => {
+                    $(e.message).appendTo($("#content"));
+                    var wtf = $('#content_chat');
+                    var height = wtf[0].scrollHeight;
+                    wtf.scrollTop(height);
+                    offset = offset + 1;
+                });
+            $("#message").keypress(function () {
+                var channel =window.Echo.join('cc');
+                setTimeout( () => {
+
+                    channel.whisper('typing', {
+                    name: 'fgg'
+                })
+                }, 300);
+                window.Echo.join('cc').listenForWhisper('typing', (e) => {
+                    alert('rrr');
+                })
+
             });
+
+
+        });
+
         function getConversation() {
             $('#content_chat').block({
                 message: '<h6><img src="{{asset('img/loading.gif')}}" />در حال بررسی اطلاعات...',
@@ -34,13 +57,15 @@
                 async: false,
                 dataType: 'JSON',
                 success: function (data) {
+                    $('#content_chat').unblock()
                     if (data.count != 0) {
-                        offset += 1;
-                        $( data.message ).appendTo( $( "#content" ) );
-                        setTimeout(function(){   $('#content_chat').unblock(); }, 2000);
+                        offset = offset + data.limit;
+                        $("#content").prepend(data.messages);
                     } else {
                         $("#etc_button").hide();
                     }
+                }, error: function (xhr, textStatus, errorThrown) {
+                    $('#content_chat').unblock()
                 }
             });
         }
@@ -82,6 +107,9 @@
                                 <textarea id="message" class="form-control" placeholder="بنویس . . ."></textarea>
                             </div>
                             <div class="form-group">
+                                <div id="alert_message"
+                                     style="display:none;color: red; font-weight: bold;">\
+                                </div>
                                 <button type="button" class="btn btn-default pull-right"
                                         onclick="javascrit:send()">ارسال
                                 </button>
@@ -98,6 +126,15 @@
     <script>
 
         function send() {
+            var message = $('#message')
+            var alert_message = $('#alert_message')
+            if (message.val() == '') {
+                message.css('border', '1px solid #F00');
+                alert_message.show();
+                alert_message.text("لطفا متن راوارد نمایید!");
+                $("#message").focus();
+                return false;
+            }
             $.ajax({
                 url: '{{url('/send_real_message')}}',
                 data: {
@@ -107,14 +144,22 @@
                 },
                 type: 'post',
                 success: function (data, textStatus) {
-                    $( data.content).appendTo( $( "#content" ) );
+                    $(data.content).appendTo($("#content"));
                     var wtf = $('#content_chat');
                     var height = wtf[0].scrollHeight;
                     wtf.scrollTop(height);
+                    $('#message').val('')
+                    offset = offset + 1;
+                    alert_message.hide();
+                    message.css('border', '1px solid #ffffff');
 
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     alert('request failed');
+                    alert_message.hide();
+                    message.css('border', '1px solid #ffffff');
+
+
                 }
             });
         }
@@ -280,7 +325,6 @@
         }
 
         textarea.form-control {
-
             height: 100px;
         }
     </style>

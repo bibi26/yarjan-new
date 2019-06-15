@@ -20,8 +20,8 @@
                         <p><span>به : </span><b style="background-color: #d8e3ff;color: black;font-size: 16px;" class="badge">{{$person['fname']}}</b></p>
                         {!! Form::label('متن :','',[]) !!}
                         {!! Form::textarea('message', old('message'), ['class'=>'form-control','style'=>'height: 150px;text-align:justify;' ,'id' =>'real_message']) !!}
-                        <div id="alert_message"
-                             style="display:none;color: red; font-weight: bold;"></div>
+                        <div id="alert_real_message"
+                             style="display:none;color: red; font-weight: bold;">\</div>
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -47,9 +47,10 @@
     function sendRealMessage(debug) {
         $(".alert_warn").hide();
         var message = $("#real_message");
-        var alert_message = $("#alert_message");
+        var alert_message = $("#alert_real_message");
         var rvr = true;
         if (message.val() == '') {
+            alert('ff');
             message.css('border', '1px solid #F00');
             alert_message.show();
             alert_message.text("لطفا متن راوارد نمایید!");

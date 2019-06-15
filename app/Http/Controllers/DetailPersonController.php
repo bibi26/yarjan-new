@@ -20,6 +20,8 @@ class DetailPersonController extends Controller
 
     function detailPersonView($user_id)
     {
+        \Log::channel('xxxx')->error('sdv');
+        dd(0);
         $sessions = [];
         Visits::_()->store($user_id);
         $getUser = Users::_()->getUserById($user_id);

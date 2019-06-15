@@ -51,7 +51,6 @@ class SignInController extends Controller
 
         LogLogin::_()->addLog("signIn",$res_login['id'],config('constants.UserLogErrCode.successLogin'),'successLogin');
 
-
         $session_login = array(
             'user_type' => 'user',
             'user_id' => $res_login['id'],
