@@ -23,10 +23,10 @@ class MessageController extends Controller
     {
         $users = [];
         $getMessages = Messages::_()->getc($flag, user()['user_id'],100,0);
-        if ($getMessages->count() == 0) {
+        if (count($getMessages) == 0) {
             return view($this->manageView, ['error' => 'رکوردی یافت نشد!']);
         }
-        foreach ($getMessages->toArray() as $val) {
+        foreach ($getMessages as $val) {
             if ($flag == 'all' || $flag == 'inbox') {
                 array_push($users, $val['sender_user_id']);
             }
