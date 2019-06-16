@@ -22,11 +22,16 @@ class MessageController extends Controller
     function messageView($flag)
     {
         $users = [];
+<<<<<<< HEAD
         $getMessages = Messages::_()->getc($flag, user()['user_id'], $this->limit, 0);
         if ($getMessages->count() == 0) {
+=======
+        $getMessages = Messages::_()->getc($flag, user()['user_id'],100,0);
+        if (count($getMessages) == 0) {
+>>>>>>> 1c7424fc8e865c67f38fc1b2b673609374e2eeb5
             return view($this->manageView, ['error' => 'رکوردی یافت نشد!']);
         }
-        foreach ($getMessages->toArray() as $val) {
+        foreach ($getMessages as $val) {
             if ($flag == 'all' || $flag == 'inbox') {
                 array_push($users, $val['sender_user_id']);
             }

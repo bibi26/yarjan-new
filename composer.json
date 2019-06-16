@@ -22,7 +22,8 @@
         "laravelcollective/html": "5.8.*",
         "mews/captcha": "^2.2",
         "morilog/jalali": "^3.1",
-        "pusher/pusher-php-server": "~3.0"
+        "pusher/pusher-php-server": "~3.0",
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

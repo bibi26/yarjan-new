@@ -84,7 +84,7 @@ class UsersTableSeeder extends Seeder
         $nationalityStatus     = $this->convert(nationalityStatus('', true));
         $lifeStyleStatus       = $this->convert(lifeStyleStatus('', true));
         $sexStatus             = $this->convert(sexStatus('', true));
-        for ($i = 0; $i < 50; $i++)
+        for ($i = 0; $i < 30; $i++)
         {
             $province  = Provinces::where('id', mt_rand(1, Provinces::count()))->get()->toArray()[0]['id'];
             $countCity = Cities::where('province_id', $province)->count();

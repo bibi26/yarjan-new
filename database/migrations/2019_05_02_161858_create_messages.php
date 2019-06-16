@@ -15,8 +15,8 @@ class CreateMessages extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('conversation_id');
             $table->integer('sender_user_id');
-            $table->integer('reciever_user_id');
             $table->text('text');
             $table->tinyInteger('is_free')->default(0);
             $table->tinyInteger('is_read')->default(0);
@@ -24,6 +24,7 @@ class CreateMessages extends Migration
             $table->tinyInteger('is_delete')->default(0);
             $table->timestamp('delete_at')->nullable();
             $table->timestamps();
+
         });
     }
 

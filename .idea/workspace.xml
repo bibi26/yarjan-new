@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="eb35c312-eb68-4039-8e1c-9d84259f217e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeds/UsersTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/UsersTableSeeder.php" afterDir="false" />
     </list>
+=======
+    <list default="true" id="eb35c312-eb68-4039-8e1c-9d84259f217e" name="Default Changelist" comment="" />
+>>>>>>> dev
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +47,7 @@
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.27" value="1" />
-          <entry key="project.open.time.3" value="3" />
+          <entry key="project.open.time.3" value="4" />
           <entry key="project.open.time.34" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.44" value="1" />
@@ -53,7 +57,11 @@
           <entry key="project.open.time.60" value="1" />
           <entry key="project.open.time.7" value="3" />
           <entry key="project.open.time.8" value="2" />
+<<<<<<< HEAD
           <entry key="project.opened" value="51" />
+=======
+          <entry key="project.opened" value="50" />
+>>>>>>> dev
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -61,16 +69,16 @@
           <entry key="dummy" value="13" />
           <entry key="env" value="54" />
           <entry key="js" value="240" />
-          <entry key="php" value="18212" />
+          <entry key="php" value="18370" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="54" />
-          <entry key="Blade" value="7533" />
+          <entry key="Blade" value="7605" />
           <entry key="HTML" value="6" />
           <entry key="JavaScript" value="240" />
-          <entry key="PHP" value="10673" />
+          <entry key="PHP" value="10759" />
           <entry key="PLAIN_TEXT" value="13" />
         </counts>
       </usages-collector>
@@ -80,9 +88,13 @@
           <entry key="gif" value="2" />
           <entry key="gitignore" value="2" />
           <entry key="js" value="41" />
-          <entry key="json" value="10" />
+          <entry key="json" value="11" />
           <entry key="log" value="3" />
+<<<<<<< HEAD
           <entry key="php" value="527" />
+=======
+          <entry key="php" value="530" />
+>>>>>>> dev
           <entry key="rnc" value="1" />
           <entry key="temp" value="2" />
           <entry key="ts" value="3" />
@@ -92,12 +104,16 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key=".env file" value="13" />
-          <entry key="Blade" value="181" />
+          <entry key="Blade" value="182" />
           <entry key="Image" value="2" />
-          <entry key="JSON" value="10" />
+          <entry key="JSON" value="11" />
           <entry key="JavaScript" value="41" />
           <entry key="Log" value="3" />
+<<<<<<< HEAD
           <entry key="PHP" value="346" />
+=======
+          <entry key="PHP" value="348" />
+>>>>>>> dev
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="RNG Compact" value="1" />
           <entry key="TypeScript" value="3" />
@@ -114,6 +130,7 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/database/migrations/2019_04_25_134624_favorites.php">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
@@ -123,11 +140,27 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="83">
               <caret line="81" column="42" selection-start-line="81" selection-start-column="42" selection-end-line="81" selection-end-column="42" />
+=======
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/users/MngUsersController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/composer.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="25" column="25" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="25" />
+>>>>>>> dev
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/database/seeds/DatabaseSeeder.php">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
@@ -137,6 +170,48 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="360">
               <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+=======
+        <entry file="file://$PROJECT_DIR$/config/app.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3420">
+              <caret line="228" column="67" selection-start-line="228" selection-start-column="67" selection-end-line="228" selection-end-column="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/datatables.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/personInfo/NewPersonInfoController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="26" selection-start-line="4" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/web.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="855">
+              <caret line="57" column="27" selection-start-line="57" selection-start-column="27" selection-end-line="57" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/users/mng.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+>>>>>>> dev
             </state>
           </provider>
         </entry>
@@ -145,8 +220,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>$sender</find>
-      <find>$getSenderInfo</find>
       <find>Echo.channel</find>
       <find>event(</find>
       <find>sender_image</find>
@@ -175,6 +248,8 @@
       <find>slack</find>
       <find>log</find>
       <find>LOG_SLACK_WEBHOOK_URL</find>
+      <find>da</find>
+      <find>ajax</find>
     </findStrings>
     <replaceStrings>
       <replace>hi=$1</replace>
@@ -211,8 +286,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/views/message/manage/inbox.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/message/manage/outbox.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/message/manage/unread.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/personInfo/new/main.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/message/chat.blade.php" />
@@ -241,7 +314,6 @@
         <option value="$PROJECT_DIR$/resources/views/home.blade.php" />
         <option value="$PROJECT_DIR$/resources/js/app.js" />
         <option value="$PROJECT_DIR$/resources/views/test.blade.php" />
-        <option value="$PROJECT_DIR$/config/app.php" />
         <option value="$PROJECT_DIR$/config/broadcasting.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CartableController.php" />
         <option value="$PROJECT_DIR$/app/Http/Kernel.php" />
@@ -256,12 +328,18 @@
         <option value="$PROJECT_DIR$/app/Http/Models/Messages.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/MessageController.php" />
         <option value="$PROJECT_DIR$/app/Events/NewMessage.php" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/routes/channels.php" />
         <option value="$PROJECT_DIR$/resources/views/message/conversation.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/DetailPersonController.php" />
         <option value="$PROJECT_DIR$/config/logging.php" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/database/seeds/UsersTableSeeder.php" />
+=======
+        <option value="$PROJECT_DIR$/config/app.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/users/MngUsersController.php" />
+        <option value="$PROJECT_DIR$/resources/views/users/mng.blade.php" />
+>>>>>>> dev
       </list>
     </option>
   </component>
@@ -408,12 +486,13 @@
       <path value="$PROJECT_DIR$/vendor/paragonie/sodium_compat" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-cors" />
       <path value="$PROJECT_DIR$/vendor/asm89/stack-cors" />
+      <path value="$PROJECT_DIR$/vendor/yajra/laravel-datatables-oracle" />
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="584" />
-    <option name="y" value="291" />
-    <option name="width" value="1237" />
+    <option name="x" value="618" />
+    <option name="y" value="114" />
+    <option name="width" value="1227" />
     <option name="height" value="789" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -429,6 +508,14 @@
               <item name="test" type="b2602c69:ProjectViewProjectNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
+<<<<<<< HEAD
+=======
+            <path>
+              <item name="test" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+            </path>
+>>>>>>> dev
           </expand>
           <select />
         </subPane>
@@ -444,19 +531,19 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources/views" />
-      <recent name="$PROJECT_DIR$/app/Http/Controllers" />
-      <recent name="$PROJECT_DIR$/resources/views/partials" />
-      <recent name="$PROJECT_DIR$/database/seeds" />
-      <recent name="$PROJECT_DIR$/resources/views/message" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resources/views/message/manage" />
       <recent name="$PROJECT_DIR$/resources/views/message/all" />
       <recent name="$PROJECT_DIR$/public/js" />
       <recent name="$PROJECT_DIR$/resources/views/personInfo/detail" />
       <recent name="$PROJECT_DIR$/app" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/users" />
+      <recent name="$PROJECT_DIR$/app/Http/Controllers/users" />
+      <recent name="$PROJECT_DIR$/resources/views" />
+      <recent name="$PROJECT_DIR$/app/Http/Controllers" />
+      <recent name="$PROJECT_DIR$/resources/views/partials" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -529,14 +616,23 @@
       <workItem from="1560083369764" duration="812000" />
       <workItem from="1560086800364" duration="1554000" />
       <workItem from="1560584481025" duration="15000" />
+<<<<<<< HEAD
       <workItem from="1560587874964" duration="1343000" />
       <workItem from="1560592820065" duration="219000" />
       <workItem from="1560663337431" duration="678000" />
+=======
+      <workItem from="1560683617275" duration="3292000" />
+      <workItem from="1560694004118" duration="280000" />
+>>>>>>> dev
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="309144000" />
+=======
+    <option name="totallyTimeSpent" value="312990000" />
+>>>>>>> dev
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -551,11 +647,15 @@
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
+<<<<<<< HEAD
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19234973" />
+=======
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2726776" />
+>>>>>>> dev
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49945354" weight="0.24108107" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49945354" visible="true" weight="0.24108107" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -564,7 +664,11 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32972974" />
+<<<<<<< HEAD
       <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49836066" visible="true" weight="0.6691892" />
+=======
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49836066" visible="true" weight="0.2508108" />
+>>>>>>> dev
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50054646" side_tool="true" weight="0.32972974" />
       <window_info anchor="bottom" id="Thumbnails" order="12" sideWeight="0.49945354" weight="0.28648648" />
       <window_info anchor="bottom" id="Database" order="13" sideWeight="0.50054646" side_tool="true" weight="0.28648648" />
@@ -614,6 +718,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/config/cors.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -624,6 +729,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> dev
     <entry file="file://$PROJECT_DIR$/resources/views/contactUs.blade.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -729,13 +836,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/mainPage.blade.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -837,13 +937,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1590">
-          <caret line="106" column="2" selection-start-line="106" selection-start-column="2" selection-end-line="109" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/message/conversation.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -900,17 +993,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/app.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2805">
-          <caret line="187" column="31" selection-start-line="187" selection-start-column="31" selection-end-line="187" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/logging.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="705">
           <caret line="48" column="31" selection-start-line="48" selection-start-column="31" selection-end-line="48" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_05_02_161858_create_messages.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/AssignedOperatorPackage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="496" column="40" selection-start-line="496" selection-start-column="40" selection-end-line="496" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/users/MngUsersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="25" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/app.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3420">
+          <caret line="228" column="67" selection-start-line="228" selection-start-column="67" selection-end-line="228" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/datatables.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/personInfo/NewPersonInfoController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="26" selection-start-line="4" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="57" column="27" selection-start-line="57" selection-start-column="27" selection-end-line="57" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/users/mng.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
         </state>
       </provider>
     </entry>

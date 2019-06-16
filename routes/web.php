@@ -54,6 +54,8 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::get('/message/unread', 'MessageController@messageView')->defaults('type', 'unread');
     Route::get('/conversation/{user_id}', 'MessageController@conversations');
     Route::post('/conversation', 'MessageController@conversations');
+    Route::get('/users/mng', 'users\MngUsersController@mngUsersView');
+    Route::post('/users/mng', 'users\MngUsersController@list')->name("usersMng");
 //    Route::get('/table', 'DetailPersonController@table')->name("table");
 
 });
