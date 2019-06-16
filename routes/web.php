@@ -42,7 +42,7 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::get('/show_persons/online', 'ShowPersonsController@showPersonsView')->defaults('type', 'onlines');
     Route::get('/show_persons/visits', 'ShowPersonsController@showPersonsView')->defaults('type', 'visits');
     Route::get('/show_persons/favorites', 'ShowPersonsController@showPersonsView')->defaults('type', 'favorites');
-    Route::get('/show_persons/blacks', 'ShowPersonsController@showPersonsView')->defaults('type', 'blacks');
+    Route::get('/show_ persons/blacks', 'ShowPersonsController@showPersonsView')->defaults('type', 'blacks');
     Route::get('/detailPerson/{id}', 'DetailPersonController@detailPersonView')->name("personInfo.detailPerson");
     Route::get('/blackList/{id}/{blacked}', 'DetailPersonController@blackList')->name("blackList");
     Route::get('/favorite/{id}/{favorited}', 'DetailPersonController@favorite')->name("blackList");
