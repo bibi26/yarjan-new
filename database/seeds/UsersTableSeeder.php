@@ -89,18 +89,10 @@ class UsersTableSeeder extends Seeder
             $province  = Provinces::where('id', mt_rand(1, Provinces::count()))->get()->toArray()[0]['id'];
             $countCity = Cities::where('province_id', $province)->count();
             $itemsCity = Cities::where('province_id', $province)->get()->toArray();
-<<<<<<< HEAD
-           $email=str_random(8) ;
-            $city=$itemsCity[mt_rand(0, $countCity - 1)]['id'];
-            \App\Http\Models\auth\Users::create([
-//                    'username' => "0937".generateRandomString(7,'number'),
-=======
             $email     = str_random(8);
             $city      = $itemsCity[mt_rand(0, $countCity - 1)]['id'];
            $name=Faker::firstname();
-          
             \App\Http\Models\auth\Users::insert([
->>>>>>> master
                 'username' => $email . '@gmail.com',
                 'email' => $email . '@gmail.com',
                 'password' => bcrypt('123456'),
