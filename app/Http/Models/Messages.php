@@ -54,6 +54,7 @@ class Messages extends Model
         if ($flag == 'outbox')
         {
             return $this
+<<<<<<< HEAD
                             ->select('id', 'reciever_user_id', 'sender_user_id')
                             ->with('users')
                             ->where('is_delete', 0)
@@ -83,6 +84,41 @@ class Messages extends Model
                 $user_id . user()['user_id'],
                 user()['user_id'] . $user_id
             ];
+=======
+                ->select('id','reciever_user_id', 'sender_user_id')
+                ->with('users')
+                ->where('is_delete', 0)
+                ->where('sender_user_id',$user_id)
+                ->distinct('reciever_user_id')
+                ->limit($limit)
+                ->offset($offset)
+                ->orderBy('id','desc')
+                ->get();
+
+        }else if($flag=='all' || $flag=='inbox') {        
+//SELECT m1.c_id,m1.message,m1.sender_id,one_id,two_id FROM messages m1 LEFT JOIN messages m2
+// ON (m1.c_id = m2.c_id AND m1.id < m2.id)
+// join conversations on m1.c_id=conversations.id
+//where (one_id=1 or two_id=1) and m2.id IS NULL
+//            return $this
+//                ->select('id','reciever_user_id', 'sender_user_id')
+//                ->with('users')
+//                ->where('is_delete', 0)
+//                ->where('reciever_user_id', $user_id)
+//                ->distinct('sender_user_id')
+//                ->limit($limit)
+//                ->offset($offset)
+//                ->orderBy('id','desc')
+//                ->get();
+            
+           return DB::select(" 
+SELECT m1.conversation_id,m1.text,m1.sender_user_id,one_user_id,two_user_id FROM messages m1 LEFT JOIN messages m2
+ ON (m1.conversation_id = m2.conversation_id AND m1.id < m2.id)
+ join conversations on m1.conversation_id=conversations.id
+where (one_user_id={$user_id} or two_user_id={$user_id}) and m2.id IS NULL
+");
+        }else{
+>>>>>>> 1c7424fc8e865c67f38fc1b2b673609374e2eeb5
             return $this
                             ->select('*')
                             ->with('users')
