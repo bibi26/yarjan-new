@@ -1,7 +1,10 @@
 @extends('home')
 @section('content')
     <script>
+
+
         $(function () {
+
             $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -12,28 +15,68 @@
                     }
                 },
                 columns: [
-                    {data: 1, name: 'id'},
-                    {data: 2, name: 'email'},
-                    {data: 3, name: 'created_at'},
-                    {data: 4, name: 'updated_at'}
+                    { data: 'id', name: 'id' },
+                    { data: 'email', name: 'email' },
+                    { data: 'mobile', name: 'mobile' },
+                    { data: 'full_name', name: 'full_name' },
+                    { data: 'created_at', name: 'created_at' },
+                    { data: 'location', name: 'location' },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "mRender": function (data, type, full) {
+                            if (full.active == "0")
+                            {
+                                return "<b style='color:red;'>غیرفعال</b>";
+
+                            }
+                            else if (full.active == "1")
+                            {
+                                return "<b style='color:green;'>فعال</b>";
+
+                            }
+                            else
+                            {
+                                return "<span>تعریف نشده</span>";
+
+                            }
+                        }
+                    },
+                    { data: 'status', name: 'status' },
+                    { data: 'action', name: 'action' },
+
+                    // {
+                    //     "orderable": false,
+                    //     "mData": null,
+                    //     "mRender": function (data, type, full) {
+                    //         return "<a class='btn btn-danger btn-md' href='javascript:void(0)' onclick='showDelModal(&quot;" + full.id + "&quot;)' >حذف</a>";
+                    //     }
+                    // }
                 ]
             });
+
+
         });
     </script>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">کارتابل مدیران ثبت شده</h4>
+                    <h4 class="card-title">کارتابل کاربران ثبت شده</h4>
                     <div class="table-responsive m-t-40">
                         <table id='users-table' class="display nowrap table table-hover table-striped table-bordered"
                                cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>نام کاربری</th>
-                                <th>IP</th>
-                                <th>مرورگر</th>
+                                <th>شناسه کاربر</th>
+                                <th>ایمیل</th>
+                                <th>شماره همراه</th>
+                                <th>نام و نام خانوادگی</th>
+                                <th>ورود به سیستم </th>
+                                <th>محل زندگی</th>
+                                <th>فعال</th>
+                                <th>وضعیت</th>
+                                <th>عملیات </th>
                             </tr>
                             </thead>
                         </table>
@@ -42,5 +85,6 @@
             </div>
         </div>
     </div>
+
 @stop
 

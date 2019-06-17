@@ -22,13 +22,8 @@ class MessageController extends Controller
     function messageView($flag)
     {
         $users = [];
-<<<<<<< HEAD
         $getMessages = Messages::_()->getc($flag, user()['user_id'], $this->limit, 0);
-        if ($getMessages->count() == 0) {
-=======
-        $getMessages = Messages::_()->getc($flag, user()['user_id'],100,0);
         if (count($getMessages) == 0) {
->>>>>>> 1c7424fc8e865c67f38fc1b2b673609374e2eeb5
             return view($this->manageView, ['error' => 'رکوردی یافت نشد!']);
         }
         foreach ($getMessages as $val) {
@@ -129,12 +124,8 @@ class MessageController extends Controller
             }
             $user_id = $request['reciever_user_id'];
             $pageNumber = $request['page_number'];
-<<<<<<< HEAD
-            $getMessages = Messages::_()->getc('', $user_id, $this->limit, $pageNumber);
-=======
 
             $getMessages = Messages::_()->getc('', $user_id, $this->limit, ($pageNumber - 1) * $this->limit);
->>>>>>> a2a44fa7d879482c48de84a1df94c473fad69a31
 
         } else {
             $pageNumber = 0;
@@ -152,7 +143,6 @@ class MessageController extends Controller
         }
        
         $content= view("partials.conversationsPartial", ['messages' =>  array_reverse($getMessages->toArray()), 'reciever' => $this->getRecieverInfo($user_id),'re'=>false])->render();
->>>>>>> a2a44fa7d879482c48de84a1df94c473fad69a31
         if ($request->ajax()) {
             return response([
                 'messages' => $content,

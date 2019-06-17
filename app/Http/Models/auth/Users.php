@@ -126,6 +126,17 @@ class Users extends BaseModel
         }
     }
 
+    public function getUsersInfo()
+    {
+        return Users::select('users.*', 'roles.name as roleName')->with(['provinces','cities'])
+            ->leftJoin('user_roles', function ($join) {
+                $join->on('users.id', '=', 'user_roles.user_id');
+            })
+            ->leftJoin('roles', function ($join) {
+                $join->on('roles.id', '=', 'user_roles.role_id');
+            })
+            ->get();
+    }
     public function getUserInfo($username)
     {
         return Users::select('users.*', 'roles.name as roleName')

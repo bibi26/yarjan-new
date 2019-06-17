@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\users;
+
 use App\Http\Controllers\Controller;
 
 use App\Http\Models\BlackLists;
@@ -146,9 +147,23 @@ class MngUsersController extends Controller
 
     function list()
     {
-        $users = Users::select(['id','email','created_at','updated_at']);
+        $users = Users::_()->getUsersInfo();
+        return Datatables::of($users)
+            ->addColumn('action', function ($users) {
+                return '<a href="#edit-' . $users->id . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+            })
+            ->addColumn('full_name', function ($users) {
+             return  $users->fname .' ' .$users->lname;
+            })
+            ->addColumn('created_at', function ($users) {
+             return  \Morilog\Jalali\Jalalian::forge($users->created_at)->format('%Y-%m-%d');;
+//             return  \Morilog\Jalali\Jalalian::forge($users->created_at)->format('%Y-%m-%d H:i:s');;
+            })
 
-        return Datatables::of($users)->make();
+            ->addColumn('location', function ($users) {
+             return  $users->provinces->name.' '.$users->cities->name;
+            })
+            ->make();
     }
 
 }
