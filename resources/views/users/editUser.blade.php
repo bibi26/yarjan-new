@@ -21,32 +21,6 @@
                     { data: 'full_name', name: 'full_name' },
                     { data: 'created_at', name: 'created_at' },
                     { data: 'location', name: 'location' },
-                    {
-                        "orderable": false,
-                        "data": null,
-                        "mRender": function (data, type, full) {
-                            console.log(full.confirm);
-                            if (full.confirm == "accept")
-                            {
-                                return "<b style='color:red;'>تایید</b>";
-
-                            }
-                            else if (full.confirm == "reject")
-                            {
-                                return "<b style='color:green;'>رد</b>";
-
-                            }
-                            else if (full.confirm == "unknown")
-                            {
-                                return "<b>در حال بررسی</b>";
-                            }
-                            else
-                            {
-                                return "<span>تعریف نشده</span>";
-
-                            }
-                        }
-                    },
                     { data: 'step', name: 'step' },
                     {
                         "orderable": false,
@@ -101,7 +75,6 @@
                                 <th>نام و نام خانوادگی</th>
                                 <th>ورود به سیستم </th>
                                 <th>محل زندگی</th>
-                                <th>تایید مدیر</th>
                                 <th>سطح</th>
                                 <th>فعال</th>
                                 <th>وضعیت</th>

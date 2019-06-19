@@ -20,11 +20,13 @@ class DetailPersonController extends Controller
 
     function detailPersonView($user_id)
     {
-        \Log::channel('xxxx')->error('sdv');
-        dd(0);
         $sessions = [];
         Visits::_()->store($user_id);
         $getUser = Users::_()->getUserById($user_id);
+        if (empty($getUser)) {
+            return back()->withErrors('error', 'کاربر یافت نشد');
+
+        }
         if (\File::exists(config("constants.upload.register.imageFolder") . $getUser['id'] . '_main_orginal' . '.jpg')) {
             $getUser['profile_image'] = config("constants.upload.register.imageFolder") . $getUser['id'] . '_main_orginal' . '.jpg';
         } elseif ($getUser['sex'] == 'f') {
@@ -32,6 +34,7 @@ class DetailPersonController extends Controller
         } elseif ($getUser['sex'] == 'm') {
             $getUser['profile_image'] = '/img/me-flat.png';
         }
+
         $isBlackedUser = BlackLists::_()->isBlackedUser($user_id);
         if (empty($isBlackedUser)) {
             $getUser['blacked'] = 0;
@@ -68,8 +71,8 @@ class DetailPersonController extends Controller
     function violationReport(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'violation_user_id' =>['required'],
-            'reason_violation' =>['required','min:5','max:3000'],
+            'violation_user_id' => ['required'],
+            'reason_violation' => ['required', 'min:5', 'max:3000'],
         ]);
         if ($validator->fails()) {
             return response([
@@ -96,7 +99,7 @@ class DetailPersonController extends Controller
         if ($result['hasErr']) {
             return back()->with('error', 'خطای سیستمی');
         }
-        if($blacked==0){
+        if ($blacked == 0) {
             return back()->with('success', 'کاربر با موفقیت از لیست سیاه حذف گردید');
 
         }
@@ -109,7 +112,7 @@ class DetailPersonController extends Controller
         if ($result['hasErr']) {
             return back()->with('error', 'خطای سیستمی');
         }
-        if($favorited==0){
+        if ($favorited == 0) {
             return back()->with('success', 'کاربر با موفقیت از لیست علاقه مندی حذف گردید');
 
         }

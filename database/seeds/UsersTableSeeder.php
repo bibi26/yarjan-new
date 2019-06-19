@@ -98,6 +98,7 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('123456'),
                 'status' => mt_rand(0, 2),
                 'active' => mt_rand(0, 1),
+                'confirm' => mt_rand(0, 1)==0?'accept':'reject',
                 'mobile' => Faker::mobile(),
                 'sex' =>   isset( $this->nameSex()[$name])?$this->nameSex()[$name]:null,
                 'province_id' => $province,

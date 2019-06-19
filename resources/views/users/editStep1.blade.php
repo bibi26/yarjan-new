@@ -1,6 +1,4 @@
-<div role="tabpanel" class="tab-pane fade in active" id="Section1">
     {!! Form::open(['route'=>'personInfo.step1','style'=>'padding: 10px','class'=>'form-horizontal' ,'id'=>'frmStep1']) !!}
-
     <div class="row">
         <div class="col-lg-6">
             <div class="form-group  {{ $errors->has('job_status') ? 'has-error' : '' }}">
@@ -115,28 +113,12 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <a class="btn btn-default btn-send pull-left btn_forget_pass "
-           href="javascript:void(0);" onclick="nextStep1();"><span><i
-                    class="fa fa-chevron-left"></i>&nbsp;</span>مرحله بعد </a>
-    </div>
     {!! Form::close() !!}
-</div>
 <script>
-    function nextStep1() {
-        $('#dv_sign').block({
-            message: '<h6><img src="/img/7070.gif" />در حال بررسی اطلاعات...',
-            css: {backgroundColor: '#33e138'}
-        });
-        $('#frmStep1').submit();
-    }
 
     $(document).ready(function () {
-        activaTab("Section1");
 
         var marriage = $("#marriage");
-
-
         $(marriage).change(function (event) {
             if (marriage.val() !== "SINGLE") {
                 $("#dv_child_count").show();
@@ -199,7 +181,6 @@
 
         @endif
 
-
         if (marriage.val() != '' && marriage.val() !== "SINGLE") {
             $("#dv_child_count").show();
             $("#child_count").show();
@@ -214,7 +195,6 @@
 
         }
     });
-
 
 </script>
 

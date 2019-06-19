@@ -3,6 +3,7 @@
 namespace App\Http\Models\auth;
 
 use App\Http\Models\Cities;
+use Illuminate\Foundation\Auth\User;
 use Request;
 use DB;
 use App\BaseModel;
@@ -58,20 +59,11 @@ class Users extends BaseModel
     public function lists($flag='',$data='',$sex='',$limit=100000000,$offset=0)
     {
 
-        if($flag=='visits'){
-            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->whereIn('id',$data);
-        }
-        elseif($flag=='favorites'){
-            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->whereIn('id',$data);
-        }
-        elseif($flag=='blacks'){
-            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->whereIn('id',$data);
-        }
-        elseif($flag=='onlines'){
-            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->whereIn('id',$data);
+        if($flag=='visits' || $flag=='favorites' || $flag=='blacks' || $flag=='onlines'){
+            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->where('confirm', 'accept')->whereIn('id',$data);
         }else{
 
-            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex);
+            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->where('confirm', 'accept');
     }
        return $total->limit($limit)->offset($offset)->get();
     }
@@ -176,9 +168,9 @@ class Users extends BaseModel
     {
         try {
             Users::updateOrCreate(
-                ["username" => user()['username']],
+                ["username" => $input['username']],
                 [
-                    "username" => user()['username'],
+                    "username" => $input['username'],
                     "job_status" => $input["job_status"],
                     "job" => $input["job"],
                     "marriage" => $input["marriage"],
@@ -203,9 +195,9 @@ class Users extends BaseModel
     {
         try {
             Users::updateOrCreate(
-                ["username" => user()['username']],
+                ["username" => $input['username']],
                 [
-                    "username" => user()['username'],
+                    "username" => $input['username'],
                     "weight" => $input["weight"],
                     "height" => $input["height"],
                     "skin_color" => $input["skin_color"],
@@ -229,9 +221,9 @@ class Users extends BaseModel
     {
         try {
             Users::updateOrCreate(
-                ["username" => user()['username']],
+                ["username" => $input['username']],
                 [
-                    "username" => user()['username'],
+                    "username" => $input['username'],
                     "i_am" => $input["i_am"],
                     "you_are" => $input["you_are"],
                     "step3" => 1
@@ -247,7 +239,7 @@ class Users extends BaseModel
     public function step4($input)
     {
         $data = [
-            "username" => user()['username'],
+            "username" => $input['username'],
             "s_age_from" => $input["s_age_from"],
             "s_age_to" => $input["s_age_to"],
             "s_age_from" => $input["s_age_from"],
@@ -290,7 +282,7 @@ class Users extends BaseModel
 
         try {
             Users::updateOrCreate(
-                ["username" => user()['username']],
+                ["username" => $input['username']],
                 $data);
             return ['hasErr' => false, 'msg' => ''];
         } catch (\Exception $e) {
@@ -303,14 +295,14 @@ class Users extends BaseModel
     public function step5($input)
     {
         $data = [
-            "username" => user()['username'],
+            "username" => $input['username'],
             "step5" => 1
         ];
 
 
         try {
             Users::updateOrCreate(
-                ["username" => user()['username']],
+                ["username" => $input['username']],
                 $data);
             return ['hasErr' => false, 'msg' => ''];
         } catch (\Exception $e) {

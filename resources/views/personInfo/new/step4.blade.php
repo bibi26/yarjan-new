@@ -3,7 +3,8 @@
     <!--                    <h3> توجه: معیارهای زیر مربوط به همسر دلخواه شما میباشد. </h3>-->
     <p class="alert alert-warning">معیارهای زیر مربوط به همسر دلخواه شما میباشد. با انتخاب دقیق آن میتوانید مشخص کنید که تنها از همین افراد پیام دریافت کنید. <span style="color:red;">(تمامی موارد اختیاری می باشند)</span>.</p>
     {!! Form::open(['route'=>'personInfo.step4','style'=>'padding: 10px','class'=>'form-horizontal' ,'id'=>'frmStep4']) !!}
-        <div class="row">
+    {{ Form::hidden('user_id',isset($userInfo['id'])?$userInfo['id']:'' )}}
+    <div class="row">
             <div class="col-lg-6">
 
                 <div class="form-group">
@@ -184,7 +185,7 @@
 
         </div>
         <div class="form-group">
-            <a class="btn btn-default btn-send pull-right btn_forget_pass"   href="{{route('personInfo.step3')}}" ><span ><i  class="fa fa-chevron-right"></i>&nbsp;</span>مرحله قبل </a>
+            <a class="btn btn-default btn-send pull-right btn_forget_pass"   href="{{route('personInfo.step3View',$userInfo['id'])}}" ><span ><i  class="fa fa-chevron-right"></i>&nbsp;</span>مرحله قبل </a>
             <a class="btn btn-default btn-send pull-left btn_forget_pass"  href="javascript:void(0);" onclick="nextStep4();"><span >مرحله بعد <i  class="fa fa-chevron-left"></i>&nbsp;</span><b></b></a>
         </div>
     {!! Form::close() !!}

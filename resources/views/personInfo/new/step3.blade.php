@@ -1,6 +1,7 @@
 <div role="tabpanel" class="tab-pane fade" id="Section3">
     {!! Form::open(['route'=>'personInfo.step3','style'=>'padding: 10px','class'=>'form-horizontal' ,'id'=>'frmStep3']) !!}
-        <div class="row">
+    {{ Form::hidden('user_id',isset($userInfo['id'])?$userInfo['id']:'' )}}
+    <div class="row">
             <div class="col-lg-12">
                 <div class="form-group {{ $errors->has('i_am') ? 'has-error' : '' }}">
                     {!! Form::label('من چنین هستم :','',['class' => 'required']) !!}
@@ -15,7 +16,7 @@
             </div>
         </div>
         <div class="form-group">
-            <a class="btn btn-default btn-send pull-right btn_forget_pass"  href="{{route('personInfo.step2')}}" ><span ><i  class="fa fa-chevron-right"></i>&nbsp;</span>مرحله قبل </a>
+            <a class="btn btn-default btn-send pull-right btn_forget_pass"  href="{{route('personInfo.step2View',$userInfo['id'])}}" ><span ><i  class="fa fa-chevron-right"></i>&nbsp;</span>مرحله قبل </a>
             <a class="btn btn-default btn-send pull-left btn_forget_pass"  href="javascript:void(0);" onclick="nextStep3();"><span >مرحله بعد <i  class="fa fa-chevron-left"></i>&nbsp;</span></a>
         </div>
     {!! Form::close() !!}

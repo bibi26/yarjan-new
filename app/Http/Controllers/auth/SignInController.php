@@ -67,7 +67,7 @@ class SignInController extends Controller
             $session_login['avatar'] = '/img/me-flat.png';
         }
         $cookie = cookie('LOGEDIN', serialize($session_login), config('constants.cookieAliveTime'));
-        return \Redirect::to('/step1')->cookie($cookie);
+        return \Redirect::to("/{$res_login['id']}/step1")->cookie($cookie);
     }
 
 }

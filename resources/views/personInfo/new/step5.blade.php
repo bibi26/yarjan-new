@@ -1,6 +1,6 @@
 @php
     $userFolder =  config("constants.upload.register.imageFolder");
-    $fileName = user()['user_id'] . '_main_orginal' . '.jpg';
+    $fileName = $userInfo['id'] . '_main_orginal' . '.jpg';
     $destPath = $userFolder . $fileName;
 @endphp
 <div class="alert alert-warning row">
@@ -11,7 +11,7 @@
 
 <div role="tabpanel" class="tab-pane fade in active" id="Section5">
     {!! Form::open(['route'=>'personInfo.step5','style'=>'padding: 10px','class'=>'form-horizontal' ,'id'=>'frmStep5']) !!}
-
+    {{ Form::hidden('user_id',isset($userInfo['id'])?$userInfo['id']:'' )}}
     <div class="row">
         <div class="col-lg-4">
                 <div class="kv-avatar">
@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="form-group">
-        <a class="btn btn-default btn-send pull-right btn_forget_pass"   href="{{route('personInfo.step4')}}" ><span ><i  class="fa fa-chevron-right"></i>&nbsp;</span>مرحله قبل </a>
+        <a class="btn btn-default btn-send pull-right btn_forget_pass"   href="{{route('personInfo.step4View',$userInfo['id'])}}" ><span ><i  class="fa fa-chevron-right"></i>&nbsp;</span>مرحله قبل </a>
         <a class="btn btn-default btn-send pull-left btn_blue"  href="javascript:void(0);" onclick="nextStep5();"><span ><i  class="fa fa-thumbs-up"></i>&nbsp;</span>ثبت نهایی</a>
     </div>
     {!! Form::close() !!}
@@ -70,7 +70,6 @@
         font-weight: normal;
     }
 </style>
-
 <script>
     function nextStep5() {
         $('#dv_sign').block({
@@ -79,7 +78,6 @@
         });
         $('#frmStep5').submit();
     }
-
     $(document).ready(function () {
 
         $("#fileMain").fileinput({
@@ -111,9 +109,9 @@
             initialPreviewConfig: [{
                 'url': 'delete_img',
                 'key': '@php echo $fileName; @endphp',
-                'extra': {'_token': _TOKEN}
+                'extra': {'_token': _TOKEN,'user_id':'{{$userInfo['id']}}' },
             }],
-            initialPreview: ['@php echo $destPath; @endphp' ] ,
+            initialPreview: ['{{asset($destPath)}}' ] ,
             @else
             defaultPreviewContent: '<img src="/img/avatar7.png" alt="تصویر اصلی">',
             @endif
@@ -121,7 +119,8 @@
             allowedFileExtensions: ["jpg", "jpeg"],
             uploadExtraData: {
                 _token: _TOKEN,
-                type: 'main'
+                type: 'main',
+                user_id:'{{$userInfo['id']}}'
             }
         }).on("filebatchselected", function (event, files) {
             $("#fileMain").fileinput("upload");
@@ -139,7 +138,6 @@
             fileActionSettings: {
                 // showRemove: false,
                 showUpload: false,
-
             },
             @php
                 if (\File::exists($destPath))
@@ -149,9 +147,9 @@
                     $d = 'initialPreviewConfig: [';
                     foreach ($handle as $file)
                     {
-                        if(strpos($file->getfilename(), user()['user_id']."_additional_orginal_") !== false)
+                        if(strpos($file->getfilename(), $userInfo['id']."_additional_orginal_") !== false)
                         {
-                            $e.= "'" .config("constants.upload.register.imageFolder") . $file->getfilename()."',";
+                            $e.= "'" .asset(config("constants.upload.register.imageFolder") . $file->getfilename())."',";
                             $d.=" { 'url' : 'delete_img','key':'{$file->getfilename()}','extra': {'_token': '".csrf_token()."' }},";
                         }
                     }
@@ -168,7 +166,8 @@
             initialPreviewAsData: true,
             uploadExtraData: {
                 _token: _TOKEN,
-                type: 'additional'
+                type: 'additional',
+                user_id:'{{$userInfo['id']}}'
             },
         }).on("filebatchselected", function (event, files) {
             $("#fileAdditional").fileinput("upload");

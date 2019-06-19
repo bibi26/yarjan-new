@@ -514,6 +514,27 @@ function childStatus($value, $array = false)
     }
 }
 
+function confirm($value ,$array = false)
+{
+    if ($array) {
+        return ['unknown' => 'نامشخص', 'accept' => 'تایید', 'reject' => 'رد'];
+    }
+    switch ($value) {
+        case "unknown":
+            echo "نامشخص";
+            break;
+        case "accept":
+            echo "تایید";
+            break;
+        case "reject":
+            echo "رد";
+            break;
+        default :
+            echo 'نامشخص';
+            break;
+    }
+}
+
 function persianNum($number)
 {
     $number = str_replace("1", "۱", $number);

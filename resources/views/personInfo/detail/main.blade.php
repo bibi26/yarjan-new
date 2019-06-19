@@ -14,13 +14,14 @@
         });
     }
 
-    @if(Session::has('success'))
+    @if(isset($success))
         notify('success','{{Session::get('success')}}' )
     @endif
-    @if(Session::has('error'))
+    @if(isset($error))
     notify('danger','{{Session::get('error')}}' )
     @endif
 </script>
+@if(isset($person))
     <div class="row" id="detail_page">
         <div class="col-lg-3 col-md-3">
             <div class="panel panel-default">
@@ -69,6 +70,15 @@
                                                                               style="color: #ff335a;"></i>&nbsp;افزودن
                                     به لیست سیاه</a>
                             </div>
+                            @if(user()['role']=='admin')
+                                <hr/>
+                                <div style="margin: 5px;">
+                                    <a href="{{url('blackList')}}/{{$person['id']}}/{{$person['blacked']?0:1}}" class="btn btn-success"style="width: 210px;text-align: right;">&nbsp;تایید کاربر</a>
+                                </div>
+                                <div style="margin: 5px;">
+                                    <a href="" class="btn btn-danger"style="width: 210px;text-align: right;">&nbsp;رد کاربر</a>
+                                </div>
+                            @endif
 
                         </div>
                         <div class="col-lg-8 col-md-8">
@@ -483,6 +493,6 @@
 
 
     </script>
-
+@endif
 @stop
 

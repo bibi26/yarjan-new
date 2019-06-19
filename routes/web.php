@@ -23,11 +23,11 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::get('/step1', function () {
         return view('personInfo.main');
     });
-    Route::get('/step1', 'personInfo\NewPersonInfoController@step1View')->name("personInfo.step1View");
-    Route::get('/step2', 'personInfo\NewPersonInfoController@step2View')->name("personInfo.step2View");
-    Route::get('/step3', 'personInfo\NewPersonInfoController@step3View')->name("personInfo.step3View");
-    Route::get('/step4', 'personInfo\NewPersonInfoController@step4View')->name("personInfo.step4View");
-    Route::get('/step5', 'personInfo\NewPersonInfoController@step5View')->name("personInfo.step5View");
+    Route::get('{user_id}/step1', 'personInfo\NewPersonInfoController@step1View')->name("personInfo.step1View");
+    Route::get('{user_id}/step2', 'personInfo\NewPersonInfoController@step2View')->name("personInfo.step2View");
+    Route::get('{user_id}/step3', 'personInfo\NewPersonInfoController@step3View')->name("personInfo.step3View");
+    Route::get('{user_id}/step4', 'personInfo\NewPersonInfoController@step4View')->name("personInfo.step4View");
+    Route::get('{user_id}/step5', 'personInfo\NewPersonInfoController@step5View')->name("personInfo.step5View");
     Route::post('/step1', 'personInfo\NewPersonInfoController@step1')->name("personInfo.step1");
     Route::post('/step2', 'personInfo\NewPersonInfoController@step2')->name("personInfo.step2");
     Route::post('/step3', 'personInfo\NewPersonInfoController@step3')->name("personInfo.step3");

@@ -4,6 +4,7 @@
             <div class="col-lg-6">
                 <div class="form-group {{ $errors->has('height') ? 'has-error' : '' }}">
                     {!! Form::label('قد (سانتی متر) :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
+                    {{ Form::hidden('user_id',isset($userInfo['id'])?$userInfo['id']:'' )}}
                     <div class="col-lg-8">
                         <select id="height" name="height"
                                 class="form-control input-sm">
@@ -114,7 +115,7 @@
             </div>
         </div>
         <div class="form-group">
-            <a class="btn btn-default btn-send pull-right btn_forget_pass"   href="{{route('personInfo.step1')}}" ><span ><i  class="fa fa-chevron-right"></i>&nbsp;</span>مرحله قبل </a>
+            <a class="btn btn-default btn-send pull-right btn_forget_pass"   href="{{route('personInfo.step1View',$userInfo['id'])}}" ><span ><i  class="fa fa-chevron-right"></i>&nbsp;</span>مرحله قبل </a>
             <a class="btn btn-default btn-send pull-left btn_forget_pass"  href="javascript:void(0);" onclick="nextStep2();" ><span >مرحله بعد <i  class="fa fa-chevron-left"></i>&nbsp;</span></a>
         </div>
     {!! Form::close() !!}
