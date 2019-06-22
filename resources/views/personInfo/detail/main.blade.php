@@ -1,5 +1,6 @@
 @extends('home')
 @section('content')
+
 <script>
     function notify(type,msg){
         $.notify({
@@ -21,8 +22,10 @@
     notify('danger','{{Session::get('error')}}' )
     @endif
 </script>
+
 @if(isset($person))
-    <div class="row" id="detail_page">
+@section('title', __('title.detailPerson',['user'=> !empty($person['nick_name']) ? $person['nick_name'] :$person['fname'] .' '.$person['age'] . ' ساله '. ' از '.$person['provinces']['name'] ]))
+<div class="row" id="detail_page">
         <div class="col-lg-3 col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body">

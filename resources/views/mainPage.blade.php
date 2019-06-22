@@ -1,6 +1,8 @@
 @extends('home')
 @section('content')
-    <style>
+@section('title', __('title.mainPage'))
+
+<style>
         .contact-form .textarea{ min-height:220px; resize:none;}
         .form-control{ box-shadow:none; height:49px;}
         .form-control:focus{ box-shadow:none; border-color:#00bfff;}

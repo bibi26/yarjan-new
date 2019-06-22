@@ -9,8 +9,25 @@
             wtf.scrollTop(height);
 
         });
-        var offset = {{$limit}};
+        var offset = '{{$limit}}';
 
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('src', "{{asset('notification.ogg')}}");
+
+        $('#play').click(function() {
+            audioElement.play();
+        });
+
+        var notify = $.notify({
+            // settings
+            // options
+            message: 'پیام با موفقیت ارسال شد.',
+        }, {
+            type: 'success',
+            onShow: function () {
+                this.css({'width': 'auto', 'height': 'auto'});
+            },
+        });
 
         $(document).ready(function () {
 
@@ -26,7 +43,6 @@
             $("#message").keypress(function () {
                 var channel =window.Echo.join('cc');
                 setTimeout( () => {
-
                     channel.whisper('typing', {
                     name: 'fgg'
                 })
@@ -34,10 +50,7 @@
                 window.Echo.join('cc').listenForWhisper('typing', (e) => {
                     alert('rrr');
                 })
-
             });
-
-
         });
 
         function getConversation() {

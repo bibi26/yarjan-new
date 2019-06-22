@@ -1,6 +1,7 @@
 @extends('home')
 @section('content')
-    <div class="row">
+
+<div class="row">
         <div class=" col-lg-12">
             <div class="tab" role="tabpanel" style="background-color: white;">
                 <ul class="nav nav-tabs" role="tablist">

@@ -1,5 +1,6 @@
 @extends('home')
 @section('content')
+@section('title', __('title.contactUs'))
 
 
     <div class="container">

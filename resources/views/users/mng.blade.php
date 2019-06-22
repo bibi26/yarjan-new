@@ -1,8 +1,7 @@
 @extends('home')
 @section('content')
-    <script>
-
-
+@section('title', __('title.mngUsers'))
+<script>
         $(function () {
 
             $('#users-table').DataTable({

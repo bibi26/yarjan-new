@@ -1,6 +1,8 @@
 @extends('home')
 @section('content')
-    <style>
+@section('title', __('title.showPersons'))
+
+<style>
         .posts-box {
             max-width: 1024px;
             margin: 0 auto;

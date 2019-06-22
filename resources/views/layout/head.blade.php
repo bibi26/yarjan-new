@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     {{--<meta name="viewport" content="width=device-width, initial-scale=1">--}}
     {{--<title>@yield('title')</title>--}}
-    <title></title>
+    <title>@yield('title')</title>
     <link href="{{ URL::asset('/css/all.css') }}" rel="stylesheet" type="text/css">
     {{--<link href="{{ URL::asset('/css/select2.css') }}" rel="stylesheet" type="text/css">--}}
     <script type="text/javascript" src="{{ URL::asset('/js/all.js') }}"></script>
