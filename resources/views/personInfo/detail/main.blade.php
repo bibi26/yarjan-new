@@ -24,7 +24,7 @@
 </script>
 
 @if(isset($person))
-@section('title', __('title.detailPerson',['user'=> !empty($person['nick_name']) ? $person['nick_name'] :$person['fname'] .' '.$person['age'] . ' ساله '. ' از '.$person['provinces']['name'] ]))
+@section('title', __('titles.detailPerson',['user'=> !empty($person['nick_name']) ? $person['nick_name'] :$person['fname'] .' '.$person['age'] . ' ساله '. ' از '.$person['provinces']['name'] ]))
 <div class="row" id="detail_page">
         <div class="col-lg-3 col-md-3">
             <div class="panel panel-default">

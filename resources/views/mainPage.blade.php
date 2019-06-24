@@ -1,6 +1,6 @@
 @extends('home')
 @section('content')
-@section('title', __('title.mainPage'))
+@section('title', __('titles.mainPage'))
 
 <style>
         .contact-form .textarea{ min-height:220px; resize:none;}

@@ -1,6 +1,6 @@
 @extends('home')
 @section('content')
-@section('title', __('title.contactUs'))
+@section('title', __('titles.contactUs'))
 
 
     <div class="container">
@@ -34,7 +34,7 @@
                             </script>
                             @endif
 
-                            {!! Form::open(['route'=>'contactus.store','style'=>'padding: 10px']) !!}
+                            {!! Form::open(['route'=>'contactus.newStore','style'=>'padding: 10px']) !!}
 
                             <div class="form-group {{ $errors->has('mobile') ? 'has-error' : '' }}">
                                 {!! Form::label('شماره همراه :') !!}

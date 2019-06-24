@@ -1,6 +1,6 @@
 @extends('home')
 @section('content')
-@section('title', __('title.showPersons'))
+@section('title', __('titles.showPersons'))
 
 <style>
         .posts-box {

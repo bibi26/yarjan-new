@@ -1,6 +1,6 @@
 @extends('home')
 @section('content')
-@section('title', __('title.mngUsers'))
+@section('title', __('titles.mngUsers'))
 <script>
         $(function () {
 
@@ -14,6 +14,13 @@
                     }
                 },
                 columns: [
+                    {
+                        "orderable": true,
+                        "mData": null,
+                        "mRender": function (data, type, full, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
                     { data: 'id', name: 'id' },
                     { data: 'email', name: 'email' },
                     { data: 'mobile', name: 'mobile' },
@@ -94,6 +101,7 @@
                                cellspacing="0" width="100%">
                             <thead>
                             <tr>
+                                <th>#</th>
                                 <th>شناسه کاربر</th>
                                 <th>ایمیل</th>
                                 <th>شماره همراه</th>

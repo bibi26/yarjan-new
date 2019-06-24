@@ -1,6 +1,8 @@
 @extends('home')
 @section('content')
-    <script>
+@section('title', __('titles.conversationUser'))
+
+<script>
 
         $(function () {
 

@@ -1,5 +1,6 @@
 @extends('home')
 @section('content')
+@section('title', __('titles.newPerson'))
 
 <div class="row">
         <div class=" col-lg-12">

@@ -1,5 +1,6 @@
 @extends('home')
 @section('content')
+@section('title', __('titles.conversationsUser'))
 
     @if(Session::has('error'))
         notify('danger','{{Session::get('error')}}' )

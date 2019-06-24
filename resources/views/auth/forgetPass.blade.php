@@ -1,6 +1,8 @@
 @extends('home')
 @section('content')
-    @if(Session::has('success'))
+@section('title', __('titles.forgetPass'))
+
+@if(Session::has('success'))
         <div class="alert oaerror success" style="margin-top: 5px;" >{{Session::get('success')}}</div>
     @else
     <div class="container">
