@@ -16,7 +16,7 @@
                 columns: [
                     {
                         "orderable": true,
-                        "mData": null,
+                        "mData": 'id',
                         "mRender": function (data, type, full, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }

@@ -81,6 +81,17 @@
                                 <div style="margin: 5px;">
                                     <a href="" class="btn btn-danger"style="width: 210px;text-align: right;">&nbsp;رد کاربر</a>
                                 </div>
+                                <hr/>
+                                @if($person['active']==1)
+                                <div style="margin: 5px;">
+                                    <a href="" class="btn btn-danger"style="width: 210px;text-align: right;">&nbsp;غیرفعال کردن کاربر</a>
+                                </div>
+                                @endif
+                                @if($person['active']==0)
+                                    <div style="margin: 5px;">
+                                        <a href="" class="btn btn-success"style="width: 210px;text-align: right;">&nbsp;فعال کردن کاربر</a>
+                                    </div>
+                                @endif
                             @endif
 
                         </div>
