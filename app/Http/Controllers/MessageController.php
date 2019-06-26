@@ -136,12 +136,8 @@ class MessageController extends Controller
 
         foreach ($getMessages as $key => $val) {
             $getMessages[$key]['time'] = \Morilog\Jalali\Jalalian::forge($val['created_at'])->ago();
-<<<<<<< HEAD
-        };
-        $content = view("partials.conversationsPartial", ['messages' => array_reverse($getMessages->toArray()), 'reciever' => $this->getRecieverInfo($user_id), 're' => false])->render();
-=======
         }
-       
+
         $content= view("partials.conversationsPartial", ['messages' =>  array_reverse($getMessages->toArray()), 'reciever' => $this->getRecieverInfo($user_id),'re'=>false])->render();
         if ($request->ajax()) {
             return response([
