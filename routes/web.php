@@ -76,8 +76,10 @@ Route::get('/sendEmail','0AuthController@sendEmail');
 
 
 //---------------contact_us-----------------------
-Route::get('/contactUs','contact_us\ContactUsController@view')->name('contactus.view');
-Route::post('/contactUs','contact_us\ContactUsController@store')->name("contactus.store");
+Route::get('/contactUs','contact_us\ContactUsController@newView')->name('contactus.newView');
+Route::post('/contactUs','contact_us\ContactUsController@newStore')->name("contactus.newStore");
+Route::get('/mngContactUs','contact_us\ContactUsController@mngView')->name('contactus.mngView');
+Route::post('/mngContactUs','contact_us\ContactUsController@mng')->name("contactus.mng");
 Route::post('/refreshCaptcha','contact_us\ContactUsController@refreshCaptcha');
 
 //---------------sign_in-----------------------

@@ -17,16 +17,16 @@ return [
             'imageFolder' => 'storage/images/',
         ]
     ],
-    'cookieAliveTime'=>31556926,// where 31556926 is total seconds for a year.
-
-'UserLogErrCode'=>[
-        'incorrect'=>'incorrect',
-        'noAgree'=>'noAgree',
-        'noActive'=>'noActive',
-        'successLogin'=>'successLogin',
-        'sendVerifyCode'=>'sendVerifyCode',
-        'noRole'=>'noRole'
-    ],'userOnlinetime'=>300 //second
+    'cookieAliveTime' => 31556926,// where 31556926 is total seconds for a year.
+    'UserLogErrCode' => [
+        'incorrect' => 'incorrect',
+        'noAgree' => 'noAgree',
+        'noActive' => 'noActive',
+        'successLogin' => 'successLogin',
+        'sendVerifyCode' => 'sendVerifyCode',
+        'noRole' => 'noRole'
+    ],
+    'userOnlinetime' => 300, //second
 ];
 
 

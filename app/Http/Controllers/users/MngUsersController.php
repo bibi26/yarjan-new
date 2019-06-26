@@ -36,7 +36,11 @@ class MngUsersController extends Controller
                 return $users->fname . ' ' . $users->lname;
             })
             ->addColumn('created_at', function ($users) {
+<<<<<<< HEAD
                 return \Morilog\Jalali\Jalalian::forge($users->created_at)->ago();
+=======
+                return \Morilog\Jalali\Jalalian::forge($users->created_at)->format('Y-m-d H:m:i');
+>>>>>>> 7b9e93aee475cc53341b5c534ef571b8c5f33733
             })
             ->addColumn('location', function ($users) {
                 return $users->provinces->name . ' ' . $users->cities->name;

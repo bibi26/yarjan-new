@@ -32,6 +32,40 @@
                                      class="thumbnail img-responsive"
                                      src="" width="300px" height="300px">
                             </div>
+
+
+<script>
+    function notify(type,msg){
+        $.notify({
+            // options
+            message: msg,
+        },{
+            // settings
+            type: type,
+            onShow: function() {
+                this.css({'width':'auto','height':'auto'});
+            },
+        });
+    }
+
+    @if(isset($success))
+        notify('success','{{Session::get('success')}}' )
+    @endif
+    @if(isset($error))
+    notify('danger','{{Session::get('error')}}' )
+    @endif
+</script>
+
+@if(isset($person))
+@section('title', __('titles.detailPerson',['user'=> !empty($person['nick_name']) ? $person['nick_name'] :$person['fname'] .' '.$person['age'] . ' ساله '. ' از '.$person['provinces']['name'] ]))
+<div class="row" id="detail_page">
+        <div class="col-lg-3 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="media">
+                        <div align="center">
+                            <img id="myImg" src='{{asset($person['profile_image'].'?'.mt_rand(1,100000))}}' class="thumbnail img-responsive"
+                                 src="" width="300px" height="300px">
                         </div>
                     </div>
                 </div>
@@ -68,6 +102,24 @@
                                        style="width: 210px;text-align: right;"><i class="fa fa-exclamation-triangle"
                                                                                   style="color: #ff335a;"></i>&nbsp;گزارش
                                         تخلفات </a>
+                                <hr/>
+                                @if($person['active']==1)
+                                <div style="margin: 5px;">
+                                    <a href="" class="btn btn-danger"style="width: 210px;text-align: right;">&nbsp;غیرفعال کردن کاربر</a>
+                                </div>
+                                @endif
+                                @if($person['active']==0)
+                                    <div style="margin: 5px;">
+                                        <a href="" class="btn btn-success"style="width: 210px;text-align: right;">&nbsp;فعال کردن کاربر</a>
+                                    </div>
+                                @endif
+                            @endif
+
+                        </div>
+                        <div class="col-lg-8 col-md-8">
+                            <div>
+                                <div>
+                                    <small>کد شناسایی :</small>&nbsp;<b style="font-size: 18px;">{{$person['id']}}</b>
                                 </div>
                                 <div style="margin: 5px;">
                                     <a href="{{url('blackList')}}/{{$person['id']}}/{{$person['blacked']?0:1}}"

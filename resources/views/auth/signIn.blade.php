@@ -1,6 +1,8 @@
 @extends('home')
 @section('content')
-    @if(isset($agreeVerifyCode))
+@section('title', __('titles.signIn'))
+
+@if(isset($agreeVerifyCode))
         <div class="alert oaerror success" style="margin-top: 5px;" >{{$agreeVerifyCode}}</div>
     @endif
 

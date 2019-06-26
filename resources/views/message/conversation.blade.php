@@ -1,5 +1,6 @@
 @extends('home')
 @section('content')
+<<<<<<< HEAD
     <div id="deleteMessageModal" class="modal fade " role="dialog">
 
         <div class="modal-dialog" style="width: 600px;">
@@ -31,6 +32,11 @@
 
 
     <script>
+=======
+@section('title', __('titles.conversationUser'))
+
+<script>
+>>>>>>> 7b9e93aee475cc53341b5c534ef571b8c5f33733
 
         $(document).on("click", ".deleteLink", function () {
             var messageId = $(this).data('id');
@@ -76,8 +82,29 @@
             wtf.scrollTop(height);
 
         });
+<<<<<<< HEAD
         var offset = 1;
+=======
+        var offset = '{{$limit}}';
 
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('src', "{{asset('notification.ogg')}}");
+
+        $('#play').click(function() {
+            audioElement.play();
+        });
+>>>>>>> 7b9e93aee475cc53341b5c534ef571b8c5f33733
+
+        var notify = $.notify({
+            // settings
+            // options
+            message: 'پیام با موفقیت ارسال شد.',
+        }, {
+            type: 'success',
+            onShow: function () {
+                this.css({'width': 'auto', 'height': 'auto'});
+            },
+        });
 
         $(document).ready(function () {
 
@@ -91,9 +118,14 @@
                     offset = offset + 1;
                 });
             $("#message").keypress(function () {
+<<<<<<< HEAD
                 var channel = window.Echo.join('cc');
                 setTimeout(() => {
 
+=======
+                var channel =window.Echo.join('cc');
+                setTimeout( () => {
+>>>>>>> 7b9e93aee475cc53341b5c534ef571b8c5f33733
                     channel.whisper('typing', {
                         name: 'fgg'
                     })
@@ -101,10 +133,7 @@
                 window.Echo.join('cc').listenForWhisper('typing', (e) => {
                     alert('rrr');
                 })
-
             });
-
-
         });
 
         function getConversation() {
