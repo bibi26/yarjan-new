@@ -48,14 +48,16 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::get('/favorite/{id}/{favorited}', 'DetailPersonController@favorite')->name("blackList");
     Route::post('/send_free_message', 'MessageController@freeMessage')->name("sendFreeMessage");
     Route::post('/send_real_message', 'MessageController@realMessage')->name("sendRealMessage");
-    Route::get('/message/all', 'MessageController@messageView')->defaults('type', 'all');
-    Route::get('/message/inbox', 'MessageController@messageView')->defaults('type', 'inbox');
-    Route::get('/message/outbox', 'MessageController@messageView')->defaults('type', 'outbox');
-    Route::get('/message/unread', 'MessageController@messageView')->defaults('type', 'unread');
-    Route::get('/conversation/{user_id}', 'MessageController@conversations');
+    Route::get('/conversation/all', 'MessageController@conversationView')->defaults('type', 'all');
+    Route::get('/conversation/inbox', 'MessageController@conversationView')->defaults('type', 'inbox');
+    Route::get('/conversation/outbox', 'MessageController@conversationView')->defaults('type', 'outbox');
+    Route::get('/conversation/unread', 'MessageController@conversationView')->defaults('type', 'unread');
+    Route::get('/conversation/{conversation_id}/{reciever_id}', 'MessageController@conversations');
     Route::post('/conversation', 'MessageController@conversations');
+    Route::post('/delete_message', 'MessageController@deleteMessage')->name('deleteMessage');
     Route::get('/users/mng', 'users\MngUsersController@mngUsersView');
     Route::post('/users/mng', 'users\MngUsersController@list')->name("usersMng");
+    Route::post('/users/mng/confirm', 'users\MngUsersController@confirm')->name("confirmRegisteredUserInfo");
 //    Route::get('/table', 'DetailPersonController@table')->name("table");
 
 });

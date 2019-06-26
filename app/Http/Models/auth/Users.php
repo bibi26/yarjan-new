@@ -10,6 +10,7 @@ use App\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Http\Models\Provinces;
+use Carbon\Carbon;
 
 class Users extends BaseModel
 {
@@ -307,6 +308,22 @@ class Users extends BaseModel
             return ['hasErr' => false, 'msg' => ''];
         } catch (\Exception $e) {
 
+            myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
+            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+        }
+    }
+
+    public function confirm($request)
+    {
+        try {
+            Users::where('id', $request['user_id'])->update([
+                'confirm' => $request['status'],
+                'confirm_date' =>  Carbon::now(),
+                'confirm_by' => user()['user_id'],
+                'confirm_desc' => $request['description']
+            ]);
+            return ['hasErr' => false, 'msg' => ''];
+        } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
             return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
         }

@@ -34,17 +34,17 @@
                             console.log(full.confirm);
                             if (full.confirm == "accept")
                             {
-                                return "<b style='color:red;'>تایید</b>";
+                                return "<b style='color:green;'>تایید</b>";
 
                             }
                             else if (full.confirm == "reject")
                             {
-                                return "<b style='color:green;'>رد</b>";
+                                return "<b style='color:red;'>رد</b>";
 
                             }
                             else if (full.confirm == "unknown")
                             {
-                                return "<b>در حال بررسی</b>";
+                                return "<b>در حال انتظار</b>";
                             }
                             else
                             {

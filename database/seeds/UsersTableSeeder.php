@@ -31,76 +31,86 @@ class UsersTableSeeder extends Seeder
     {
 
         return [
-      'حمید' => 'm',
-        'علی' => 'm',
-        'المیرا' => 'f',
-        'سحر' => 'f',
-        'حسام' => 'm',
-        'پروانه' => 'f',
-        'ترانه' => 'f',
-        'عطیه' => 'f',
-        'شیما' => 'f',
-        'لیلا' => 'f',
-        'مهدی' => 'm',
-        'پرستو' => 'f',
-        'عباس' => 'm',
-        'مریم' => 'f',
-        'منیر' => 'f',
-        'نگار' => 'f',
-        'شایان' => 'm',
-        'علیرضا' => 'm',
-        'وحید' => 'm',
-        'حسن' => 'm',
-        'سجاد' => 'm',
-        'شقایق' => 'f',
-        'ریحانه' => 'f',
-        'مرجان' => 'f',
-        'شاهرخ' => 'm',
-        'زهرا' =>'f'
+            'حمید' => 'm',
+            'علی' => 'm',
+            'المیرا' => 'f',
+            'سحر' => 'f',
+            'حسام' => 'm',
+            'پروانه' => 'f',
+            'ترانه' => 'f',
+            'عطیه' => 'f',
+            'شیما' => 'f',
+            'لیلا' => 'f',
+            'مهدی' => 'm',
+            'پرستو' => 'f',
+            'عباس' => 'm',
+            'مریم' => 'f',
+            'منیر' => 'f',
+            'نگار' => 'f',
+            'شایان' => 'm',
+            'علیرضا' => 'm',
+            'وحید' => 'm',
+            'حسن' => 'm',
+            'سجاد' => 'm',
+            'شقایق' => 'f',
+            'ریحانه' => 'f',
+            'مرجان' => 'f',
+            'شاهرخ' => 'm',
+            'زهرا' => 'f'
         ];
     }
 
     function convert($array)
     {
         $data = [];
-        foreach ($array as $key => $value)
-        {
+        foreach ($array as $key => $value) {
             $data[] = $key;
         }
         return $data;
     }
 
+    function confirm()
+    {
+        switch (mt_rand(1, 3)) {
+            case 1:
+                return 'accept';
+            case 2:
+                return 'reject';
+            case 3:
+                return 'unknown';
+        }
+    }
+
     public function run()
     {
-        $jobStatus             = $this->convert(jobStatus('', true));
-        $marriageStatus        = $this->convert(marriageStatus('', true));
-        $educationStatus       = $this->convert(educationStatus('', true));
-        $incomeStatus          = $this->convert(incomeStatus('', true));
-        $houseStatus           = $this->convert(houseStatus('', true));
-        $carStatus             = $this->convert(carStatus('', true));
-        $skinColorStatus       = $this->convert(skinColorStatus('', true));
-        $beliefStatus          = $this->convert(beliefStatus('', true));
+        $jobStatus = $this->convert(jobStatus('', true));
+        $marriageStatus = $this->convert(marriageStatus('', true));
+        $educationStatus = $this->convert(educationStatus('', true));
+        $incomeStatus = $this->convert(incomeStatus('', true));
+        $houseStatus = $this->convert(houseStatus('', true));
+        $carStatus = $this->convert(carStatus('', true));
+        $skinColorStatus = $this->convert(skinColorStatus('', true));
+        $beliefStatus = $this->convert(beliefStatus('', true));
         $healthConditionStatus = $this->convert(healthConditionStatus('', true));
-        $nationalityStatus     = $this->convert(nationalityStatus('', true));
-        $lifeStyleStatus       = $this->convert(lifeStyleStatus('', true));
-        $sexStatus             = $this->convert(sexStatus('', true));
-        for ($i = 0; $i < 30; $i++)
-        {
-            $province  = Provinces::where('id', mt_rand(1, Provinces::count()))->get()->toArray()[0]['id'];
+        $nationalityStatus = $this->convert(nationalityStatus('', true));
+        $lifeStyleStatus = $this->convert(lifeStyleStatus('', true));
+        $sexStatus = $this->convert(sexStatus('', true));
+        for ($i = 0; $i < 30; $i++) {
+            $province = Provinces::where('id', mt_rand(1, Provinces::count()))->get()->toArray()[0]['id'];
             $countCity = Cities::where('province_id', $province)->count();
             $itemsCity = Cities::where('province_id', $province)->get()->toArray();
-            $email     = str_random(8);
-            $city      = $itemsCity[mt_rand(0, $countCity - 1)]['id'];
-           $name=Faker::firstname();
+            $email = str_random(8);
+            $city = $itemsCity[mt_rand(0, $countCity - 1)]['id'];
+            $name = Faker::firstname();
             \App\Http\Models\auth\Users::insert([
                 'username' => $email . '@gmail.com',
                 'email' => $email . '@gmail.com',
                 'password' => bcrypt('123456'),
                 'status' => mt_rand(0, 2),
                 'active' => mt_rand(0, 1),
-                'confirm' => mt_rand(0, 1)==0?'accept':'reject',
+                'confirm' => $this->confirm(),
                 'mobile' => Faker::mobile(),
-                'sex' =>   isset( $this->nameSex()[$name])?$this->nameSex()[$name]:null,
+                'sex' => isset($this->nameSex()[$name]) ? $this->nameSex()[$name] : null,
                 'province_id' => $province,
                 'city_id' => $city,
                 'fname' => $name,

@@ -14,65 +14,57 @@ class MessageController extends Controller
 {
     private $manageView = 'message.manage.main';
     private $conversationView = 'message.conversation';
-    private $limit = 50;
+    private $limit = 10;
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    function messageView($flag)
+    function conversationView($flag)
     {
         $users = [];
-        $getMessages = Messages::_()->getc($flag, user()['user_id'], $this->limit, 0);
+        $getMessages = Messages::_()->getConversations($flag, user()['user_id']);
         if (count($getMessages) == 0) {
             return view($this->manageView, ['error' => 'رکوردی یافت نشد!']);
         }
-        foreach ($getMessages as $val) {
-            if ($flag == 'all' || $flag == 'inbox') {
-                array_push($users, $val['sender_user_id']);
-            }
-            if ($flag == 'outbox') {
-                array_push($users, $val['reciever_user_id']);
-            }
-        }
-
-        $getLastMessage = Messages::_()->lastMessage($users, $flag);
+        $getUsers = Users::_()->getUsersInfo()->toArray();
         $getSessionUsers = Sessions::_()->lists();
+
         foreach ($getMessages as $key => $val) {
-//            dd($val->toArray());
-            if (\File::exists(config("constants.upload.register.imageFolder") . $val['reciever_user_id'] . '_main_orginal' . '.jpg')) {
-                $getMessages[$key]['profile_image'] = config("constants.upload.register.imageFolder") . $val['reciever_user_id'] . '_main_orginal' . '.jpg';
-            } elseif ($val['users']['sex'] == 'f') {
-                $getMessages[$key]['profile_image'] = '/img/wman1.png';
-            } elseif ($val['users']['sex'] == 'm') {
-                $getMessages[$key]['profile_image'] = '/img/me-flat.png';
+            if ($val->one_user_id == user()['user_id']) {
+                $reciever_user_id = $val->two_user_id;
+            } else {
+                $reciever_user_id = $val->one_user_id;
             }
-
-
-            foreach ($getLastMessage as $rv) {
-                if ($flag == 'outbox') {
-                    if ($val['reciever_user_id'] == $rv->reciever_user_id) {
-                        $getMessages[$key]['text'] = $rv->text;
-                        $getMessages[$key]['time'] = \Morilog\Jalali\Jalalian::forge($rv->created_at)->ago();
-                    }
+            $val->time = \Morilog\Jalali\Jalalian::forge($val->created_at)->ago();
+            unset($val->one_user_id);
+            unset($val->two_user_id);
+            unset($val->created_at);
+            foreach ($getUsers as $user) {
+                if ($user['id'] == $reciever_user_id) {
+                    $val->reciever = (object)$user;
                 }
-                if ($flag == 'all' || $flag == 'inbox') {
-                    if ($val['sender_user_id'] == $rv->sender_user_id) {
-                        $getMessages[$key]['text'] = $rv->text;
-                        $getMessages[$key]['time'] = \Morilog\Jalali\Jalalian::forge($rv->created_at)->ago();
-                    }
+                if ($user['id'] == $reciever_user_id) {
+                    $val->reciever = (object)$user;
                 }
             }
-            $getMessages[$key]['online_status_icon'] = '/img/0offline.png';
+            if (\File::exists(config("constants.upload.register.imageFolder") . $reciever_user_id . '_main_orginal' . '.jpg')) {
+                $val->reciever->profile_image = config("constants.upload.register.imageFolder") . $reciever_user_id . '_main_orginal' . '.jpg';
+            } elseif ($val->reciever->sex == 'f') {
+                $val->reciever->profile_image = '/img/wman1.png';
+            } elseif ($val->reciever->sex == 'm') {
+                $val->reciever->profile_image = '/img/me-flat.png';
+            }
+            $val->reciever->online_status_icon = '/img/0offline.png';
             foreach ($getSessionUsers as $se) {
                 if ($val['reciever_user_id'] == $se['user_id']) {
                     if ($se->last_activity + config('constants.userOnlinetime') <= time()) {
-                        $getMessages[$key]['online_status_icon'] = '/img/0online.png';
+                        $val->reciever->online_status_icon = '/img/0online.png';
                     }
                 }
             }
         }
 
-        return view($this->manageView, ['messages' => $getMessages->toArray(), 'flag' => $flag]);
+        return view($this->manageView, ['messages' => $getMessages, 'flag' => $flag]);
 
 
     }
@@ -81,7 +73,6 @@ class MessageController extends Controller
     {
         $getReceiverInfo = Users::_()->getUserById($user_id);
         $getSessionUsers = Sessions::_()->lists();
-
         if (\File::exists(config("constants.upload.register.imageFolder") . $user_id . '_main_orginal' . '.jpg')) {
             $getReceiverInfo['receiver_image'] = config("constants.upload.register.imageFolder") . $user_id . '_main_orginal' . '.jpg';
         } elseif ($getReceiverInfo['sex'] == 'f') {
@@ -108,12 +99,13 @@ class MessageController extends Controller
         return $getReceiverInfo;
     }
 
-    function conversations($user_id = '', Request $request)
+    function conversations($conversation_id = '', $reciever_id = '', Request $request)
     {
         if ($request->ajax()) {
-            
+
             $validator = Validator::make($request->all(), [
                 'page_number' => ['required', 'integer'],
+                'conversation_id' => ['required', 'integer'],
                 'reciever_user_id' => ['required', 'integer'],
             ]);
             if ($validator->fails()) {
@@ -122,14 +114,13 @@ class MessageController extends Controller
                     'error' => $validator->errors()->all()
                 ]);
             }
-            $user_id = $request['reciever_user_id'];
-            $pageNumber = $request['page_number'];
+            $reciever_id = $request['reciever_user_id'];
 
-            $getMessages = Messages::_()->getc('', $user_id, $this->limit, ($pageNumber - 1) * $this->limit);
+            $getMessages = Messages::_()->getConversation($request['conversation_id'], $this->limit, $request['page_number'] * $this->limit);
 
         } else {
             $pageNumber = 0;
-            $getMessages = Messages::_()->getc('', $user_id, $this->limit, $pageNumber);
+            $getMessages = Messages::_()->getConversation($conversation_id, $this->limit, $pageNumber);
 
         }
 
@@ -138,7 +129,19 @@ class MessageController extends Controller
             $getMessages[$key]['time'] = \Morilog\Jalali\Jalalian::forge($val['created_at'])->ago();
         }
 
-        $content= view("partials.conversationsPartial", ['messages' =>  array_reverse($getMessages->toArray()), 'reciever' => $this->getRecieverInfo($user_id),'re'=>false])->render();
+        $messages = [];
+        if (count($getMessages) > 0) {
+            foreach ($getMessages as $message) {
+                if ($message['is_read'] == 0) {
+                    $messages[] = $message['id'];
+                }
+            }
+            if (count($messages) > 0) {
+                Messages::_()->read($messages);
+            }
+        }
+
+        $content = view("partials.conversationsPartial", ['messages' => array_reverse($getMessages->toArray()), 'reciever' => $this->getRecieverInfo($reciever_id), 'limit' => $this->limit, 're' => false])->render();
         if ($request->ajax()) {
             return response([
                 'messages' => $content,
@@ -146,7 +149,7 @@ class MessageController extends Controller
                 'limit' => $this->limit,
             ]);
         }
-        return view($this->conversationView, ['content' => $content, 'reciever' => $this->getRecieverInfo($user_id),'limit'=>$this->limit]);
+        return view($this->conversationView, ['content' => $content, 'reciever' => $this->getRecieverInfo($reciever_id), 'conversation_id' => $conversation_id, 'limit' => $this->limit]);
 
 
     }
@@ -157,7 +160,6 @@ class MessageController extends Controller
         $validator = Validator::make($request->all(), [
             'reciever_user_id' => ['required'],
             'text' => ['required', 'max:3000'],
-            'free' => ['required'],
         ]);
         if ($validator->fails()) {
             return response([
@@ -211,5 +213,34 @@ class MessageController extends Controller
         ]);
     }
 
+function deleteMessage(Request $request){
+    $validator = Validator::make($request->all(), [
+        'message_id' => ['required','integer'],
+    ]);
+    if ($validator->fails()) {
+        return response([
+            'hasErr' => true,
+            'error' => $validator->errors()->all()
+        ]);
+    }
+    $checkMessage = Messages::_()->checkMessage($request['message_id']);
+    if (empty($checkMessage)) {
+        return response([
+            'hasErr' => true,
+            'error' => 'کاربر مورد نظر اجازه حذف ندارد'
+        ]);
+    }
 
+    $result = Messages::_()->del($request['message_id']);
+    if ($result['hasErr']) {
+        return response([
+            'hasErr' => true,
+            'error' => 'خطای سیستمی'
+        ]);
+    }
+    return response([
+        'hasErr' => false,
+        'error' => ''
+    ]);
+}
 }
