@@ -33,28 +33,27 @@
             <a class="tablinks" id="unreadMessageMenu" href="{{url('/message/unread')}}">نخوانده ها</a>
         </div>
         <div class="messageContent">
-            <table class="table  table-hover">
+            <table class="table  table-hover" >
                 @if(isset($messages))
                     @foreach($messages as $message)
-                    @dd($message);
-                        <tr>
+                        <tr >
                             <td class=" col-xs-2" style="position: relative;">
-                                <a href="{{url('conversation/'.$message['users']['id'])}}">
-                                <img style="width: 60px;height: 60px;"
-                                     src='{{asset($message['profile_image'].'?'.mt_rand(1,100000))}}'>
+                                <a href="{{url("conversation/{$message->conversation_id}/{$message->reciever->id}")}}">
+                                    <img style="width: 60px;height: 60px;"
+                                         src='{{asset($message->reciever->profile_image.'?'.mt_rand(1,100000))}}'>
                                     <span style='position: absolute;top: 5px;right: 5px;'>
-                                <img src='{{$message['online_status_icon']}}'>
+                                <img src='{{$message->reciever->online_status_icon}}'>
                         </span>
                                 </a>
                             </td>
-                            <td class="col-md-8" style="text-align: right;">
+                            <td class="col-md-8" style="text-align: right;@php if($message->is_read=='0') echo 'background-color:#FFCCEF'; @endphp">
                                 <div>
-                                    <b style="color: #ff1254;">@php  echo !empty($message['users']['nick_name']) ? $message['users']['nick_name'] :$message['users']['fname']; @endphp</b>
+                                    <b style="color: #ff1254;">@php  echo !empty($message->reciever->nick_name) ? $message->reciever->nick_name :$message->reciever->fname; @endphp</b>
                                 </div>
-                                <div>{{$message['text']}}</div>
+                                <div>{{$message->text}}</div>
                             </td>
                             <td class="col-xs-2" style="padding-top: 25px;">
-                                <small>{{persianNum($message['time'])}}</small>
+                                <small>{{persianNum($message->time)}}</small>
                             </td>
                         </tr>
                     @endforeach
@@ -62,7 +61,7 @@
             </table>
         </div>
         <script>
-        @if(isset($flag))
+            @if(isset($flag))
             @if($flag=='all')
             openCity('messageContent', 'allMessageMenu');
             @endif
@@ -75,7 +74,7 @@
             @if($flag=='unread')
             openCity('messageContent', 'unreadMessageMenu');
             @endif
-             @endif
+            @endif
         </script>
 
     </div>

@@ -41,19 +41,7 @@ class MessagesTableSeeder extends Seeder
 
     public function run()
     {
-<<<<<<< HEAD
 
-        for ($i = 0; $i < 500; $i++) {
-            $s=mt_rand(1,4);
-            $r=mt_rand(1,4);
-            if($r!=$s) {
-                \App\Http\Models\Messages::create([
-                    'sender_user_id' => $s,
-                    'reciever_user_id' => $r,
-                    'text' => $this->messageFaker()[mt_rand(0, count($this->messageFaker()) - 1)],
-                ]);
-            }
-=======
         $conversation_id = DB::table('conversations')->insertGetId([
             'one_user_id' => 26000,
             'two_user_id' => 26001,
@@ -81,7 +69,6 @@ class MessagesTableSeeder extends Seeder
                 'sender_user_id' => mt_rand(26000, 26002),
                 'text' => $this->messageFaker()[mt_rand(0, count($this->messageFaker()) - 1)],
             ]);
->>>>>>> 1c7424fc8e865c67f38fc1b2b673609374e2eeb5
         }
         $conversation_id = DB::table('conversations')->insertGetId([
             'one_user_id' => 26000,

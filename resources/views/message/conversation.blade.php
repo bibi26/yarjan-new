@@ -1,6 +1,73 @@
 @extends('home')
 @section('content')
+    <div id="deleteMessageModal" class="modal fade " role="dialog">
+
+        <div class="modal-dialog" style="width: 600px;">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div id="dv_confirm_registered_user_info">
+
+                    <div class="modal-body">
+                        <div class='alert_warn alert alert-danger' style="display: none;"></div>
+                    <div>پیام جاری پاک شود؟</div>
+                    </div>
+                    <input type="hidden" id="messageId">
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col col-lg-12" style="text-align: right;">
+                                <input name="text" class="btn btn-danger" style="background-color: #fd265a;" type="submit" value="بله"
+                                       onclick="javascrit:deleteMessage()">
+                                <button data-dismiss="modal" type="button" class="btn btn-info"
+                                        >خیر
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
+
+        $(document).on("click", ".deleteLink", function () {
+            var messageId = $(this).data('id');
+            $('#messageId').val(messageId);
+
+
+
+        });
+        function deleteMessage(){
+            $('.portlet').block({
+                message: '<h6><img src="{{asset('img/loading.gif')}}" />در حال بررسی اطلاعات...',
+                css: {backgroundColor: '#FFA500'}
+            });
+            $.ajax({
+                url: '{{url('/delete_message')}}',
+                data: {
+                    _token: _TOKEN,
+                    message_id:  $('#messageId').val()
+        },
+                type: 'POST',
+                async: false,
+                dataType: 'JSON',
+                success: function (data) {
+                    $('.portlet').unblock();
+                    if (data.hasErr) {
+                        alert(data.error);
+                    }else{
+                        $('#deleteMessageModal').modal('toggle');
+                        $('#message_'+$('#messageId').val()).hide()
+                    }
+                }, error: function (xhr, textStatus, errorThrown) {
+                    $('.portlet').unblock();
+                }
+            });
+        }
+
+
 
         $(function () {
 
@@ -9,7 +76,7 @@
             wtf.scrollTop(height);
 
         });
-        var offset = {{$limit}};
+        var offset = 1;
 
 
         $(document).ready(function () {
@@ -24,12 +91,12 @@
                     offset = offset + 1;
                 });
             $("#message").keypress(function () {
-                var channel =window.Echo.join('cc');
-                setTimeout( () => {
+                var channel = window.Echo.join('cc');
+                setTimeout(() => {
 
                     channel.whisper('typing', {
-                    name: 'fgg'
-                })
+                        name: 'fgg'
+                    })
                 }, 300);
                 window.Echo.join('cc').listenForWhisper('typing', (e) => {
                     alert('rrr');
@@ -51,6 +118,7 @@
                 data: {
                     _token: _TOKEN,
                     page_number: offset,
+                    conversation_id: '{{$conversation_id}}',
                     reciever_user_id: '{{$reciever['id']}}'
                 },
                 type: 'POST',
@@ -58,28 +126,21 @@
                 dataType: 'JSON',
                 success: function (data) {
                     $('#content_chat').unblock()
+
                     if (data.count != 0) {
-<<<<<<< HEAD
-                        offset = offset + data.limit;
-                        $("#content").prepend(data.messages);
-                    } else {
+                        offset += 1;
+                        $($("#content")).prepend(data.messages);
+                        setTimeout(function () {
+                            $('#content_chat').unblock();
+                        }, 2000);
+                    }
+                    if (data.count < data.limit) {
                         $("#etc_button").hide();
+                        return false;
                     }
                 }, error: function (xhr, textStatus, errorThrown) {
-                    $('#content_chat').unblock()
+                    $('#content_chat').unblock();
                 }
-=======
-                        offset += 1;
-                        console.log(data.messages);
-                        $($( "#content" ) ).prepend(   data.messages );
-                        setTimeout(function(){   $('#content_chat').unblock(); }, 2000);
-                    } else {
-                        $("#etc_button").hide();
-                    }
-                } , error: function (xhr, textStatus, errorThrown) {
-                            $('#content_chat').unblock();
-                            }
->>>>>>> a2a44fa7d879482c48de84a1df94c473fad69a31
             });
         }
     </script>
@@ -144,7 +205,7 @@
             if (message.val() == '') {
                 message.css('border', '1px solid #F00');
                 alert_message.show();
-                alert_message.text("لطفا متن راوارد نمایید!");
+                alert_message.text("لطفا متن را وارد نمایید!");
                 $("#message").focus();
                 return false;
             }
@@ -339,6 +400,9 @@
 
         textarea.form-control {
             height: 100px;
+        }
+        .deleteMessage:hover{
+            cursor: pointer;
         }
     </style>
 

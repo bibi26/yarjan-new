@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-default btn-send pull-left btn_sign_in "><span ><i  class="fa fa-key"></i>&nbsp;</span>ورود به سایت</button>
-                                    <a  class="btn btn-default btn-send btn_sign_up" href=""><span ><i  class="fa fa-user-plus"></i>&nbsp;</span>ثبت نام  رایگان </a>
+                                    <a  class="btn btn-default btn-send btn_sign_up"><span ><i  class="fa fa-user-plus"></i>&nbsp;</span>ثبت نام  رایگان </a>
                                 </div>
                                 <div style="text-align: center;"> <a href=""><span ><i class="fa fa-question-circle"></i>&nbsp;</span>رمز عبور خود را فراموش کرده ام</a></div>
                             </form>

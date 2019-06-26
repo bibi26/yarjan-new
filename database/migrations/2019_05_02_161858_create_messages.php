@@ -21,8 +21,10 @@ class CreateMessages extends Migration
             $table->tinyInteger('is_free')->default(0);
             $table->tinyInteger('is_read')->default(0);
             $table->timestamp('read_at')->nullable();
+            $table->integer('read_by')->nullable();
             $table->tinyInteger('is_delete')->default(0);
             $table->timestamp('delete_at')->nullable();
+            $table->integer('delete_by')->nullable();
             $table->timestamps();
 
         });

@@ -49,7 +49,6 @@ class Visits extends Model
 
             return ['hasErr' => false, 'msg' => ''];
         } catch (\Exception $e) {
-            dd($e->getMessage());
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
             return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
         }

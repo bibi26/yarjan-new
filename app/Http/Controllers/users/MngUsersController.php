@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Models\BlackLists;
 use App\Http\Models\Favorites;
 use Yajra\Datatables\Datatables;
+use Validator;
 
 use Illuminate\Http\Request;
 use App\Http\Models\auth\Users;
@@ -35,7 +36,7 @@ class MngUsersController extends Controller
                 return $users->fname . ' ' . $users->lname;
             })
             ->addColumn('created_at', function ($users) {
-                return \Morilog\Jalali\Jalalian::forge($users->created_at)->format('%Y-%m-%d');;
+                return \Morilog\Jalali\Jalalian::forge($users->created_at)->ago();
             })
             ->addColumn('location', function ($users) {
                 return $users->provinces->name . ' ' . $users->cities->name;
@@ -61,6 +62,34 @@ class MngUsersController extends Controller
 
             })
             ->make();
+    }
+
+    function confirm(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => ['required'],
+            'user_id' => ['required','integer'],
+            'description' => ['required_if:status,==,reject']
+        ]);
+        if ($validator->fails()) {
+            return response([
+                'hasErr' => true,
+                'error' => $validator->errors()->all()
+            ]);
+        }
+        $result = Users::_()->confirm($request);
+        if ($result['hasErr']) {
+            return response([
+                'hasErr' => true,
+                'error' => 'خطای سیستمی'
+            ]);
+        }
+        return response([
+            'hasErr' => false,
+            'error' => ''
+        ]);
+
+
     }
 }
 
