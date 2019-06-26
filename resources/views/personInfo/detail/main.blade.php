@@ -1,5 +1,6 @@
 @extends('home')
 @section('content')
+<<<<<<< HEAD
     <script>
         function notify(type, msg) {
             $.notify({
@@ -32,7 +33,7 @@
                                      class="thumbnail img-responsive"
                                      src="" width="300px" height="300px">
                             </div>
-
+=======
 
 <script>
     function notify(type,msg){
@@ -66,6 +67,7 @@
                         <div align="center">
                             <img id="myImg" src='{{asset($person['profile_image'].'?'.mt_rand(1,100000))}}' class="thumbnail img-responsive"
                                  src="" width="300px" height="300px">
+>>>>>>> 7b9e93aee475cc53341b5c534ef571b8c5f33733
                         </div>
                     </div>
                 </div>
@@ -89,6 +91,7 @@
                                                                                   style="color: #ff335a;"></i>&nbsp;ارسال
                                         پیام شخصی </a>
                                 </div>
+<<<<<<< HEAD
                                 <div style="margin: 5px;">
                                     <a href="{{url('favorite')}}/{{$person['id']}}/{{$person['favorited']?0:1}}"
                                        class="btn btn-{{$person['favorited']?'success':'default'}}"
@@ -102,6 +105,7 @@
                                        style="width: 210px;text-align: right;"><i class="fa fa-exclamation-triangle"
                                                                                   style="color: #ff335a;"></i>&nbsp;گزارش
                                         تخلفات </a>
+=======
                                 <hr/>
                                 @if($person['active']==1)
                                 <div style="margin: 5px;">
@@ -120,6 +124,7 @@
                             <div>
                                 <div>
                                     <small>کد شناسایی :</small>&nbsp;<b style="font-size: 18px;">{{$person['id']}}</b>
+>>>>>>> 7b9e93aee475cc53341b5c534ef571b8c5f33733
                                 </div>
                                 <div style="margin: 5px;">
                                     <a href="{{url('blackList')}}/{{$person['id']}}/{{$person['blacked']?0:1}}"
