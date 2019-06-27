@@ -19,11 +19,13 @@ class CreateUsers extends Migration
            $table->string('password');
            $table->string('status')->default("0");
            $table->boolean('active')->default("1");
+            $table->timestamp('active_at');
+            $table->integer('active_by');
+            $table->mediumText('active_desc');
            $table->string('confirm')->default("unknown");
            $table->timestamp('confirm_at');
            $table->integer('confirm_by');
            $table->mediumText('confirm_desc');
-           $table->string('confirm')->default("unknown");
            $table->string('mobile')->nullable();
            $table->string('email')->nullable();
            $table->char('sex',1)->nullable();

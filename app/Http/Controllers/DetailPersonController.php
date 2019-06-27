@@ -18,8 +18,19 @@ class DetailPersonController extends Controller
 {
     private $view = 'personInfo.detail.main';
 
+    function hasAccess($user_id){
+        if( $user_id!=user()['user_id'])
+        {
+            if(user()['role']!='admin'){
+                return back()->withInput()->with('error', 'دسترسی غیر مجاز');
+            }
+        }
+        return true;
+    }
     function detailPersonView($user_id)
     {
+        $r=$this->hasAccess($user_id);
+        dd($r);
         $sessions = [];
         Visits::_()->store($user_id);
         $getUser = Users::_()->getUserById($user_id);
@@ -75,28 +86,20 @@ class DetailPersonController extends Controller
             'reason_violation' => ['required', 'min:5', 'max:3000'],
         ]);
         if ($validator->fails()) {
-            return response([
-                'hasErr' => true,
-                'error' => $validator->errors()->all()
-            ]);
+            return responseHandler(true, $validator->errors()->all());
         }
         $result = ViolationReports::_()->store($request['violation_user_id'], $request['reason_violation']);
-        if ($result['hasErr']) {
-            return response([
-                'hasErr' => true,
-                'error' => 'خطا در ثبت گزارش تخلف'
-            ]);
+        if ($result['error']) {
+            return responseHandler(true, 'خطا در ثبت گزارش تخلف');
         }
-        return response([
-            'hasErr' => false,
-            'error' => ''
-        ]);
+        return responseHandler(false);
+
     }
 
     function blackList($blacked_user_id, $blacked)
     {
         $result = BlackLists::_()->store($blacked_user_id, $blacked);
-        if ($result['hasErr']) {
+        if ($result['error']) {
             return back()->with('error', 'خطای سیستمی');
         }
         if ($blacked == 0) {
@@ -109,12 +112,11 @@ class DetailPersonController extends Controller
     function favorite($favorited_user_id, $favorited)
     {
         $result = Favorites::_()->store($favorited_user_id, $favorited);
-        if ($result['hasErr']) {
+        if ($result['error']) {
             return back()->with('error', 'خطای سیستمی');
         }
         if ($favorited == 0) {
             return back()->with('success', 'کاربر با موفقیت از لیست علاقه مندی حذف گردید');
-
         }
         return back()->with('success', 'کاربر با موفقیت به لیست علاقه مندی افزوده شد');
     }

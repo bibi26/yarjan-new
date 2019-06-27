@@ -36,11 +36,7 @@ class MngUsersController extends Controller
                 return $users->fname . ' ' . $users->lname;
             })
             ->addColumn('created_at', function ($users) {
-<<<<<<< HEAD
-                return \Morilog\Jalali\Jalalian::forge($users->created_at)->ago();
-=======
                 return \Morilog\Jalali\Jalalian::forge($users->created_at)->format('Y-m-d H:m:i');
->>>>>>> 7b9e93aee475cc53341b5c534ef571b8c5f33733
             })
             ->addColumn('location', function ($users) {
                 return $users->provinces->name . ' ' . $users->cities->name;
@@ -61,9 +57,6 @@ class MngUsersController extends Controller
                 }
             })->addColumn('confirm', function ($users) {
                 return $users->confirm;
-//                $confirmState=confirm($users->confirm,true);
-//             return   isset($confirmState[$users->confirm])?$confirmState[$users->confirm]:'';
-
             })
             ->make();
     }
@@ -76,24 +69,30 @@ class MngUsersController extends Controller
             'description' => ['required_if:status,==,reject']
         ]);
         if ($validator->fails()) {
-            return response([
-                'hasErr' => true,
-                'error' => $validator->errors()->all()
-            ]);
+            return responseHandler(true,$validator->errors()->all());
         }
         $result = Users::_()->confirm($request);
-        if ($result['hasErr']) {
-            return response([
-                'hasErr' => true,
-                'error' => 'خطای سیستمی'
-            ]);
+        if ($result['error']) {
+            return responseHandler(true,'خطای سیستمی');
         }
-        return response([
-            'hasErr' => false,
-            'error' => ''
+        return responseHandler(false);
+    }
+
+    function deactive(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => ['required'],
+            'user_id' => ['required','integer'],
+            'description' => ['required_if:status,==,reject']
         ]);
-
-
+        if ($validator->fails()) {
+            return responseHandler(true,$validator->errors()->all());
+        }
+        $result = Users::_()->deactive($request);
+        if ($result['error']) {
+            return responseHandler(true,'خطای سیستمی');
+        }
+        return responseHandler(false);
     }
 }
 

@@ -88,7 +88,7 @@
             },
             type: 'post',
             success: function (data, textStatus) {
-                if (data.hasErr == false) {
+                if (data.error == false) {
                     $(".alert_warn").html("");
                     $('#dv_free_message').unblock();
                     $('#freeMessage').modal('toggle');
@@ -109,7 +109,7 @@
                 } else {
                     $('#dv_free_message').unblock();
                     $(".alert_warn").show();
-                    $(".alert_warn").html(data.error);
+                    $(".alert_warn").html(data.message);
 
                 }
             },

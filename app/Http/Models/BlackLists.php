@@ -40,10 +40,10 @@ class BlackLists extends Model
                     "blacked_user_id" =>$blacked_user_id,
                     "blacked" =>$blacked
                 ]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 

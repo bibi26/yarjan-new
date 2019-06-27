@@ -96,10 +96,11 @@ class Users extends BaseModel
                 'password' => \Hash::make($input["pass1"]),
                 'verify_code' => Str::random(20)
             ]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse(true, __('errors.errSystem'));
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
+
         }
     }
 
@@ -112,10 +113,10 @@ class Users extends BaseModel
     {
         try {
             Users::where('verify_code', $cerify_code)->update(['status' => 1]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 
@@ -147,10 +148,10 @@ class Users extends BaseModel
     {
         try {
             Users::where('id', $user_id)->update(['verify_code' => Str::random(20)]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 
@@ -158,10 +159,10 @@ class Users extends BaseModel
     {
         try {
             Users::where('verify_code', $request['verifyCode'])->update(['password' => \Hash::make($request["pass1"])]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => $e->getMessage()];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 
@@ -185,10 +186,10 @@ class Users extends BaseModel
                     "age_older_child" => $input["age_older_child"],
                     "step1" => 1
                 ]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 
@@ -210,11 +211,11 @@ class Users extends BaseModel
                     "life_style" => $input["life_style"],
                     "step2" => 2
                 ]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
 
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 
@@ -229,11 +230,11 @@ class Users extends BaseModel
                     "you_are" => $input["you_are"],
                     "step3" => 1
                 ]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
 
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 
@@ -285,11 +286,11 @@ class Users extends BaseModel
             Users::updateOrCreate(
                 ["username" => $input['username']],
                 $data);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
 
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 
@@ -305,27 +306,44 @@ class Users extends BaseModel
             Users::updateOrCreate(
                 ["username" => $input['username']],
                 $data);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
 
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 
-    public function confirm($request)
+    public function confirm($input)
     {
         try {
-            Users::where('id', $request['user_id'])->update([
-                'confirm' => $request['status'],
-                'confirm_date' =>  Carbon::now(),
+            Users::where('id', $input['user_id'])->update([
+                'confirm' => $input['status'],
+                'confirm_at' =>  Carbon::now(),
                 'confirm_by' => user()['user_id'],
-                'confirm_desc' => $request['description']
+                'confirm_desc' => $input['description']
             ]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
+        }
+    }
+
+    public function deactive($input)
+    {
+      $status=  $input['status']=='yes'?0:1;
+        try {
+            Users::where('id', $input['user_id'])->update([
+                'active' =>$status,
+                'active_at' =>  Carbon::now(),
+                'active_by' => user()['user_id'],
+                'active_desc' => $input['description']
+            ]);
+            return  modelResponse();
+        } catch (\Exception $e) {
+            myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 

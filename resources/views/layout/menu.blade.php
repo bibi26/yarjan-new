@@ -36,7 +36,7 @@
                     <li id="aboutTopMenu"><a href="<?php echo "" . 'about'; ?>"><span><i style="color: #00CCFF;"
                                                                                          class="fa fa-question-circle"></i>&nbsp;</span>درباه
                             ما</a></li>
-                    <li><a href="{{url('message/all')}}"><span><i style="color: #00CCFF;"
+                    <li><a href="{{url('conversation/all')}}"><span><i style="color: #00CCFF;"
                                                                           class="fa fa-envelope"></i>&nbsp;</span>
                             پیام ها</a></li>
                     <li class="dropdown">

@@ -96,7 +96,7 @@
             },
             type: 'post',
             success: function (data, textStatus) {
-                if (data.hasErr == false) {
+                if (data.error == false) {
                     $(".alert_warn").html("");
                     $('#dv_violation_report').unblock();
                     $('#violationReportModal').modal('toggle');
@@ -113,7 +113,7 @@
                 } else {
                     $('#dv_violation_report').unblock();
                     $(".alert_warn").show();
-                    $(".alert_warn").html(data.error);
+                    $(".alert_warn").html(data.message);
 
                 }
             },

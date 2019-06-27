@@ -549,3 +549,38 @@ function persianNum($number)
     $number = str_replace("0", "۰", $number);
     return $number;
 }
+
+
+
+
+ function modelResponse( $error = false, $message = '',$data='',$count=0)
+{
+    if (!empty($error) && $error == true) {
+        $messages = $message;
+    }
+
+    return [
+        'error' => !empty($messages) ? true : false,
+        'message' => !empty($messages) ? $messages : '',
+        'count' => !empty($count) ? $count : 0,
+        'result' => !empty($data) ? $data : ''
+    ];
+}
+
+ function responseHandler($error = false, $message = '',$data=[],$count=0)
+{
+    $messages = '';
+    if (!empty($error) && $error == true) {
+        $messages = $message;
+    }
+
+    $responseRecord = [
+        'error' => !empty($messages) ? true : false,
+        'message' => !empty($messages) ? $messages : [],
+        'count' => (!empty($count)) ?$count : 0,
+        'result' => (!empty($data)) ? $data : []
+    ];
+
+    return response()->json($responseRecord);
+}
+

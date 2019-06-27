@@ -12,8 +12,6 @@ class CartableController extends Controller
 
     function cartableView()
     {
-//        event( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
-//        broadcast( new \App\Events\NewMessage('cvvvvvvhiiiiiiiiii'));
         $getMyVisited = Visits::_()->myVisitors()->count();
         $getMyFavorites = Favorites::_()->myFavorites()->count();
         $getMyBlacks = BlackLists::_()->myblacks()->count();

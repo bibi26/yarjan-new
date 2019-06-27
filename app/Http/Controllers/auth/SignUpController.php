@@ -9,7 +9,6 @@ use App\Http\Models\auth\UserRoles;
 use App\Http\Models\auth\Log_login;
 use Validator;
 use App\Http\Models\Provinces;
-use Illuminate\Support\Facades\Lang;
 use jDate;
 use Carbon\Carbon;
 
@@ -53,8 +52,8 @@ class SignUpController extends Controller
         $request['birth_date']= $request["birth_date_year"] . '-' . $request["birth_date_month"] . '-' . $request["birth_date_day"];
         $request['age']=$diff;
         $res_add_user = Users::_()->addUser($request);
-        if ($res_add_user ['hasErr']) {
-            return back()->with('error', $res_add_user['msg']);
+        if ($res_add_user ['error']) {
+            return back()->with('error', $res_add_user['message']);
         }
 
         $res_data = Users::_()->getUserbyUsername($request['email']);
@@ -63,29 +62,29 @@ class SignUpController extends Controller
         }
         $request['user_id'] = $res_data->id;
         $res_add_role = UserRoles::_()->addRole($request);
-        if ($res_add_role ['hasErr']) {
-            return back()->with('error', $res_add_user['msg']);
+        if ($res_add_role ['error']) {
+            return back()->with('error', $res_add_user['message']);
         }
 
-        return back()->with('success', Lang::get('errors.sendVerifyCode'));
+        return back()->with('success', __('errors.sendVerifyCode'));
     }
 
     function checkVerifyCode($verify_code = '')
     {
         if (!isset($verify_code) || $verify_code == '') {
-            return view($this->verifyView)->with('error', Lang::get('errors.noVerifyCode'));
+            return view($this->verifyView)->with('error', __('errors.noVerifyCode'));
         }
         $res_check = Users::_()->checkVerifyCode($verify_code);
         if (!isset($res_check->id)) {
-            return view($this->verifyView)->with('error', Lang::get('errors.incorrect'));
+            return view($this->verifyView)->with('error', __('errors.incorrect'));
         }
         if ($res_check->status == 1) {
-            return view($this->verifyView)->with('error', Lang::get('errors.usedVerificationCode'));
+            return view($this->verifyView)->with('error', __('errors.usedVerificationCode'));
         }
         $res_confirm = Users::_()->confirmUser($verify_code);
-        if ($res_confirm['hasErr'] == true) {
-            return view($this->verifyView)->with('error', $res_confirm['msg']);
+        if ($res_confirm['error'] == true) {
+            return view($this->verifyView)->with('error', $res_confirm['message']);
         }
-        return view($this->verifyView)->with('error', Lang::get('errors.successForgetPass'));
+        return view($this->verifyView)->with('error', __('errors.successForgetPass'));
     }
 }

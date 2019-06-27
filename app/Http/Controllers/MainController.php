@@ -10,9 +10,7 @@ class MainController extends Controller
     {
         $province_id = Request::input('provinceId');
         $result=Cities::where('province_id',$province_id)->where('id','like','%0000')->get();
-        return response([
-            'hasErr' =>  false  ,
-            'msg' => $result
-        ]);
+        return responseHandler(false,'' ,$result);
+
     }
 }

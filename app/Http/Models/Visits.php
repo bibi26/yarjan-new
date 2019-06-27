@@ -47,10 +47,10 @@ class Visits extends Model
                     "visitor_user_id" => user()['user_id'],
                 ]);
 
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 

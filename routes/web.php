@@ -58,6 +58,7 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::get('/users/mng', 'users\MngUsersController@mngUsersView');
     Route::post('/users/mng', 'users\MngUsersController@list')->name("usersMng");
     Route::post('/users/mng/confirm', 'users\MngUsersController@confirm')->name("confirmRegisteredUserInfo");
+    Route::post('/users/mng/deactive', 'users\MngUsersController@deactive')->name("deactiveUser");
 //    Route::get('/table', 'DetailPersonController@table')->name("table");
 
 });

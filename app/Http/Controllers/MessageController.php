@@ -56,7 +56,7 @@ class MessageController extends Controller
             }
             $val->reciever->online_status_icon = '/img/0offline.png';
             foreach ($getSessionUsers as $se) {
-                if ($val['reciever_user_id'] == $se['user_id']) {
+                if ($reciever_user_id== $se['user_id']) {
                     if ($se->last_activity + config('constants.userOnlinetime') <= time()) {
                         $val->reciever->online_status_icon = '/img/0online.png';
                     }
@@ -109,10 +109,7 @@ class MessageController extends Controller
                 'reciever_user_id' => ['required', 'integer'],
             ]);
             if ($validator->fails()) {
-                return response([
-                    'hasErr' => true,
-                    'error' => $validator->errors()->all()
-                ]);
+                return responseHandler(true,  $validator->errors()->all());
             }
             $reciever_id = $request['reciever_user_id'];
 
@@ -140,8 +137,7 @@ class MessageController extends Controller
                 Messages::_()->read($messages);
             }
         }
-
-        $content = view("partials.conversationsPartial", ['messages' => array_reverse($getMessages->toArray()), 'reciever' => $this->getRecieverInfo($reciever_id), 'limit' => $this->limit, 're' => false])->render();
+        $content = view("partials.conversationsPartial", ['messages' => array_reverse($getMessages->toArray()), 'reciever' => $this->getRecieverInfo($reciever_id), 'limit' => $this->limit,'count'=>count($getMessages), 're' => false])->render();
         if ($request->ajax()) {
             return response([
                 'messages' => $content,
@@ -149,7 +145,7 @@ class MessageController extends Controller
                 'limit' => $this->limit,
             ]);
         }
-        return view($this->conversationView, ['content' => $content, 'reciever' => $this->getRecieverInfo($reciever_id), 'conversation_id' => $conversation_id, 'limit' => $this->limit]);
+        return view($this->conversationView, ['content' => $content, 'reciever' => $this->getRecieverInfo($reciever_id), 'conversation_id' => $conversation_id, 'limit' => $this->limit,'count'=>count($getMessages)]);
 
 
     }
@@ -162,22 +158,16 @@ class MessageController extends Controller
             'text' => ['required', 'max:3000'],
         ]);
         if ($validator->fails()) {
-            return response([
-                'hasErr' => true,
-                'error' => $validator->errors()->all()
-            ]);
+            return responseHandler(true,'' ,$validator->errors()->all());
+
         }
         $result = Messages::_()->store(user()['user_id'], $request['reciever_user_id'], $request['text'], 0);
-        if ($result['hasErr']) {
-            return response([
-                'hasErr' => true,
-                'error' => 'خطای سیستمی'
-            ]);
+        if ($result['error']) {
+            return responseHandler(true,'' ,$validator->errors()->all());
+
         }
-        return response([
-            'hasErr' => false,
-            'error' => ''
-        ]);
+        return responseHandler(false,'' );
+
     }
 
     function realMessage(Request $request)
@@ -187,19 +177,14 @@ class MessageController extends Controller
             'text' => ['required', 'max:3000'],
         ]);
         if ($validator->fails()) {
-            return response([
-                'hasErr' => true,
-                'error' => $validator->errors()->all()
-            ]);
+            return responseHandler(true, $validator->errors()->all() );
         }
-        $result = Messages::_()->store(user()['user_id'], $request['reciever_user_id'], $request['text'], 1);
-        if ($result['hasErr']) {
-            return response([
-                'hasErr' => true,
-                'error' => 'خطای سیستمی'
-            ]);
+        $store = Messages::_()->store(user()['user_id'], $request['reciever_user_id'], $request['text'], 1);
+        if ($store['error']) {
+            return responseHandler(true, 'خطای سیستمی' );
         }
         $getMessages = [[
+            'id' => $store['result'],
             'sender_user_id' => user()['user_id'],
             'text' => $request['text'],
             'time' => \Morilog\Jalali\Jalalian::forge(now())->ago(),
@@ -213,34 +198,25 @@ class MessageController extends Controller
         ]);
     }
 
-function deleteMessage(Request $request){
-    $validator = Validator::make($request->all(), [
-        'message_id' => ['required','integer'],
-    ]);
-    if ($validator->fails()) {
-        return response([
-            'hasErr' => true,
-            'error' => $validator->errors()->all()
+    function deleteMessage(Request $request){
+        $validator = Validator::make($request->all(), [
+            'message_id' => ['required','integer'],
         ]);
-    }
-    $checkMessage = Messages::_()->checkMessage($request['message_id']);
-    if (empty($checkMessage)) {
-        return response([
-            'hasErr' => true,
-            'error' => 'کاربر مورد نظر اجازه حذف ندارد'
-        ]);
+        if ($validator->fails()) {
+            return responseHandler(true, $validator->errors()->all() );
+
+        }
+        $checkMessage = Messages::_()->checkMessage($request['message_id']);
+        if (empty($checkMessage)) {
+            return responseHandler(true, 'کاربر مورد نظر اجازه حذف ندارد' );
+
+        }
+
+        $result = Messages::_()->del($request['message_id']);
+        if ($result['error']) {
+            return responseHandler(true, 'خطای سیستمی');
+        }
+        return responseHandler(false);
     }
 
-    $result = Messages::_()->del($request['message_id']);
-    if ($result['hasErr']) {
-        return response([
-            'hasErr' => true,
-            'error' => 'خطای سیستمی'
-        ]);
-    }
-    return response([
-        'hasErr' => false,
-        'error' => ''
-    ]);
-}
 }

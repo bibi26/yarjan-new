@@ -32,17 +32,16 @@ class Messages extends Model
     function store($sender_user_id, $reciever_user_id, $text, $free)
     {
         try {
-            $this->create(
+           $result= $this->create(
                 [
                     "sender_user_id" => $sender_user_id,
-                    "reciever_user_id" => $reciever_user_id,
                     "text" => $text,
                     "is_free" => $free
                 ]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse(false,'',$result->id);
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 
@@ -82,10 +81,10 @@ where {$q} and m2.id IS NULL   order by  m1.id desc
                     'read_at'=>  Carbon::now(),
                     'read_by'=>user()['user_id'],
                 ]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 
@@ -98,10 +97,10 @@ where {$q} and m2.id IS NULL   order by  m1.id desc
                     'delete_at'=>  Carbon::now(),
                     'delete_by'=>user()['user_id'],
                 ]);
-            return ['hasErr' => false, 'msg' => ''];
+            return  modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
 
     }

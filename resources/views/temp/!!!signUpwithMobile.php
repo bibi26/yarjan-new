@@ -760,7 +760,7 @@
                 data: $('#signUpForm').serialize(),
                 type: 'post',
                 success: function (data, textStatus) {
-                    if (data.hasErr==false) {
+                    if (data.error==false) {
                         $("#alert_warn").html("");
                         $('#dv_sign').unblock();
                         $('#signUpForm').hide();
@@ -769,7 +769,7 @@
                         $("#verify_code").focus();
                     } else {
                         $('#dv_sign').unblock();
-                        $("#alert_warn").append(data.msg);
+                        $("#alert_warn").append(data.message);
                         alert_pass1.text("لطفا رمز عبور را وارد نمایید!");
                         $("#mobile").focus();
 

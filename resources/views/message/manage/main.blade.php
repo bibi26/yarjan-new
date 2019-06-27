@@ -28,10 +28,10 @@
     </script>
     <div class="container">
         <div class="tab">
-            <a class="tablinks" id="allMessageMenu" href="{{url('/message/all')}}">همه</a>
-            <a class="tablinks" id="inboxMessageMenu" href="{{url('/message/inbox')}}">دریافتی ها</a>
-            <a class="tablinks" id="outboxMessageMenu" href="{{url('/message/outbox')}}">ارسالی ها</a>
-            <a class="tablinks" id="unreadMessageMenu" href="{{url('/message/unread')}}">نخوانده ها</a>
+            <a class="tablinks" id="allMessageMenu" href="{{url('/conversation/all')}}">همه</a>
+            <a class="tablinks" id="inboxMessageMenu" href="{{url('/conversation/inbox')}}">دریافتی ها</a>
+            <a class="tablinks" id="outboxMessageMenu" href="{{url('/conversation/outbox')}}">ارسالی ها</a>
+            <a class="tablinks" id="unreadMessageMenu" href="{{url('/conversation/unread')}}">نخوانده ها</a>
         </div>
         <div class="messageContent">
             <table class="table  table-hover" >

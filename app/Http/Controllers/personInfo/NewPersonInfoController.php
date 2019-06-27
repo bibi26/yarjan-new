@@ -99,7 +99,7 @@ class NewPersonInfoController extends Controller
         $request['username']=$getUser->username;
         $res_add_user = Users::_()->step1($request);
 
-        if ($res_add_user ['hasErr']) {
+        if ($res_add_user ['error']) {
             return back()->with('error', $res_add_user['msg']);
         }
 
@@ -125,7 +125,7 @@ class NewPersonInfoController extends Controller
         $getUser = Users::_()->getUserbyUserId($request['user_id']);
         $request['username']=$getUser->username;
         $res_add_user = Users::_()->step2($request);
-        if ($res_add_user ['hasErr']) {
+        if ($res_add_user ['error']) {
             return back()->with('error', $res_add_user['msg']);
         }
         return \Redirect::to("/{$request['user_id']}/step3");
@@ -143,7 +143,7 @@ class NewPersonInfoController extends Controller
         $getUser = Users::_()->getUserbyUserId($request['user_id']);
         $request['username']=$getUser->username;
         $res_add_user = Users::_()->step3($request);
-        if ($res_add_user ['hasErr']) {
+        if ($res_add_user ['error']) {
             return back()->with('error', $res_add_user['msg']);
         }
         return \Redirect::to("/{$request['user_id']}/step4");
@@ -157,7 +157,7 @@ class NewPersonInfoController extends Controller
         $request['user_id']=$request['user_id'];
         $request['username']=$getUser->username;
         $res_add_user = Users::_()->step4($request);
-        if ($res_add_user ['hasErr']) {
+        if ($res_add_user ['error']) {
             return back()->with('error', $res_add_user['msg']);
         }
         return \Redirect::to("/{$request['user_id']}/step5");
@@ -171,7 +171,7 @@ class NewPersonInfoController extends Controller
         $request['user_id']=$request['user_id'];
         $request['username']=$getUser->username;
         $res_add_user = Users::_()->step5($request);
-        if ($res_add_user ['hasErr']) {
+        if ($res_add_user ['error']) {
             return back()->with('error', $res_add_user['msg']);
         }
         return \Redirect::route('cartable');
@@ -181,10 +181,7 @@ class NewPersonInfoController extends Controller
     function upload_img(Request $request)
     {
         if (!isset($request['user_id'])) {
-            return response([
-                'hasErr' => true,
-                'msg' => 'شناسه کاربر وجود ندارد'
-            ]);
+            return responseHandler(true,'شناسه کاربر وجود ندارد');
         }
         $request['type'] == 'main' ? $f = 'fileMain' : $f = 'fileAdditional';
         $_imgWidth = config("constants.upload.register.imageWidth");
@@ -194,24 +191,17 @@ class NewPersonInfoController extends Controller
             'fileAdditional' => [ 'mimes:jpeg,jpg' , 'max:' . config("constants.upload.register.fileSizeKiloByte")]
         ]);
         if ($validator->fails()) {
-            return response([
-                'hasErr' => true,
-                'msg' => $validator->errors()->all()
-            ]);
+            return responseHandler(true,$validator->errors()->all());
         }
         try {
             $fileinfo = getimagesize($request->file($f));
             $width = $fileinfo[0];
             $height = $fileinfo[1];
             if ($width < $_imgWidth || $height < $_imgHeight) {
-                return response([
-                    'hasErr' => true,
-                    'error' => "فایل " . " بارگذاری نشد. اندازه عکس بسیار کوچک است (حداقل " . $_imgWidth . " در " . $_imgHeight . " پیکسل)"
-                ]);
+                return responseHandler(true, "فایل " . " بارگذاری نشد. اندازه عکس بسیار کوچک است (حداقل " . $_imgWidth . " در " . $_imgHeight . " پیکسل)");
             }
         } catch (\Exception $e) {
             \Log::channel('notify')->error("LINE => " . __LINE__ . " METHOD => " . __METHOD__ . " INFO => " . $e->getMessage());
-
         }
 
         $f == 'fileMain' ? $fileName = $request['user_id'] . '_main_orginal' . '.jpg' : $fileName = $request['user_id'] . '_additional_orginal_' . md5(mt_rand(1000, 10000000)) . ".jpg";
@@ -219,17 +209,16 @@ class NewPersonInfoController extends Controller
             $request->file($f)->move(config("constants.upload.register.imageFolder"), $fileName);
         } catch (\Exception $e) {
             \Log::channel('notify')->error("LINE => " . __LINE__ . " METHOD => " . __METHOD__ . " INFO => " . $e->getMessage());
-            return response([
-                'hasErr' => true,
-                'error' => 'خطا در آپلود فایل!'
-            ]);
+            return responseHandler(true,'خطا در آپلود فایل!');
+
         }
         return response([
-            'hasErr' => false,
+            'error' => false,
             'initialPreview' => [asset(config("constants.upload.register.imageFolder") . $fileName . "?" . mt_rand(1000, 100000))],
             'initialPreviewConfig' => [['url' => 'delete_img', 'key' => $fileName, 'extra' => ['_token' => csrf_token()]]],
             'append' => $f == 'fileMain' ? FALSE : TRUE
         ]);
+
 
     }
 
@@ -237,10 +226,7 @@ class NewPersonInfoController extends Controller
     function delete_img(Request $request)
     {
         if (!isset($request['user_id'])) {
-            return response([
-                'hasErr' => true,
-                'msg' => 'شناسه کاربر وجود ندارد'
-            ]);
+            return responseHandler(true,  'شناسه کاربر وجود ندارد');
         }
         $fileName = request('key');
         $file_path = 'storage/images/' . $fileName; // app_path("public/test.txt");
@@ -250,26 +236,15 @@ class NewPersonInfoController extends Controller
                 \File::delete($file_path);
             } catch (\Exception $e) {
                 \Log::channel('notify')->error("LINE => " . __LINE__ . " METHOD => " . __METHOD__ . " INFO => " . $e->getMessage());
-                return response([
-                    'hasErr' => true,
-                    'msg' => 'خطا در حذف فایل!'
-                ]);
-
+                return responseHandler(true,  'خطا در حذف فایل!');
             }
         } else {
             $msg = 'فایل یافت نشد!';
             \Log::channel('notify')->error("LINE => " . __LINE__ . " METHOD => " . __METHOD__ . " INFO => " . $msg);
-
-            return response([
-                'hasErr' => true,
-                'msg' => $msg
-            ]);
+            return responseHandler(true,  $msg);
         }
+        return responseHandler(false);
 
-        return response([
-            'hasErr' => false,
-            'msg' => ''
-        ]);
     }
 
 

@@ -35,10 +35,10 @@ class UserRoles extends Model
                 'user_id' =>  $input["user_id"],
                 'role_id'=>2
             ]);
-            return ['hasErr'=>false,'msg'=>'' ];
+            return  modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return ['hasErr' => true, 'msg' => \Lang::get('errors.errSystem')];
+            return  modelResponse(true, __('errors.errSystem'));
         }
     }
 }
