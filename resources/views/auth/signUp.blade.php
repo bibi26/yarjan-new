@@ -35,7 +35,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="form-group {{ $errors->has('lname') ? 'has-error' : '' }} ">
                                         {!! Form::label('نام خانوادگی :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
                                         <div class="col-lg-8">
@@ -404,7 +403,7 @@
                     var selected = $('#province').val();
                     event.preventDefault();
                     $.ajax({
-                        url: 'getCity',
+                        url: "{{route('getCity')}}",
                         data: {
                             "_token": _TOKEN,
                             'provinceId': selected
@@ -413,7 +412,7 @@
                         success: function (data, textStatus) {
                             var items;
                             items += "<option selected value=''>انتخاب کنید </option>";
-                            $.each(data.msg, function (index, item) {
+                            $.each(data.result, function (index, item) {
                                 items += "<option value='" + item.id + "'>" + item.name + "</option>";
                             });
                             $("#city").html(items);
@@ -427,7 +426,7 @@
                 });
                 @if (old('province'))
                 $.ajax({
-                    url: 'getCity',
+                    url: "{{route('getCity')}}",
                     data: {
                         "_token": _TOKEN,
                         'provinceId':'@php echo old('province') @endphp'
@@ -436,7 +435,7 @@
                     success: function (data, textStatus) {
                         var items;
                         items += "<option selected value=''>انتخاب کنید </option>";
-                        $.each(data.msg, function (index, item) {
+                        $.each(data.result, function (index, item) {
                             items += "<option value='" + item.id + "'>" + item.name + "</option>";
                         });
                         $("#city").html(items);

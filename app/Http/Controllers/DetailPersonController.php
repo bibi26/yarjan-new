@@ -13,29 +13,27 @@ use App\Http\Models\BlackLists;
 use App\Http\Models\Favorites;
 use Carbon\Carbon;
 use Validator;
+use  Session;
 
 class DetailPersonController extends Controller
 {
     private $view = 'personInfo.detail.main';
 
-    function hasAccess($user_id){
-        if( $user_id!=user()['user_id'])
-        {
-            if(user()['role']!='admin'){
-                return back()->withInput()->with('error', 'دسترسی غیر مجاز');
-            }
-        }
-        return true;
-    }
+
     function detailPersonView($user_id)
     {
-        $r=$this->hasAccess($user_id);
-        dd($r);
         $sessions = [];
         Visits::_()->store($user_id);
         $getUser = Users::_()->getUserById($user_id);
+
+        if (user()['role'] != 'admin') {
+            if ($getUser['status'] != 2 || $getUser['confirm'] != 'accept' || $getUser['active'] == 0) {
+                return back()->with('error', 'دسترسی غیر مجاز');
+            }
+        }
+
         if (empty($getUser)) {
-            return back()->withErrors('error', 'کاربر یافت نشد');
+            return back()->with('error', 'کاربر یافت نشد');
 
         }
         if (\File::exists(config("constants.upload.register.imageFolder") . $getUser['id'] . '_main_orginal' . '.jpg')) {
@@ -44,6 +42,8 @@ class DetailPersonController extends Controller
             $getUser['profile_image'] = '/img/wman1.png';
         } elseif ($getUser['sex'] == 'm') {
             $getUser['profile_image'] = '/img/me-flat.png';
+        }else{
+            $getUser['profile_image'] = '/img/no-image.png';
         }
 
         $isBlackedUser = BlackLists::_()->isBlackedUser($user_id);

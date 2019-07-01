@@ -92,17 +92,8 @@
                     $(".alert_warn").html("");
                     $('#dv_free_message').unblock();
                     $('#freeMessage').modal('toggle');
+                    notify('success', 'پیام با موفقیت ارسال شد.')
 
-                    var notify = $.notify({
-                        // settings
-                        // options
-                        message: 'پیام با موفقیت ارسال شد.',
-                    }, {
-                        type: 'success',
-                        onShow: function () {
-                            this.css({'width': 'auto', 'height': 'auto'});
-                        },
-                    });
                     setTimeout(function() {
                         notify.close();
                     }, 2000);

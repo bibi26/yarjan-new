@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsers extends Migration
+class CreateUsersVersions extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateUsers extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('username')->unique();
+        Schema::create('users_versions', function (Blueprint $table) {
+            $table->integer('id');//change
+            $table->string('username');
             $table->string('password');
             $table->string('status')->default("0");
             $table->boolean('active')->default("1");
@@ -84,11 +84,9 @@ class CreateUsers extends Migration
             $table->string('step3')->nullable()->default("0");
             $table->string('step4')->nullable()->default("0");
             $table->string('step5')->nullable()->default("0");
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at');//change
+            $table->timestamp('updated_at');//change
         });
-
-        DB::statement("ALTER TABLE users AUTO_INCREMENT = 26000;");
     }
 
     /**

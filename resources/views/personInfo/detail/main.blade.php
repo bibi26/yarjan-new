@@ -1,26 +1,13 @@
 @extends('home')
 @section('content')
-    <script>
-        function notify(type, msg) {
-            $.notify({
-                // options
-                message: msg,
-            }, {
-                // settings
-                type: type,
-                onShow: function () {
-                    this.css({'width': 'auto', 'height': 'auto'});
-                },
-            });
+    <style>
+        table, th, td {
+            border: 1px solid black;
         }
-
-        @if(isset($success))
-        notify('success', '{{Session::get('success')}}')
-        @endif
-        @if(isset($error))
-        notify('danger', '{{Session::get('error')}}')
-        @endif
-    </script>
+        td{
+            padding: 5px;
+        }
+    </style>
     @if(isset($person))
         <div class="row" id="detail_page">
             <div class="col-lg-3 col-md-3">
@@ -30,7 +17,7 @@
                             <div align="center">
                                 <img id="myImg" src='{{asset($person['profile_image'].'?'.mt_rand(1,100000))}}'
                                      class="thumbnail img-responsive"
-                                     src="" width="300px" height="300px">
+                                     style="max-height: 300px;max-width: 300px;">
                             </div>
                         </div>
                     </div>
@@ -76,13 +63,6 @@
                                                                                   style="color: #ff335a;"></i>&nbsp;گزارش
                                         تخلفات </a>
                                     <hr/>
-                                    @if($person['active']==1)
-                                        <div style="margin: 5px;">
-                                            <a href="" class="btn btn-danger" style="width: 210px;text-align: right;">&nbsp;غیرفعال
-                                                کردن کاربر</a>
-                                        </div>
-                                    @endif
-
 
                                 </div>
                                 <div style="margin: 5px;">
@@ -96,9 +76,66 @@
                                     </div>
                                     @if(user()['role']=='admin' )
                                         <hr/>
+                                        <table >
+                                            <tr>
+                                                <td>
+                                                    step 5
+                                                </td>
+                                                <td>
+                                                    step 4
+                                                </td>
+                                                <td>
+                                                    step 3
+                                                </td>
+                                                <td>
+                                                    step 2
+                                                </td>
+                                                <td>
+                                                    step 1
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @php
+                                                        if($person['step5']==1){
+                                                  echo    "<span style='color :green;'>&check;</span>";
+                                                  }
+                                                    @endphp
+                                                </td>
+                                                <td>
+                                                    @php
+                                                        if($person['step4']==1){
+                                                  echo    "<span style='color :green;'>&check;</span>";
+                                                  }
+                                                    @endphp
+                                                </td>
+                                                <td>
+                                                    @php
+                                                        if($person['step3']==1){
+                                                  echo    "<span style='color :green;'>&check;</span>";
+                                                  }
+                                                    @endphp
+                                                </td>
+                                                <td>
+                                                    @php
+                                                        if($person['step2']==1){
+                                                  echo    "<span style='color :green;'>&check;</span>";
+                                                  }
+                                                    @endphp
+                                                </td>
+                                                <td>
+                                                    @php
+                                                        if($person['step1']==1){
+                                                  echo    "<span style='color :green;'>&check;</span>";
+                                                  }
+                                                    @endphp
+                                                </td>
+                                            </tr>
+
+                                        </table>
                                         @if($person['confirm']=='unknown' )
                                             <div style="margin: 5px;">
-                                                <a class="btn btn-info" href="#" data-toggle="modal"
+                                                <a class="btn btn-warning" href="#" data-toggle="modal"
                                                    data-target="#confirmRegisteredUserInfo"
                                                    style="width: 210px;text-align: right;">&nbsp; تایید / رد کاربر
                                                 </a>
@@ -111,7 +148,8 @@
                                         @endif
                                         @if($person['confirm']=='reject' )
                                             <div style="margin: 5px;">
-                                                <h3 style="color: rgba(255,53,56,0.77)"><span>&check; &nbsp;</span>رد</h3>
+                                                <h3 style="color: rgba(255,53,56,0.77)"><span>&check; &nbsp;</span>رد
+                                                </h3>
                                             </div>
                                         @endif
                                         @if($person['active']==1 )
@@ -121,7 +159,8 @@
                                         @endif
                                         @if($person['active']==0 )
                                             <div style="margin: 5px;">
-                                                <h3 style="color: rgba(255,53,56,0.77);"><span>&check; &nbsp;</span>غیرفعال</h3>
+                                                <h3 style="color: rgba(255,53,56,0.77);"><span>&check; &nbsp;</span>غیرفعال
+                                                </h3>
                                             </div>
                                         @endif
                                         <div style="margin: 5px;">

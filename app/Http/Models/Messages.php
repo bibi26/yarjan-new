@@ -13,7 +13,7 @@ class Messages extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        'sender_user_id', 'reciever_user_id', 'text'];
+        'conversation_id','sender_user_id', 'reciever_user_id', 'text','is_free'];
     private static $_instance = null;
 
     public static function _()
@@ -29,11 +29,12 @@ class Messages extends Model
         return $this->belongsTo(Users::class, 'reciever_user_id', 'id');
     }
 
-    function store($sender_user_id, $reciever_user_id, $text, $free)
+    function store( $conversation_id, $sender_user_id,$text, $free)
     {
         try {
            $result= $this->create(
                 [
+                    "conversation_id" => $conversation_id,
                     "sender_user_id" => $sender_user_id,
                     "text" => $text,
                     "is_free" => $free

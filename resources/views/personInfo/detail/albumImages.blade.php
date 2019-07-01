@@ -1,6 +1,6 @@
 @php
     $userFolder =  config("constants.upload.register.imageFolder");
-    $fileName = user()['user_id'] . '_main_orginal' . '.jpg';
+    $fileName = $person['id']. '_main_orginal' . '.jpg';
     $destPath = $userFolder . $fileName;
 @endphp
 <div role="tabpanel" class="tab-pane fade" id="Section3">
@@ -17,7 +17,7 @@
         theme: "fas",
         language: "fa",
         showCaption: false,
-        dropZoneTitle: 'تصاویر دیگر',
+        dropZoneTitle: 'تصویری وجود ندارد',
         showClose: false,
         showRemove: false,
         showUpload: false,
@@ -33,7 +33,7 @@
                 $d = 'initialPreviewConfig: [';
                 foreach ($handle as $file)
                 {
-                    if(strpos($file->getfilename(), user()['user_id']."_additional_orginal_") !== false)
+                    if(strpos($file->getfilename(), $person['id']."_additional_orginal_") !== false)
                     {
                         $e.= "'" .url(config("constants.upload.register.imageFolder") . $file->getfilename())."',";
                         $d.=" { 'url' : 'delete_img','key':'{$file->getfilename()}','extra': {'_token': '".csrf_token()."' }},";

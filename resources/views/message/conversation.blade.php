@@ -81,24 +81,42 @@
 
     });
 
-    var audioElement = document.createElement('audio');
-    audioElement.setAttribute('src', "{{asset('notification.ogg')}}");
 
-    $('#play').click(function () {
-        audioElement.play();
-    });
 
 
     $(document).ready(function () {
 
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('src', "{{asset('notification.ogg')}}");
 
         window.Echo.channel('home{{user()["user_id"]}}')
             .listen('NewMessage', (e) => {
-                $(e.message).appendTo($("#content"));
+                var obj = JSON.parse(e.message);
+
+                $(obj.content).appendTo($("#content"));
                 var wtf = $('#content_chat');
                 var height = wtf[0].scrollHeight;
                 wtf.scrollTop(height);
                 offset = offset + 1;
+                audioElement.play();
+                $.notify({
+                    icon: obj.avatar,
+                    title:obj.name + " :",
+                    message:obj.shortText
+                },{
+                    delay: 50,    animate: {
+                        enter: 'animated bounceInDown',
+                        exit: 'animated bounceOutUp'
+                    },
+                    type: 'info',
+
+                    icon_type: 'image',
+                    template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                        '<img data-notify="icon" class="img-circle pull-left" style="width: 50px;height: 50px;">' +
+                        '<h4 data-notify="title" style="font-weight: bolder;font-size: 16px;color: black;">{1}</h4>' +
+                        '<h6 data-notify="message" style="color: black;">{2}</h6>' +
+                        '</div>'
+                });
             });
         $("#message").keypress(function () {
 
@@ -188,11 +206,16 @@
                 <div class="portlet-footer">
                     <form role="form">
                         <div class="form-group">
-                            <textarea id="message" class="form-control" placeholder="بنویس . . ."></textarea>
+                            <div data-emojiarea data-type="unicode" data-global-picker="false" >
+                                <div class="emoji-button">&#x1f604;</div>
+                                <textarea id="message" class="form-control" placeholder="بنویس . . ."></textarea>
+                            </div>
+
+
                         </div>
                         <div class="form-group">
                             <div id="alert_message"
-                                 style="display:none;color: red; font-weight: bold;">\
+                                 style="display:none;color: red; font-weight: bold;">
                             </div>
                             <button type="button" class="btn btn-default pull-right"
                                     onclick="javascrit:send()">ارسال
@@ -223,6 +246,7 @@
             url: '{{url('/send_real_message')}}',
             data: {
                 _token: _TOKEN,
+                conversation_id: '{{$conversation_id}}',
                 reciever_user_id: '{{$reciever['id']}}',
                 text: $('#message').val()
             },
@@ -415,6 +439,93 @@
     .deleteMessage:hover {
         cursor: pointer;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    .emoji {
+        color: transparent;
+        display: inline-block;
+        font-size: 18px;
+        font-style: normal;
+        height: 25px;
+        width: 25px;
+    }
+
+    .emoji::selection {
+        background-color: highlight;
+        color: transparent;
+    }
+
+    .emoji-image {
+        font-size: 14px;
+        line-height: 28px;
+    }
+
+    .emoji-button {
+        cursor: pointer;
+        margin: 5px;
+        text-align: left;
+    }
+
+    .emoji-editor {
+        -moz-appearance: textfield-multiline;
+        -webkit-appearance: textarea;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        cursor: text;
+        font: medium -moz-fixed;
+        -webkit-font-smoothing: antialiased;
+        height: 100px;
+        overflow: auto;
+        padding: 5px;
+        resize: both;
+        width: 100%;
+    }
+
+    .emoji-picker {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        position: absolute;
+        width: 350px;
+
+    }
+
+    .emoji-picker a {
+        cursor: pointer;
+        display: inline-block;
+        font-size: 20px;
+        padding: 3px;
+    }
+
+    .emoji-selector {
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        background: rgba(115,255,99,0.77);
+
+    }
+
+    .emoji-selector li { margin: 5px; }
+
+    .emoji-group {
+        display: grid;
+        grid-template-columns: repeat(6, 16.66667%);
+        height: 200px;
+        overflow-y: scroll;
+        padding: 3px;
+    }
+
+    /*# sourceMappingURL=style.css.map */
 </style>
 
 

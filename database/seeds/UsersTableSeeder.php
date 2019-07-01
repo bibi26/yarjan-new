@@ -98,7 +98,7 @@ class UsersTableSeeder extends Seeder
         for ($i = 0; $i < 30; $i++) {
             $province = Provinces::where('id', mt_rand(1, Provinces::count()))->get()->toArray()[0]['id'];
             $countCity = Cities::where('province_id', $province)->count();
-            $itemsCity = Cities::where('province_id', $province)->get()->toArray();
+            $itemsCity = Cities::where('province_id', $province)->where('id','like','%0000')->get()->toArray();
             $email = str_random(8);
             $city = $itemsCity[mt_rand(0, $countCity - 1)]['id'];
             $name = Faker::firstname();

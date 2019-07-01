@@ -94,16 +94,7 @@
                     $(".alert_warn").html("");
                     $('#dv_description').unblock();
                     $('#confirmRegisteredUserInfo').modal('toggle');
-                    var notify = $.notify({
-                        // settings
-                        // options
-                        message: ' با موفقیت انجام شد.',
-                    }, {
-                        type: 'success',
-                        onShow: function () {
-                            this.css({'width': 'auto', 'height': 'auto'});
-                        },
-                    });
+                    notify('success', 'با موفقیت انجام شد.')
                     window.location.reload(false);
                 } else {
                     $('#dv_description').unblock();

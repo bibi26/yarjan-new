@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 use App;
 
 use App\Http\Models\Cities;
-use Illuminate\Http\Request;
+use Request;
 class MainController extends Controller
 {
     public function getCity()

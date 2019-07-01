@@ -3,6 +3,135 @@
 
     <div class="row">
         <div class="col-lg-6">
+            <div class="form-group {{ $errors->has('fname') ? 'has-error' : '' }} ">
+                {!! Form::label('نام :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
+                <div class="col-lg-8">
+                    {!! Form::text('fname', '', ['class'=>'form-control input-sm','id'=>'fname']) !!}
+                    <span class="text-danger small ">{{ $errors->first('fname') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group {{ $errors->has('lname') ? 'has-error' : '' }} ">
+                {!! Form::label('نام خانوادگی :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
+                <div class="col-lg-8">
+                    {!! Form::text('lname', '', ['class'=>'form-control input-sm','id'=>'lname']) !!}
+                    <span class="text-danger small ">{{ $errors->first('lname') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group {{ $errors->has('nick_name') ? 'has-error' : '' }} ">
+                {!! Form::label('نام مستعار :','',['class' => 'control-label input-sm col-lg-4']) !!}
+                <div class="col-lg-8">
+                    {!! Form::text('nick_name', '', ['class'=>'form-control input-sm','id'=>'nick_name','title'=>'درصورتی که نام مستعار را وارد ننمایید ، نام اصلی شما نمایش داده می شود.']) !!}
+                    <span class="text-danger small ">{{ $errors->first('nick_name') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group {{ $errors->has('sex') ? 'has-error' : '' }}">
+                {!! Form::label('جنسیت :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
+                <div class="col-lg-8">
+                    {{ Form::select('sex', [''=>'انتخاب کنید','f'=>'زن', 'm'=>'مرد'],'', [ 'class' => 'form-control input-sm','id'=>'sex' ])}}
+                    <span class="text-danger small ">{{ $errors->first('sex') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('تاریخ تولد :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div
+                                class="form-group {{ $errors->has('birth_date_day') ? 'has-error' : '' }}">
+                                <select id="birth_date_day" name="birth_date_day"
+                                        class="form-control input-sm {{ $errors->has('birth_date_day') ? 'has-error' : '' }}">
+                                    <option value="">روز</option>
+                                    @for ($i = 1; $i <= 31; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
+                                    @if (old('birth_date_day'))
+                                        <option value="{{ old('birth_date_day') }}"
+                                                selected>{{ old('birth_date_day') }}</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div
+                                class="form-group {{ $errors->has('birth_date_month') ? 'has-error' : '' }}">
+                                <select id="birth_date_month" name="birth_date_month"
+                                        class="form-control input-sm {{ $errors->has('birth_date_month') ? 'has-error' : '' }}">
+                                    <option value="">ماه</option>
+                                    @for ($i = 1; $i <= 12; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
+                                    @if (old('birth_date_month'))
+                                        <option value="{{ old('birth_date_month') }}"
+                                                selected>{{ old('birth_date_month') }}</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div
+                                class="form-group {{ $errors->has('birth_date_month') ? 'has-error' : '' }}">
+                                <select id="birth_date_year" name="birth_date_year"
+                                        class="form-control input-sm">
+                                    <option value="">سال</option>
+                                    @for ($i = 1330; $i <= 1380; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
+                                    @if (old('birth_date_year'))
+                                        <option value="{{ old('birth_date_year') }}"
+                                                selected>{{ old('birth_date_year') }}</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="text-danger small ">{{ $errors->first('birth_date_year') }}</div>
+                    <div
+                        class="text-danger small ">{{ $errors->first('birth_date_month') }}</div>
+                    <div class="text-danger small ">{{ $errors->first('birth_date_day') }}</div>
+                </div>
+            </div>
+
+            <div class="form-group {{ $errors->has('province') ? 'has-error' : '' }}">
+                {!! Form::label('استان  :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
+                <div class="col-lg-8">
+
+                    <select class="form-control input-sm" name="province" id="province">
+                        <option value="">انتخاب کنید</option>
+                        @if(isset($provinces))
+                            @foreach($provinces as $province)
+                                <option
+                                    value="{{$province->id}}" @if (old('province') == $province->id) selected @endif>{{$province->name}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    <span class="text-danger small ">{{ $errors->first('province') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group  {{ $errors->has('city') ? 'has-error' : '' }}">
+                {!! Form::label('شهرستان  :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
+                <div class="col-lg-8">
+                    <select id="city" name="city" class="input-sm form-control">
+
+                    </select>
+                    <span class="text-danger small ">{{ $errors->first('city') }}</span>
+                </div>
+            </div>
+
+            <div class="form-group {{ $errors->has('mobile') ? 'has-error' : '' }} ">
+                {!! Form::label('شماره همراه :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
+                <div class="col-lg-8">
+
+                    {!! Form::text('mobile', '', ['class'=>'form-control input-sm','style'=>'direction: ltr','id'=>'mobile']) !!}
+                    <span class="text-danger small ">{{ $errors->first('mobile') }}</span>
+                </div>
+            </div>
+
             <div class="form-group  {{ $errors->has('job_status') ? 'has-error' : '' }}">
                 {!! Form::label('وضعیت اشتغال  :','',['class' => 'control-label  input-sm col-lg-4 required']) !!}
                 {{ Form::hidden('user_id',isset($userInfo['id'])?$userInfo['id']:'' )}}
@@ -33,6 +162,9 @@
                     <span class="text-danger small ">{{ $errors->first('education') }}</span>
                 </div>
             </div>
+        </div>
+
+        <div class="col-lg-6">
             <div class="form-group {{ $errors->has('field') ? 'has-error' : '' }} ">
                 {!! Form::label('رشته تحصیلی :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
                 <div class="col-lg-8">
@@ -41,9 +173,6 @@
                     <span class="text-danger small ">{{ $errors->first('field') }}</span>
                 </div>
             </div>
-        </div>
-
-        <div class="col-lg-6">
             <div class="form-group {{ $errors->has('my_income') ? 'has-error' : '' }}">
                 {!! Form::label('میزان درآمد شما :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
                 <div class="col-lg-8">
@@ -213,7 +342,107 @@
             $("#age_older_child").hide();
 
         }
+
+
+
+
+
+        @if($editInitInfo)
+
+        @if(isset($userInfo->fname))
+        $("#fname").val("@php echo  $userInfo->fname @endphp");
+        @endif
+
+        @if(isset($userInfo->lname))
+        $("#lname").val("@php echo  $userInfo->lname @endphp");
+        @endif
+
+        @if(isset($userInfo->nick_name))
+        $("#nick_name").val("@php echo  $userInfo->nick_name @endphp");
+        @endif
+
+        @if(isset($userInfo->sex))
+        $("#sex").val("@php echo  $userInfo->sex @endphp");
+        @endif
+
+        @if(isset($userInfo->birth_date))
+        $("#birth_date_day").val("@php echo explode('-', $userInfo->birth_date)[2]  @endphp");
+        @endif
+
+        @if(isset($userInfo->birth_date))
+        $("#birth_date_month").val("@php echo   explode('-', $userInfo->birth_date)[1] @endphp");
+        @endif
+
+        @if(isset($userInfo->birth_date))
+        $("#birth_date_year").val("@php echo  explode('-', $userInfo->birth_date)[0] @endphp");
+        @endif
+
+        @if(isset($userInfo->province_id))
+        $("#province").val("@php echo  $userInfo->province_id @endphp");
+        @endif
+
+        @if(isset($userInfo->mobile))
+        $("#mobile").val("@php echo  $userInfo->mobile @endphp");
+        @endif
+
+        $(document).ready(function () {
+            $("#province").change(function (event) {
+                $("#city").prop("disabled", true);
+                var selected = $('#province').val();
+                event.preventDefault();
+                $.ajax({
+                    url: "{{route('getCity')}}",
+                    data: {
+                        "_token": _TOKEN,
+                        'provinceId': selected
+                    },
+                    type: 'post',
+                    success: function (data, textStatus) {
+                        var items;
+                        items += "<option selected value=''>انتخاب کنید </option>";
+                        $.each(data.result, function (index, item) {
+                            items += "<option value='" + item.id + "'>" + item.name + "</option>";
+                        });
+                        $("#city").html(items);
+                        $("#city").prop("disabled", false);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        $("#city").prop("disabled", false);
+                        alert('request failed');
+                    }
+                });
+            });
+            @if(isset($userInfo->province_id))
+            $.ajax({
+                url: "{{route('getCity')}}",
+                data: {
+                    "_token": _TOKEN,
+                    'provinceId':'{{$userInfo->province_id}}'
+                },
+                type: 'post',
+                success: function (data, textStatus) {
+                    var items;
+                    items += "<option selected value=''>انتخاب کنید </option>";
+                    $.each(data.result, function (index, item) {
+                        items += "<option value='" + item.id + "'>" + item.name + "</option>";
+                    });
+                    $("#city").html(items);
+                    $("#city").prop("disabled", false);
+                    $("#city").val("{{ $userInfo->city_id}}");
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    $("#city").prop("disabled", false);
+                    alert('request failed');
+                }
+            });
+            @endif
+
+        });
+
+        @endif
+
     });
+
 
 
 </script>

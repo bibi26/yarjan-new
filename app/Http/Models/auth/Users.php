@@ -18,10 +18,10 @@ class Users extends BaseModel
     public $timestamps = true;
 
     protected $fillable = [
-        'username', 'password', 'verify_code', 'email', 'fname', 'lname','nick_name', 'sex', 'birth_date', 'age', 'province', 'city', 'username',
+        'username', 'password', 'verify_code', 'email', 'fname', 'lname', 'nick_name', 'sex', 'birth_date', 'age', 'province', 'city', 'username',
         'mobile', 'job_status', 'job', 'marriage', 'education', 'field', 'my_income',
         'family_income', 'house', 'car', 'child_count', 'age_older_child', 'step', 'weight', 'height', 'skin_color',
-         'health_condition', 'immigration', 'face', 'style', 'nationality', 'life_style', 'i_am', 'you_are',
+        'health_condition', 'immigration', 'face', 'style', 'nationality', 'life_style', 'i_am', 'you_are',
         's_age_from', 's_age_to', 's_education_from', 's_education_to', 's_marriage_single', 's_marriage_deceased_spouse',
         's_marriage_divorced', 's_location_fellow_citizen', 's_location_fellow_province', 's_location_homeland',
         's_location_abroad', 's_job_status', 's_height_from', 's_height_to', 's_my_income', 's_house', 's_car',
@@ -39,34 +39,34 @@ class Users extends BaseModel
 
     public function provinces()
     {
-        return $this->belongsTo(Provinces::class,'province_id','id');
+        return $this->belongsTo(Provinces::class, 'province_id', 'id');
     }
 
     public function cities()
     {
-        return $this->belongsTo(Cities::class,'city_id','id');
+        return $this->belongsTo(Cities::class, 'city_id', 'id');
     }
 
     public function getCurrentUser()
     {
-        return Users::with(['provinces','cities'])->where('id',user()['user_id'])->first();
+        return Users::with(['provinces', 'cities'])->where('id', user()['user_id'])->first();
     }
 
     public function getUserById($user_id)
     {
-        return Users::with(['provinces','cities'])->where('id',$user_id)->first();
+        return Users::with(['provinces', 'cities'])->where('id', $user_id)->first();
     }
 
-    public function lists($flag='',$data='',$sex='',$limit=100000000,$offset=0)
+    public function lists($flag = '', $data = '', $sex = '', $limit = 100000000, $offset = 0)
     {
 
-        if($flag=='visits' || $flag=='favorites' || $flag=='blacks' || $flag=='onlines'){
-            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->where('confirm', 'accept')->whereIn('id',$data);
-        }else{
+        if ($flag == 'visits' || $flag == 'favorites' || $flag == 'blacks' || $flag == 'onlines') {
+            $total = Users::with(['provinces', 'cities'])->where('id', '<>', user()['user_id'])->where('sex', '<>', $sex)->where('confirm', 'accept')->whereIn('id', $data);
+        } else {
 
-            $total=  Users::with(['provinces','cities'])->where('id','<>', user()['user_id'])->where('sex','<>', $sex)->where('confirm', 'accept');
-    }
-       return $total->limit($limit)->offset($offset)->get();
+            $total = Users::with(['provinces', 'cities'])->where('id', '<>', user()['user_id'])->where('sex', '<>', $sex)->where('confirm', 'accept');
+        }
+        return $total->limit($limit)->offset($offset)->get();
     }
 
     public function getUserbyUserId($userId)
@@ -85,21 +85,22 @@ class Users extends BaseModel
             Users::updateOrCreate(['username' => $input["email"]], [
                 'fname' => $input["fname"],
                 'lname' => $input["lname"],
+                'nick_name' => $input["nick_name"],
                 'sex' => $input["sex"],
                 'birth_date' => $input["birth_date"],
                 'age' => $input["age"],
-                'province' => $input["province"],
-                'city' => $input["city"],
+                'province_id' => $input["province"],
+                'city_id' => $input["city"],
                 'email' => $input["email"],
                 'username' => $input["email"],
                 'mobile' => $input["mobile"],
                 'password' => \Hash::make($input["pass1"]),
                 'verify_code' => Str::random(20)
             ]);
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
 
         }
     }
@@ -113,24 +114,33 @@ class Users extends BaseModel
     {
         try {
             Users::where('verify_code', $cerify_code)->update(['status' => 1]);
-            return  modelResponse();
+            return modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
         }
     }
 
     public function getUsersInfo()
     {
-        return Users::select('users.*', 'roles.name as roleName')->with(['provinces','cities'])
+        return Users::select('users.*', 'roles.name as roleName')->with(['provinces', 'cities'])
             ->leftJoin('user_roles', function ($join) {
                 $join->on('users.id', '=', 'user_roles.user_id');
             })
             ->leftJoin('roles', function ($join) {
                 $join->on('roles.id', '=', 'user_roles.role_id');
             })
+//            ->orderBy("id",'desc')
+            ->orderByRaw(" FIELD(confirm,'unknown' , 'accept', 'reject')  ")
+//            ->orderByRaw("IF(confirm = 'unknown', accept, reject) DESC")
             ->get();
     }
+
+    public function getUsersInfoVersion()
+    {
+        return DB::select("SELECT id, MAX(updated_at) FROM users_versions GROUP BY  id ");
+    }
+
     public function getUserInfo($username)
     {
         return Users::select('users.*', 'roles.name as roleName')
@@ -148,10 +158,10 @@ class Users extends BaseModel
     {
         try {
             Users::where('id', $user_id)->update(['verify_code' => Str::random(20)]);
-            return  modelResponse();
+            return modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
         }
     }
 
@@ -159,82 +169,105 @@ class Users extends BaseModel
     {
         try {
             Users::where('verify_code', $request['verifyCode'])->update(['password' => \Hash::make($request["pass1"])]);
-            return  modelResponse();
+            return modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
         }
     }
 
-    public function step1($input)
+    public function step1($input, $editInitInfo)
     {
+        $dataStep0 = [
+            'fname' => $input["fname"],
+            'lname' => $input["lname"],
+            'nick_name' => $input["nick_name"],
+            'sex' => $input["sex"],
+            'birth_date' => $input["birth_date_year"] . '-' . $input["birth_date_month"] . '-' . $input["birth_date_day"],
+            'age' => $input["age"],
+            'province_id' => $input["province"],
+            'city_id' => $input["city"],
+            'mobile' => $input["mobile"],
+            "confirm" => 'unknown',
+            "confirm_by" => '',
+            "confirm_at" => '',
+            "confirm_desc" => ''
+        ];
+        $dataStep1 = [
+            "job_status" => $input["job_status"],
+            "job" => $input["job"],
+            "marriage" => $input["marriage"],
+            "education" => $input["education"],
+            "field" => $input["field"],
+            "my_income" => $input["my_income"],
+            "family_income" => $input["family_income"],
+            "house" => $input["house"],
+            "car" => $input["car"],
+            "child_count" => $input["child_count"],
+            "age_older_child" => $input["age_older_child"],
+            "step1" => 1
+        ];
+        $data = $dataStep1;
+        if ($editInitInfo == true) {
+            $data = array_merge($dataStep0, $dataStep1);
+        }
         try {
-            Users::updateOrCreate(
-                ["username" => $input['username']],
-                [
-                    "username" => $input['username'],
-                    "job_status" => $input["job_status"],
-                    "job" => $input["job"],
-                    "marriage" => $input["marriage"],
-                    "education" => $input["education"],
-                    "field" => $input["field"],
-                    "my_income" => $input["my_income"],
-                    "family_income" => $input["family_income"],
-                    "house" => $input["house"],
-                    "car" => $input["car"],
-                    "child_count" => $input["child_count"],
-                    "age_older_child" => $input["age_older_child"],
-                    "step1" => 1
-                ]);
-            return  modelResponse();
+            Users::where('id', $input['user_id'])
+                ->update($data);
+            return modelResponse();
         } catch (\Exception $e) {
+            dd($e->getMessage());
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
         }
     }
 
     public function step2($input)
     {
+        $data = [
+            "username" => $input['username'],
+            "weight" => $input["weight"],
+            "height" => $input["height"],
+            "skin_color" => $input["skin_color"],
+            "health_condition" => $input["health_condition"],
+            "immigration" => $input["immigration"],
+            "face" => $input["face"],
+            "style" => $input["style"],
+            "nationality" => $input["nationality"],
+            "life_style" => $input["life_style"],
+            "step2" => 2
+        ];
         try {
-            Users::updateOrCreate(
-                ["username" => $input['username']],
-                [
-                    "username" => $input['username'],
-                    "weight" => $input["weight"],
-                    "height" => $input["height"],
-                    "skin_color" => $input["skin_color"],
-                    "health_condition" => $input["health_condition"],
-                    "immigration" => $input["immigration"],
-                    "face" => $input["face"],
-                    "style" => $input["style"],
-                    "nationality" => $input["nationality"],
-                    "life_style" => $input["life_style"],
-                    "step2" => 2
-                ]);
-            return  modelResponse();
+            Users::where('id', $input['user_id'])
+                ->update($data);
+            return modelResponse();
         } catch (\Exception $e) {
 
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
         }
     }
 
     public function step3($input)
     {
+        $data = [
+            "username" => $input['username'],
+            "i_am" => $input["i_am"],
+            "you_are" => $input["you_are"],
+            "step3" => 1,
+            "confirm" => 'unknown',
+            "confirm_by" => '',
+            "confirm_at" => '',
+            "confirm_desc" => ''
+        ];
         try {
-            Users::updateOrCreate(
-                ["username" => $input['username']],
-                [
-                    "username" => $input['username'],
-                    "i_am" => $input["i_am"],
-                    "you_are" => $input["you_are"],
-                    "step3" => 1
-                ]);
-            return  modelResponse();
+            Users::where('id', $input['user_id'])
+                ->update($data);
+            return modelResponse();
         } catch (\Exception $e) {
 
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
         }
     }
 
@@ -283,67 +316,86 @@ class Users extends BaseModel
 
 
         try {
-            Users::updateOrCreate(
-                ["username" => $input['username']],
-                $data);
-            return  modelResponse();
+            Users::where('id', $input['user_id'])
+                ->update($data);
+            return modelResponse();
         } catch (\Exception $e) {
 
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
         }
     }
 
     public function step5($input)
     {
         $data = [
-            "username" => $input['username'],
-            "step5" => 1
+            "id" => $input['user_id'],
+            "step5" => 1,
         ];
 
 
         try {
-            Users::updateOrCreate(
-                ["username" => $input['username']],
-                $data);
-            return  modelResponse();
+            Users::where('username', $input['username'])
+                ->update($data);
+            return modelResponse();
         } catch (\Exception $e) {
 
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
         }
     }
+
+    public function step5ResetConfirm($input)
+    {
+        $data = [
+            "username" => $input['user_id'],
+            "confirm" => 'unknown',
+            "confirm_by" => '',
+            "confirm_at" => '',
+            "confirm_desc" => ''
+        ];
+        try {
+            Users::where('user_id', $input['user_id'])
+                ->update($data);
+            return modelResponse();
+        } catch (\Exception $e) {
+
+            myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
+            return modelResponse(true, __('errors.errSystem'));
+        }
+    }
+
 
     public function confirm($input)
     {
         try {
             Users::where('id', $input['user_id'])->update([
                 'confirm' => $input['status'],
-                'confirm_at' =>  Carbon::now(),
+                'confirm_at' => Carbon::now(),
                 'confirm_by' => user()['user_id'],
                 'confirm_desc' => $input['description']
             ]);
-            return  modelResponse();
+            return modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
         }
     }
 
     public function deactive($input)
     {
-      $status=  $input['status']=='yes'?0:1;
+        $status = $input['status'] == 'yes' ? 0 : 1;
         try {
             Users::where('id', $input['user_id'])->update([
-                'active' =>$status,
-                'active_at' =>  Carbon::now(),
+                'active' => $status,
+                'active_at' => Carbon::now(),
                 'active_by' => user()['user_id'],
                 'active_desc' => $input['description']
             ]);
-            return  modelResponse();
+            return modelResponse();
         } catch (\Exception $e) {
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
-            return  modelResponse(true, __('errors.errSystem'));
+            return modelResponse(true, __('errors.errSystem'));
         }
     }
 

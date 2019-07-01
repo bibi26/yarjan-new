@@ -67,7 +67,7 @@ Route::get('/', function () {
     return view('mainPage');
 })->name("mainPage");
 
-Route::post('/getCity','StoreController@getCity');
+Route::post('/getCity','MainController@getCity')->name('getCity');
 
 
 Route::get('/about','MainController@about');

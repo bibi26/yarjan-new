@@ -53,6 +53,8 @@ class MessageController extends Controller
                 $val->reciever->profile_image = '/img/wman1.png';
             } elseif ($val->reciever->sex == 'm') {
                 $val->reciever->profile_image = '/img/me-flat.png';
+            }else{
+                $val->reciever->profile_image = '/img/no-image.png';
             }
             $val->reciever->online_status_icon = '/img/0offline.png';
             foreach ($getSessionUsers as $se) {
@@ -124,6 +126,8 @@ class MessageController extends Controller
 
         foreach ($getMessages as $key => $val) {
             $getMessages[$key]['time'] = \Morilog\Jalali\Jalalian::forge($val['created_at'])->ago();
+
+            $getMessages[$key]['text'] =$val['text'];
         }
 
         $messages = [];
@@ -154,7 +158,7 @@ class MessageController extends Controller
     function freeMessage(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'reciever_user_id' => ['required'],
+            'reciever_user_id' => ['required','integer'],
             'text' => ['required', 'max:3000'],
         ]);
         if ($validator->fails()) {
@@ -173,13 +177,15 @@ class MessageController extends Controller
     function realMessage(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'reciever_user_id' => ['required'],
+            'conversation_id' => ['required','integer'],
+            'reciever_user_id' => ['required','integer'],
             'text' => ['required', 'max:3000'],
         ]);
         if ($validator->fails()) {
             return responseHandler(true, $validator->errors()->all() );
         }
-        $store = Messages::_()->store(user()['user_id'], $request['reciever_user_id'], $request['text'], 1);
+        $store = Messages::_()->store($request['conversation_id'],user()['user_id'], $request['text'], 1);
+
         if ($store['error']) {
             return responseHandler(true, 'خطای سیستمی' );
         }
@@ -189,8 +195,27 @@ class MessageController extends Controller
             'text' => $request['text'],
             'time' => \Morilog\Jalali\Jalalian::forge(now())->ago(),
         ]];
+
         $content = view("partials.conversationsPartial", ['messages' => $getMessages, 'reciever' => $this->getRecieverInfo($request['reciever_user_id']), 're' => true])->render();
-        event(new \App\Events\NewMessage($content, $request['reciever_user_id']));
+
+        if (\File::exists(config("constants.upload.register.imageFolder") . user()['user_id']. '_main_orginal' . '.jpg')) {
+            $avatar = config("constants.upload.register.imageFolder") . user()['user_id'] . '_main_orginal' . '.jpg';
+        } elseif ( user()['sex']== 'f') {
+            $avatar = '/img/wman1.png';
+        } elseif ( user()['sex'] == 'm') {
+            $avatar = '/img/me-flat.png';
+        }else{
+            $avatar= '/img/no-image.png';
+        }
+
+        $data=[
+            'content'=>$content,
+            'shortText'=>mb_substr($request['text'],0,40). " ...",
+            'text'=> $request['text'],
+            'name'=> !empty(user()['nick_name']) ? user()['nick_name'] :user()['fname'],
+            'avatar'=> asset( $avatar),
+        ];
+        event(new \App\Events\NewMessage(json_encode($data), $request['reciever_user_id']));
 
         return response([
             'hasErr' => false,
@@ -218,5 +243,6 @@ class MessageController extends Controller
         }
         return responseHandler(false);
     }
+
 
 }

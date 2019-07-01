@@ -81,7 +81,8 @@
             url: '{{route('sendRealMessage')}}',
             data: {
                 '_token': _TOKEN,
-                'reciever_user_id': '{{$person['id']}}',
+                'conversation_id': '{{$conversation_id}}',
+                'reciever_user_id': '{{$reciever['id']}}',
                 'text': message.val()
             },
             type: 'post',
@@ -90,17 +91,8 @@
                     $(".alert_warn").html("");
                     $('#dv_real_message').unblock();
                     $('#realMessage').modal('toggle');
+                    notify('success', 'با موفقیت ارسال شد.')
 
-                    var notify = $.notify({
-                        // settings
-                        // options
-                        message: 'پیام با موفقیت ارسال شد.',
-                    }, {
-                        type: 'success',
-                        onShow: function () {
-                            this.css({'width': 'auto', 'height': 'auto'});
-                        },
-                    });
                     setTimeout(function() {
                         notify.close();
                     }, 2000);

@@ -22,41 +22,36 @@
                         }
                     },
                     { data: 'id', name: 'id' },
-                    { data: 'email', name: 'email' },
                     { data: 'mobile', name: 'mobile' },
                     { data: 'full_name', name: 'full_name' },
                     { data: 'created_at', name: 'created_at' },
                     { data: 'location', name: 'location' },
                     {
-                        "orderable": false,
-                        "data": null,
+                        "orderable": true,
+                        "data": 'confirm',
                         "mRender": function (data, type, full) {
-                            console.log(full.confirm);
                             if (full.confirm == "accept")
                             {
                                 return "<b style='color:green;'>تایید</b>";
-
                             }
                             else if (full.confirm == "reject")
                             {
                                 return "<b style='color:red;'>رد</b>";
-
                             }
                             else if (full.confirm == "unknown")
                             {
-                                return "<b>در حال انتظار</b>";
+                                return "<b style='font-weight: bolder;color:purple;'>در حال انتظار</b>";
                             }
                             else
                             {
                                 return "<span>تعریف نشده</span>";
-
                             }
                         }
                     },
                     { data: 'step', name: 'step' },
                     {
-                        "orderable": false,
-                        "data": null,
+                        "orderable": true,
+                        "data": 'active',
                         "mRender": function (data, type, full) {
                             if (full.active == "0")
                             {
@@ -77,15 +72,19 @@
                     },
                     { data: 'status', name: 'status' },
                     { data: 'action', name: 'action' },
+                ],
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        var column = this;
+                        var input = document.createElement("input");
+                        input.style.width='80%';
 
-                    // {
-                    //     "orderable": false,
-                    //     "mData": null,
-                    //     "mRender": function (data, type, full) {
-                    //         return "<a class='btn btn-danger btn-md' href='javascript:void(0)' onclick='showDelModal(&quot;" + full.id + "&quot;)' >حذف</a>";
-                    //     }
-                    // }
-                ]
+                        $(input).appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                column.search($(this).val()).draw();
+                            });
+                    });
+                }
             });
 
 
@@ -103,7 +102,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>شناسه کاربر</th>
-                                <th>ایمیل</th>
                                 <th>شماره همراه</th>
                                 <th>نام و نام خانوادگی</th>
                                 <th>ورود به سیستم </th>
@@ -115,6 +113,21 @@
                                 <th>عملیات </th>
                             </tr>
                             </thead>
+                            <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>شناسه کاربر</th>
+                                <th>شماره همراه</th>
+                                <th>نام و نام خانوادگی</th>
+                                <th>ورود به سیستم </th>
+                                <th>محل زندگی</th>
+                                <th>تایید مدیر</th>
+                                <th>سطح</th>
+                                <th>فعال</th>
+                                <th>وضعیت</th>
+                                <th>عملیات </th>
+                            </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

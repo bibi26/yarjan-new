@@ -36,7 +36,7 @@ class MngUsersController extends Controller
                 return $users->fname . ' ' . $users->lname;
             })
             ->addColumn('created_at', function ($users) {
-                return \Morilog\Jalali\Jalalian::forge($users->created_at)->format('Y-m-d H:m:i');
+                return \Morilog\Jalali\Jalalian::forge($users->created_at)->format('H:m:i Y-m-d ');
             })
             ->addColumn('location', function ($users) {
                 return $users->provinces->name . ' ' . $users->cities->name;
@@ -57,8 +57,10 @@ class MngUsersController extends Controller
                 }
             })->addColumn('confirm', function ($users) {
                 return $users->confirm;
+            }) ->order(function ($query) {
+
             })
-            ->make();
+            ->make(true);
     }
 
     function confirm(Request $request)

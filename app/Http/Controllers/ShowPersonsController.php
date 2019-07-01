@@ -118,6 +118,9 @@ class ShowPersonsController extends Controller
             } elseif ($getUsers[$key]['sex'] == 'm') {
                 $getUsers[$key]['profile_image'] = '/img/me-flat.png';
             }
+            else{
+                $getUsers[$key]['profile_image'] = '/img/no-image.png';
+            }
             if ($getUsers[$key]['is_online']) {
 
                 $getUsers[$key]['online_status_icon'] = '/img/0online.png';

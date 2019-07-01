@@ -35,16 +35,7 @@
                     $("#alert_warn").html("");
                     $('#dv_violation_report').unblock();
                     $('#violationReportModal').modal('toggle');
-                    $.notify({
-                        // options
-                        message: 'گزارش تخلف با موفقیت ثبت گردید.',
-                    },{
-                        // settings
-                        type: 'success',
-                        onShow: function() {
-                            this.css({'width':'auto','height':'auto'});
-                        },
-                    });
+                    notify('success', 'افزودن به لیست سیاه با موفقیت ثبت گردید.')
                 } else {
                     $('#dv_violation_report').unblock();
                     $("#alert_warn").show();
