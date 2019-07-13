@@ -79,13 +79,15 @@ class CreateUsers extends Migration
             $table->string('s_location_fellow_province')->nullable();
             $table->string('s_location_abroad')->nullable();
             $table->string('s_location_homeland')->nullable();
-            $table->string('step1')->nullable()->default("0");
-            $table->string('step2')->nullable()->default("0");
-            $table->string('step3')->nullable()->default("0");
-            $table->string('step4')->nullable()->default("0");
-            $table->string('step5')->nullable()->default("0");
+            $table->integer('step1')->nullable()->default("0");
+            $table->integer('step2')->nullable()->default("0");
+            $table->integer('step3')->nullable()->default("0");
+            $table->integer('step4')->nullable()->default("0");
+            $table->integer('step5')->nullable()->default("0");
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->integer('version')->default("0");
+
         });
 
         DB::statement("ALTER TABLE users AUTO_INCREMENT = 26000;");

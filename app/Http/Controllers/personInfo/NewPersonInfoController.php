@@ -16,9 +16,10 @@ class NewPersonInfoController extends Controller
 
     function hasAccess($user_id)
     {
+
         if ($user_id != user()['user_id']) {
             if (user()['role'] != 'admin') {
-                return back()->withInput()->with('error', 'دسترسی غیر مجاز');
+                return back()->withInput()->with('noAceess', 'دسترسی غیر مجاز');
             }
         }
         return true;
@@ -126,7 +127,7 @@ class NewPersonInfoController extends Controller
         $res_add_user = Users::_()->step1($request,$editInitInfo);
 
         if ($res_add_user ['error']) {
-            return back()->with('error', $res_add_user['message']);
+            return back()->with('eFix', $res_add_user['message']);
         }
 
         return \Redirect::to("/{$request['user_id']}/step2");
@@ -150,7 +151,7 @@ class NewPersonInfoController extends Controller
         ]);
         $res_add_user = Users::_()->step2($request);
         if ($res_add_user ['error']) {
-            return back()->with('error', $res_add_user['message']);
+            return back()->with('eFix', $res_add_user['message']);
         }
         return \Redirect::to("/{$request['user_id']}/step3");
     }
@@ -166,7 +167,7 @@ class NewPersonInfoController extends Controller
         ]);
         $res_add_user = Users::_()->step3($request);
         if ($res_add_user ['error']) {
-            return back()->with('error', $res_add_user['message']);
+            return back()->with('eFix', $res_add_user['message']);
         }
         return \Redirect::to("/{$request['user_id']}/step4");
     }
@@ -178,7 +179,7 @@ class NewPersonInfoController extends Controller
         $request['user_id'] = $request['user_id'];
         $res_add_user = Users::_()->step4($request);
         if ($res_add_user ['error']) {
-            return back()->with('error', $res_add_user['message']);
+            return back()->with('eFix', $res_add_user['message']);
         }
         return \Redirect::to("/{$request['user_id']}/step5");
     }
@@ -190,7 +191,7 @@ class NewPersonInfoController extends Controller
         $request['user_id'] = $request['user_id'];
         $res_add_user = Users::_()->step5($request);
         if ($res_add_user ['error']) {
-            return back()->with('error', $res_add_user['message']);
+            return back()->with('eFix', $res_add_user['message']);
         }
         return \Redirect::route('cartable');
     }
@@ -266,7 +267,6 @@ class NewPersonInfoController extends Controller
             return responseHandler(true, $msg);
         }
         return responseHandler(false);
-
     }
 
 

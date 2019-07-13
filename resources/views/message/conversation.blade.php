@@ -2,7 +2,6 @@
 @section('content')
 @section('title', __('titles.conversationUser'))
 <div id="deleteMessageModal" class="modal fade " role="dialog">
-
     <div class="modal-dialog" style="width: 600px;">
 
         <!-- Modal content-->
@@ -243,7 +242,7 @@
             return false;
         }
         $.ajax({
-            url: '{{url('/send_real_message')}}',
+            url: '{{route('sendRealMessage')}}',
             data: {
                 _token: _TOKEN,
                 conversation_id: '{{$conversation_id}}',

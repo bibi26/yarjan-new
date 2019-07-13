@@ -26,23 +26,23 @@ class SignInController extends Controller
         if (!isset($res_login->id) or !\Hash::check($request['pass'], $res_login->password)) {
             $msg_incorrect = __('errors.failLogin') ;
             LogLogin::_()->addLog("signIn",NULL,'incorrect',$msg_incorrect);
-            return back()->withInput()->with('error', $msg_incorrect);
+            return back()->withInput()->with('eFix', $msg_incorrect);
         }
         if (isset($res_login['id']) && $res_login['status'] == 0) {
             $msg_incorrect = __('errors.noAgree');
             LogLogin::_()->addLog("signIn",NULL,config('constants.UserLogErrCode.noAgree'),$msg_incorrect);
-            return back()->withInput()->with('error', $msg_incorrect);
+            return back()->withInput()->with('eFix', $msg_incorrect);
         }
 
         if (isset($res_login['id']) && $res_login['status'] == 1 && $res_login['id'] == 0) {
             $msg_inactive = __('errors.noActive');
             LogLogin::_()->addLog("signIn",$res_login['id'],config('constants.UserLogErrCode.noActive'),$msg_inactive);
-            return back()->withInput()->with('error', $msg_inactive);
+            return back()->withInput()->with('eFix', $msg_inactive);
         }
         if ($res_login['roleName']==null) {
             $msg_no_role =__('errors.noRole');
             LogLogin::_()->addLog("signIn",$res_login['id'],config('constants.UserLogErrCode.noRole'),$msg_no_role);
-            return back()->withInput()->with('error', $msg_no_role);
+            return back()->withInput()->with('eFix', $msg_no_role);
         }
 
         LogLogin::_()->addLog("signIn",$res_login['id'],config('constants.UserLogErrCode.successLogin'),'successLogin');

@@ -24,7 +24,7 @@ class MessageController extends Controller
         $users = [];
         $getMessages = Messages::_()->getConversations($flag, user()['user_id']);
         if (count($getMessages) == 0) {
-            return view($this->manageView, ['error' => 'رکوردی یافت نشد!']);
+            return view($this->manageView, ['eFix' => 'رکوردی یافت نشد!']);
         }
         $getUsers = Users::_()->getUsersInfo()->toArray();
         $getSessionUsers = Sessions::_()->lists();
@@ -177,14 +177,14 @@ class MessageController extends Controller
     function realMessage(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'conversation_id' => ['required','integer'],
+            'conversation_id' => ['integer'],
             'reciever_user_id' => ['required','integer'],
             'text' => ['required', 'max:3000'],
         ]);
         if ($validator->fails()) {
             return responseHandler(true, $validator->errors()->all() );
         }
-        $store = Messages::_()->store($request['conversation_id'],user()['user_id'], $request['text'], 1);
+        $store = Messages::_()->store($request['conversation_id'],$request['reciever_user_id'], $request['text'], 1);
 
         if ($store['error']) {
             return responseHandler(true, 'خطای سیستمی' );

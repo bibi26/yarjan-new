@@ -32,7 +32,7 @@ class CreateConversations extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('conversations');
     }
 
 }

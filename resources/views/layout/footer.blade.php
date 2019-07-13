@@ -94,24 +94,7 @@
 </div>
 
 <script>
-    function notify(type, msg) {
-        return  $.notify({
-            // options
-            message: msg,
-        }, {
-            // settings
-            type: type,
-            onShow: function () {
-                this.css({'width': 'auto', 'height': 'auto'});
-            },
-        });
-    }
-    @if(Session::get('success'))
-    notify('success', '{{Session::get('success')}}')
-    @endif
-    @if(Session::get('error'))
-    notify('danger', '{{Session::get('error')}}')
-    @endif
+
 </script>
 
 

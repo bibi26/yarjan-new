@@ -20,6 +20,19 @@
     <script src="{{ URL::asset('/js/dataTables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('/js/jquery.emojiarea.min.js') }}" type="text/javascript"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+<script>
+    function notify(type, msg) {
+        return  $.notify({
+            // options
+            message: msg,
+        }, {
+            // settings
+            type: type,
+            onShow: function () {
+                this.css({'width': 'auto', 'height': 'auto'});
+            },
+        });
+    }
+</script>
 </head>
 

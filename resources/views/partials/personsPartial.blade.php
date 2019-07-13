@@ -1,3 +1,4 @@
+@include('partials.alerts')
 @if (isset($persons))
     @foreach ($persons as $person)
         <li>
@@ -25,7 +26,8 @@
                     <div
                         style="float: right; width: 50%;padding-right: 0px;text-align: center;"><span
                             class="badge"
-                          style="background-color: white;border: 1px black solid;color: black;"  >{{$person['i_visited']}}</span></div>
+                            style="background-color: white;border: 1px black solid;color: black;">{{$person['i_visited']}}</span>
+                    </div>
                     <div style="float: right; width: 25%;padding-right: 0px;"><a
                             class='btn btn-small btn-default' href='article-link1'>80&nbsp;<i
                                 class="fa fa-heart" style="color: #ff335a;"></i></a></div>
@@ -33,6 +35,7 @@
                 </div>
                 <a href="{{url('detailPerson/'.$person['id'])}}">
                     <div class='overlay'>
+
                         <table>
                             <tr>
                                 <td>
@@ -88,6 +91,16 @@
                     </div>
                 </a>
             </div>
+            @if($flag=='favorites')
+                <a href="{{url("/favorite/m/{$person['id']}/0")}}" class="btn btn-danger" style="margin-top: 10px;width: 100%;">
+                    حذف
+                </a>
+            @endif
+            @if($flag=='blacks')
+                <a href="{{url("/blackList/m/{$person['id']}/0")}}" class="btn btn-danger" style="margin-top: 10px;width: 100%;">
+                    حذف
+                </a>
+            @endif
         </li>
     @endforeach
 @endif

@@ -58,7 +58,7 @@ class Favorites extends Model
            ->where( "m1.favoritor_user_id" , user()['user_id'])
            ->where( "m1.favorited" , 1)
            ->get();
-
     }
+
 
 }

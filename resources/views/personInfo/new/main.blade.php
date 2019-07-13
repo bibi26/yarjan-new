@@ -1,8 +1,10 @@
 @extends('home')
 @section('content')
 @section('title', __('titles.newPerson'))
-
-<div class="row">
+@if( Session::has('noAccess'))
+    @include('partials.alerts')
+@else
+    <div class="row">
         <div class=" col-lg-12">
             <div class="tab" role="tabpanel" style="background-color: white;">
                 <ul class="nav nav-tabs" role="tablist">
@@ -19,10 +21,8 @@
                             آپلود تصویر</a></li>
                 </ul>
                 <div class="tab-content tabs" id="dv_sign">
-                    @if(Session::has('error'))
-                        <div class="alert oaerror danger" style="margin-top: 5px;">{{Session::get('error')}}</div>
-                    @endif
-                    @if($step==1)
+                    @include('partials.alerts')
+                @if($step==1)
                         @include('personInfo.new.step1')
                     @endif
                     @if($step==2)
@@ -73,9 +73,6 @@
 
         });
     </script>
-
-
-
     <style>
         .textInputError {
             border: 1px red solid;
@@ -163,6 +160,7 @@
             }
         }
     </style>
+@endif
 @stop
 
 

@@ -30,6 +30,14 @@ class BlackLists extends Model
           ])->latest()->first();
 
     }
+    function imBlacked($user_id)
+    {
+          return  $this->where([
+              "blacker_user_id" => $user_id,
+              "blacked_user_id" =>user()['user_id']
+          ])->exists();
+
+    }
 
     function store($blacked_user_id,$blacked)
     {
@@ -58,8 +66,8 @@ class BlackLists extends Model
             ->where( "m1.blacker_user_id" , user()['user_id'])
             ->where( "m1.blacked" , 1)
             ->get();
-
     }
+
 
 
 }

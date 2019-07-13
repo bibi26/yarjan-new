@@ -82,7 +82,7 @@
             data: {
                 '_token': _TOKEN,
                 'conversation_id': '{{$conversation_id}}',
-                'reciever_user_id': '{{$reciever['id']}}',
+                'reciever_user_id': '{{$person['id']}}',
                 'text': message.val()
             },
             type: 'post',

@@ -1,10 +1,12 @@
 @extends('home')
 @section('content')
-    @if(Session::has('error'))
-        notify('danger','{{Session::get('error')}}' )
+    @if(Session::has('ePop'))
+        notify('danger','{{Session::get('ePop')}}' )
     @endif
+    @include('partials.alerts')
 
-        <div class="container gal-container" >
+
+    <div class="container gal-container" >
             <div class="col-md-8 col-sm-12 co-xs-12 gal-item">
                 <div class="box">
                     <a href="#" data-toggle="modal" data-target="#1">

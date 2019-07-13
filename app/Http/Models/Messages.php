@@ -3,6 +3,7 @@
 namespace App\Http\Models;
 
 use App\Http\Models\auth\Users;
+use App\Http\Models\Conversations;
 use Request;
 use DB;
 use Illuminate\Database\Eloquent\Model;
@@ -29,13 +30,24 @@ class Messages extends Model
         return $this->belongsTo(Users::class, 'reciever_user_id', 'id');
     }
 
-    function store( $conversation_id, $sender_user_id,$text, $free)
+    function store( $conversation_id,$reciever_user_id='',$text, $free)
     {
         try {
+            $getConversation=Conversations::_()->getId($reciever_user_id)->first();
+            if(empty($getConversation)){
+              $addConversation=  Conversations::create([
+                    'one_user_id'=>user()['user_id'],
+                    'two_user_id'=>$reciever_user_id
+                ]);
+                $conversation=$addConversation->id;
+
+            }else{
+                $conversation=$conversation_id;
+            }
            $result= $this->create(
                 [
-                    "conversation_id" => $conversation_id,
-                    "sender_user_id" => $sender_user_id,
+                    "conversation_id" => $conversation,
+                    "sender_user_id" => user()['user_id'],
                     "text" => $text,
                     "is_free" => $free
                 ]);

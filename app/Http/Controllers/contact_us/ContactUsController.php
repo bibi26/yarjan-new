@@ -23,7 +23,8 @@ class ContactUsController extends Controller
 
 
     function newStore(Request $request)
-    {
+    {        return back()->with('sPop', 'پیام شما با موفقیت ارسال شد!');
+
         $this->validate($request,  [
             'mobile' => ["nullable", "regex:/^09[0-9]{9}+$/u"],
             'email' => ["nullable", "email"],
@@ -39,7 +40,7 @@ class ContactUsController extends Controller
             return back()->with('error',$e->getMessage());
         }
 
-        return back()->with('success', 'پیام شما با موفقیت ارسال شد!');
+        return back()->with('sPop', 'پیام شما با موفقیت ارسال شد!');
     }
     function mng()
     {

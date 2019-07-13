@@ -53,38 +53,38 @@ class SignUpController extends Controller
         $request['age']=$diff;
         $res_add_user = Users::_()->addUser($request);
         if ($res_add_user ['error']) {
-            return back()->with('error', $res_add_user['message']);
+            return back()->with('eFix', $res_add_user['message']);
         }
 
         $res_data = Users::_()->getUserbyUsername($request['email']);
         if (!isset($res_data->id) || empty($res_data->id)) {
-            return back()->with('error', 'خطای سیستمی');
+            return back()->with('eFix', 'خطای سیستمی');
         }
         $request['user_id'] = $res_data->id;
         $res_add_role = UserRoles::_()->addRole($request);
         if ($res_add_role ['error']) {
-            return back()->with('error', $res_add_user['message']);
+            return back()->with('eFix', $res_add_user['message']);
         }
 
-        return back()->with('success', __('errors.sendVerifyCode'));
+        return back()->with('sFix', __('errors.sendVerifyCode'));
     }
 
     function checkVerifyCode($verify_code = '')
     {
         if (!isset($verify_code) || $verify_code == '') {
-            return view($this->verifyView)->with('error', __('errors.noVerifyCode'));
+            return view($this->verifyView)->with('eFix', __('errors.noVerifyCode'));
         }
         $res_check = Users::_()->checkVerifyCode($verify_code);
         if (!isset($res_check->id)) {
-            return view($this->verifyView)->with('error', __('errors.incorrect'));
+            return view($this->verifyView)->with('eFix', __('errors.incorrect'));
         }
         if ($res_check->status == 1) {
-            return view($this->verifyView)->with('error', __('errors.usedVerificationCode'));
+            return view($this->verifyView)->with('eFix', __('errors.usedVerificationCode'));
         }
         $res_confirm = Users::_()->confirmUser($verify_code);
         if ($res_confirm['error'] == true) {
-            return view($this->verifyView)->with('error', $res_confirm['message']);
+            return view($this->verifyView)->with('eFix', $res_confirm['message']);
         }
-        return view($this->verifyView)->with('error', __('errors.successForgetPass'));
+        return view($this->verifyView)->with('eFix', __('errors.successForgetPass'));
     }
 }

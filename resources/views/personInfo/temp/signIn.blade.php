@@ -24,9 +24,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                @if(Session::has('error'))
-                                    <div class="alert oaerror danger" style="margin-top: 5px;" >{{Session::get('error')}}</div>
-                                @endif
+                                @include('partials.alerts')
                                 {!! Form::open(['route'=>'signIn.login','style'=>'padding: 10px','id'=>'sigInForm']) !!}
                                 {{--                                {!! Form::hidden('_token',  csrf_token() ) !!}--}}
                                 <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">

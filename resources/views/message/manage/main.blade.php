@@ -1,9 +1,8 @@
 @extends('home')
 @section('content')
 @section('title', __('titles.conversationsUser'))
-
-    @if(Session::has('error'))
-        notify('danger','{{Session::get('error')}}' )
+    @if(Session::has('ePop'))
+        notify('danger','{{Session::get('ePop')}}' )
     @endif
     <script>
 
@@ -33,6 +32,8 @@
             <a class="tablinks" id="outboxMessageMenu" href="{{url('/conversation/outbox')}}">ارسالی ها</a>
             <a class="tablinks" id="unreadMessageMenu" href="{{url('/conversation/unread')}}">نخوانده ها</a>
         </div>
+        @include('partials.alerts')
+
         <div class="messageContent">
             <table class="table  table-hover" >
                 @if(isset($messages))

@@ -136,10 +136,10 @@ class Users extends BaseModel
             ->get();
     }
 
-    public function getUsersInfoVersion()
-    {
-        return DB::select("SELECT id, MAX(updated_at) FROM users_versions GROUP BY  id ");
-    }
+//    public function getUsersInfoVersion()
+//    {
+//        return DB::select("SELECT id, MAX(updated_at) FROM users_versions GROUP BY  id ");
+//    }
 
     public function getUserInfo($username)
     {

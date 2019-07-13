@@ -79,13 +79,14 @@ class CreateUsersVersions extends Migration
             $table->string('s_location_fellow_province')->nullable();
             $table->string('s_location_abroad')->nullable();
             $table->string('s_location_homeland')->nullable();
-            $table->string('step1')->nullable()->default("0");
-            $table->string('step2')->nullable()->default("0");
-            $table->string('step3')->nullable()->default("0");
-            $table->string('step4')->nullable()->default("0");
-            $table->string('step5')->nullable()->default("0");
+            $table->integer('step1')->nullable()->default("0");
+            $table->integer('step2')->nullable()->default("0");
+            $table->integer('step3')->nullable()->default("0");
+            $table->integer('step4')->nullable()->default("0");
+            $table->integer('step5')->nullable()->default("0");
             $table->timestamp('created_at');//change
             $table->timestamp('updated_at');//change
+            $table->integer('version')->default("0");
         });
     }
 

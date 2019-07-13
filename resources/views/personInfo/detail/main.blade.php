@@ -1,13 +1,6 @@
 @extends('home')
 @section('content')
-    <style>
-        table, th, td {
-            border: 1px solid black;
-        }
-        td{
-            padding: 5px;
-        }
-    </style>
+    @include('partials.alerts')
     @if(isset($person))
         <div class="row" id="detail_page">
             <div class="col-lg-3 col-md-3">
@@ -43,14 +36,14 @@
                                         پیام شخصی </a>
                                 </div>
                                 <div style="margin: 5px;">
-                                    <a href="{{url('favorite')}}/{{$person['id']}}/{{$person['favorited']?0:1}}"
+                                    <a href="{{url('favorite')}}/d/{{$person['id']}}/{{$person['favorited']?0:1}}"
                                        class="btn btn-{{$person['favorited']?'success':'default'}}"
                                        style="width: 210px;text-align: right;"><i class="fa fa-heart "
                                                                                   style="color: #ff335a;"></i>&nbsp;افزودن
                                         به علاقه مندی ها </a>
                                 </div>
                                 <div style="margin: 5px;">
-                                    <a href="{{url('blackList')}}/{{$person['id']}}/{{$person['blacked']?0:1}}"
+                                    <a href="{{url('blackList')}}/d/{{$person['id']}}/{{$person['blacked']?0:1}}"
                                        class="btn btn-{{$person['blacked']?'success':'default'}}"
                                        style="width: 210px;text-align: right;"><i class="fa fa-ban"
                                                                                   style="color: #ff335a;"></i>&nbsp;افزودن
@@ -76,7 +69,7 @@
                                     </div>
                                     @if(user()['role']=='admin' )
                                         <hr/>
-                                        <table >
+                                        <table>
                                             <tr>
                                                 <td>
                                                     step 5
@@ -193,10 +186,6 @@
                             <div class="tab-content tabs" id="dv_sign">
 
 
-                                @if(Session::has('error'))
-                                    <div class="alert oaerror danger"
-                                         style="margin-top: 5px;">{{Session::get('error')}}</div>
-                                @endif
                                 @include('personInfo.detail.aboutMe')
                                 @include('personInfo.detail.spouseCriteria')
                                 @include('personInfo.detail.freeMessage')
@@ -545,6 +534,13 @@
                     text-shadow: none;
                 }
 
+                table, th, td {
+                    border: 1px solid black;
+                }
+
+                td {
+                    padding: 5px;
+                }
             </style>
 
 

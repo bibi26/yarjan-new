@@ -1,10 +1,7 @@
 @extends('home')
 @section('content')
 @section('title', __('titles.forgetPass'))
-
-@if(Session::has('success'))
-        <div class="alert oaerror success" style="margin-top: 5px;" >{{Session::get('success')}}</div>
-    @else
+@if(!Session::has('success'))
     <div class="container">
         <div class="row sign">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -21,10 +18,8 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                @if(Session::has('error'))
-                                    <div class="alert oaerror danger" style="margin-top: 5px;" >{{Session::get('error')}}</div>
-                                @endif
-                                    {!! Form::open(['route'=>'forgetPass.store','style'=>'padding: 10px','id'=>'forgetPassForm']) !!}
+                                @include('partials.alerts')
+                                {!! Form::open(['route'=>'forgetPass.store','style'=>'padding: 10px','id'=>'forgetPassForm']) !!}
                                     <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
                                         {!! Form::label('ایمیل :') !!}
                                         {!! Form::text('username', old('username'), ['class'=>'form-control ','style'=>'direction: ltr']) !!}

@@ -10,7 +10,7 @@ App::setLocale('fa');
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::post('/violationReport', 'DetailPersonController@violationReport')->name("violationReport");
+Route::post('/violationReport', 'ShowPersonsController@violationReport')->name("violationReport");
 
 Route::group(['middleware' => [ 'cors']], function ()
 {
@@ -42,10 +42,12 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::get('/show_persons/online', 'ShowPersonsController@showPersonsView')->defaults('type', 'onlines');
     Route::get('/show_persons/visits', 'ShowPersonsController@showPersonsView')->defaults('type', 'visits');
     Route::get('/show_persons/favorites', 'ShowPersonsController@showPersonsView')->defaults('type', 'favorites');
-    Route::get('/show_ persons/blacks', 'ShowPersonsController@showPersonsView')->defaults('type', 'blacks');
-    Route::get('/detailPerson/{id}', 'DetailPersonController@detailPersonView')->name("personInfo.detailPerson");
-    Route::get('/blackList/{id}/{blacked}', 'DetailPersonController@blackList')->name("blackList");
-    Route::get('/favorite/{id}/{favorited}', 'DetailPersonController@favorite')->name("blackList");
+    Route::get('/show_persons/blacks', 'ShowPersonsController@showPersonsView')->defaults('type', 'blacks');
+    Route::get('/blackList/{flag}/{id}/{blacked}', 'ShowPersonsController@blackList');//my page
+    Route::get('/favorite/{flag}/{id}/{favorited}', 'ShowPersonsController@favorite');//my page
+    Route::get('/detailPerson/{id}', 'ShowPersonsController@detailPersonView')->name("personInfo.detailPerson");
+    Route::get('/blackList/{flag}/{id}/{blacked}', 'ShowPersonsController@blackList');//detail page  d
+    Route::get('/favorite/{flag}/{id}/{favorited}', 'ShowPersonsController@favorite');//detail page  d
     Route::post('/send_free_message', 'MessageController@freeMessage')->name("sendFreeMessage");
     Route::post('/send_real_message', 'MessageController@realMessage')->name("sendRealMessage");
     Route::get('/conversation/all', 'MessageController@conversationView')->defaults('type', 'all');
@@ -59,7 +61,7 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::post('/users/mng', 'users\MngUsersController@list')->name("usersMng");
     Route::post('/users/mng/confirm', 'users\MngUsersController@confirm')->name("confirmRegisteredUserInfo");
     Route::post('/users/mng/deactive', 'users\MngUsersController@deactive')->name("deactiveUser");
-//    Route::get('/table', 'DetailPersonController@table')->name("table");
+//    Route::get('/table', 'ShowPersonsController@table')->name("table");
 
 });
 

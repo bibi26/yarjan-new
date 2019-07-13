@@ -1,7 +1,7 @@
 @extends('home')
 @section('content')
 @section('title', __('titles.contactUs'))
-
+@include('partials.alerts')
 
     <div class="container">
     <div class="row">
@@ -20,19 +20,6 @@
                         <div class="col-lg-12" style="padding-top: 5px;">
                             <script>
                             </script>
-                            @if(Session::has('success'))
-                            <script>
-                                $.toast({
-                                text: "<span style='font-weight: bold; font-family:Tahoma;'>{{Session::get('success')}}</span>",
-                                position: 'top-right',
-                                showHideTransition: 'slide',
-                                icon: 'success',
-                                bgColor: '#3EFF2F',
-                                textColor: '#000',
-                                rtl: true
-                                })
-                            </script>
-                            @endif
 
                             {!! Form::open(['route'=>'contactus.newStore','style'=>'padding: 10px']) !!}
 
