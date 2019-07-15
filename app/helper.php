@@ -61,37 +61,37 @@ function user()
 function educationStatus($value, $array = false)
 {
     if ($array) {
-        return ['under_diploma' => 'زیر دیپلم', 'diploma' => 'دیپلم', 'above_diploma' => 'فوق دیپلم', 'licensee' => 'لیسانس', 'above_licensee' => 'فوق لیسانس', 'public_dr' => 'دکترای عمومی', 'private_dr' => 'دکترای تخصصی', 'above_dr' => 'فوق تخصص', 'hozavi' => 'حوزوی'];
+        return ['1' => 'زیر دیپلم', '2' => 'دیپلم', '3' => 'فوق دیپلم', '4' => 'لیسانس', '5' => 'فوق لیسانس', '6' => 'دکترای عمومی', '7' => 'دکترای تخصصی', '8' => 'فوق تخصص', '9' => 'حوزوی'];
     }
     switch ($value) {
         case "-1":
             echo "مهم نیست";
             break;
-        case "under_diploma":
+        case "1":
             echo "زیر دیپلم";
             break;
-        case "diploma":
+        case "2":
             echo "دیپلم";
             break;
-        case "above_diploma":
+        case "3":
             echo "فوق دیپلم";
             break;
-        case "licensee":
+        case "4":
             echo "لیسانس";
             break;
-        case "above_licensee":
+        case "5":
             echo "فوق لیسانس";
             break;
-        case "public_dr":
+        case "6":
             echo "دکترای عمومی";
             break;
-        case "private_dr":
+        case "7":
             echo "دکترای تخصصی";
             break;
-        case "above_dr":
+        case "8":
             echo "فوق تخصص";
             break;
-        case "hozavi":
+        case "9":
             echo "حوزوی";
             break;
         case "":
@@ -106,7 +106,7 @@ function educationStatus($value, $array = false)
 function skinColorStatus($value, $array = false)
 {
     if ($array) {
-        return ['white' => 'سفید', 'bright_brunetee' => 'سبزه روشن', 'dark_brunetee' => 'سبزه تیره', 'balk' => 'سیاه'];
+        return ['white' => 'سفید', 'bright_brunetee' => 'سبزه روشن', 'dark_brunetee' => 'سبزه تیره', 'black' => 'سیاه'];
     }
     switch ($value) {
         case "-1":
@@ -121,7 +121,7 @@ function skinColorStatus($value, $array = false)
         case "dark_brunetee":
             echo "سبزه تیره";
             break;
-        case "balk":
+        case "black":
             echo "سیاه";
             break;
         case "":
@@ -196,7 +196,7 @@ function beliefStatus($value, $array = false)
 function incomeStatus($value, $array = false)
 {
     if ($array) {
-        return ['0' => 'بدون درآمد', '-2M' => 'زیر 2 میلیون تومان', '2M-5M' => 'بين 2 تا 5 میلیون تومان', '5M-10M' => 'بين 5 تا 10 میلیون تومان', '+10M' => 'بیش از 10 میلیون تومان'];
+        return ['0' => 'بدون درآمد', '1' => 'زیر 2 میلیون تومان', '2' => 'بين 2 تا 5 میلیون تومان', '3' => 'بين 5 تا 10 میلیون تومان', '4' => 'بیش از 10 میلیون تومان'];
 
     }
     switch ($value) {
@@ -206,16 +206,16 @@ function incomeStatus($value, $array = false)
         case "0":
             echo "بدون درآمد";
             break;
-        case "-2M":
+        case "1":
             echo "زیر 2 میلیون تومان";
             break;
-        case "2M-5M":
+        case "2":
             echo "بين 2 تا 5 میلیون تومان";
             break;
-        case "5M-10M":
+        case "3":
             echo "بين 5 تا 10 میلیون تومان";
             break;
-        case "+10M":
+        case "4":
             echo "بیش از 10 میلیون تومان";
             break;
         case "":
@@ -255,32 +255,32 @@ function carStatus($value, $array = false)
 
 {
     if ($array) {
-        return ['0' => 'بدون اتومبيل', '-30M' => 'اتومبیل کمتر از 30 میلیون تومان', '30M-60M' => 'داراي اتومبيل بين 30 تا 60 ميليون تومان', '60M-100M' => 'داراي اتومبيل بين 60 تا 100 ميليون تومان', '100M-200M' => 'داراي اتومبيل بين 100 تا 200 ميليون تومان', '200M-400M' => 'داراي اتومبيل بين 200 تا 400 ميليون تومان', '+400M' => 'اتومبیل بیشتر از 400 میلیون تومان'];
+        return ['1' => 'بدون اتومبيل', '2' => 'اتومبیل کمتر از 30 میلیون تومان', '3' => 'داراي اتومبيل بين 30 تا 60 ميليون تومان', '4' => 'داراي اتومبيل بين 60 تا 100 ميليون تومان', '5' => 'داراي اتومبيل بين 100 تا 200 ميليون تومان', '6' => 'داراي اتومبيل بين 200 تا 400 ميليون تومان', '7' => 'اتومبیل بیشتر از 400 میلیون تومان'];
 
     }
     switch ($value) {
         case "-1":
             echo "مهم نیست";
             break;
-        case "0":
+        case "1":
             echo "بدون اتومبیل";
             break;
-        case "-30M":
+        case "2":
             echo "کمتر از 30 میلیون تومان";
             break;
-        case "30M-60M":
+        case "3":
             echo "بين 30 تا 60 میلیون تومان";
             break;
-        case "60M-100M":
+        case "4":
             echo "بين 60 تا 100 میلیون تومان";
             break;
-        case "100M-200M":
+        case "5":
             echo "بين 100 تا 200 میلیون تومان";
             break;
-        case "200M-400M":
+        case "6":
             echo "بين 200 تا 400 میلیون تومان";
             break;
-        case "+400M":
+        case "7":
             echo "بيش از 400 ميليون تومان";
             break;
         case "":

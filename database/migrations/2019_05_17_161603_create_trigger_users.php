@@ -15,7 +15,7 @@ class CreateTriggerUsers extends Migration
     {
         \Illuminate\Support\Facades\DB::unprepared("
 
-CREATE TRIGGER update_users AFTER UPDATE ON `users`
+CREATE TRIGGER update_users BEFORE UPDATE ON `users`
 FOR EACH ROW BEGIN
     IF (old.confirm='accept' and old.status=2  or  old.fname <> OLD.fname or old.lname <> OLD.lname or old.nick_name <> OLD.nick_name or old.i_am <> OLD.i_am  or old.you_are <> OLD.you_are) THEN
    INSERT INTO users_versions

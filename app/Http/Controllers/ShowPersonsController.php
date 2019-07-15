@@ -10,11 +10,14 @@ use App\Http\Models\auth\Users;
 use App\Http\Models\Visits;
 use App\Http\Models\Sessions;
 use App\Http\Models\Conversations;
+use Illuminate\Support\Facades\Input;
+use App\Http\Models\Provinces;
+use Carbon\Carbon;
 
 class ShowPersonsController extends Controller
 {
     private $limit = 10;
-    private $view = 'showPersons';
+    private $view = 'personInfo.showPersons';
     private $detailView = 'personInfo.detail.main';
 
 
@@ -24,11 +27,16 @@ class ShowPersonsController extends Controller
         $visits = [];
         $iVisited = [];
         $onlineUsers = [];
-        $data = '';
+        $data = [];
+        $isOffline=[];
+        $activityInLastDays = Input::get('activity_in_last_days');
+        $haveImage = Input::get('have_image');
+        $isOnline = Input::get('is_online');
+        $now = Carbon::now();
         $getSessionUsers = Sessions::_()->lists();
         $getIvisited = Visits::_()->iVisited();
         $getVisited = Visits::_()->visitCount();
-
+        $provinces = Provinces::all();
         if (!empty($getVisited)) {
             foreach ($getVisited->toArray() as $key => $val) {
                 $visits[$val['visited_user_id']] = $val['visitCount'];
@@ -47,7 +55,8 @@ class ShowPersonsController extends Controller
                 foreach ($getMyVisitors->toArray() as $row) {
                     $myVisitors[] = $row['visitor_user_id'];
                 }
-                $data = $myVisitors;
+                $data= array_merge( $data , $myVisitors);
+
             }
         }
 
@@ -58,7 +67,8 @@ class ShowPersonsController extends Controller
                 foreach ($getMyFavorites->toArray() as $row) {
                     $myFavorites[] = $row->favorited_user_id;
                 }
-                $data = $myFavorites;
+                $data= array_merge( $data , $myFavorites);
+
             }
         }
         if ($flag == 'blacks') {
@@ -68,10 +78,20 @@ class ShowPersonsController extends Controller
                 foreach ($getMyBlacks->toArray() as $row) {
                     $myBlacks[] = $row->blacked_user_id;
                 }
-                $data = $myBlacks;
+                $data= array_merge( $data , $myBlacks);
             }
         }
+
+
         foreach ($getSessionUsers as $key => $val) {
+            $searchActivityInLastDays = [];
+
+            if (isset($activityInLastDays)) {
+                $last_activity = new Carbon($val->last_activity);
+                if ($last_activity->diff($now)->days <= $activityInLastDays) {
+                    $searchActivityInLastDays[] = $val->user_id;
+                }
+            }
             if ($val->last_activity + config('constants.userOnlinetime') <= time()) {
                 $sessions[$val->user_id] = [
                     'onlineOroffline' => false,
@@ -86,18 +106,45 @@ class ShowPersonsController extends Controller
             }
         }
         if ($flag == 'onlines') {
-            $data = $onlineUsers;
+            $data= array_merge( $data , $onlineUsers);
         }
-
+        if (isset($isOnline)) {
+            if($isOnline==1){
+                $data= array_merge( $data , $onlineUsers);
+            }
+            if($isOnline==0){
+                $isOffline=$onlineUsers;
+            }
+        }
+        if (isset($activityInLastDays)) {
+            $data= array_merge( $data , $searchActivityInLastDays);
+        }
+        if (isset($haveImage)) {
+            $haveImageUsersArray = [];
+            $getUsersIds = $getUsers = Users::_()->getActivetUser();
+            foreach ($getUsersIds as $user_id) {
+                if($haveImage==0){
+                    if (!\File::exists(config("constants.upload.register.imageFolder") . $user_id. '_main_orginal' . '.jpg')) {
+                        $haveImageUsersArray[] = $user_id;
+                    }
+                }
+                if($haveImage==1){
+                    if (\File::exists(config("constants.upload.register.imageFolder") . $user_id. '_main_orginal' . '.jpg')) {
+                        $haveImageUsersArray[] = $user_id;
+                    }
+                }
+            }
+            $data= array_merge( $data , $haveImageUsersArray);
+        }
         if ($request->ajax()) {
             $pageNumber = $request['page_number'];
-            $getUsers = Users::_()->lists($flag, $data, user()['sex'], $this->limit, ($pageNumber - 1) * $this->limit);
+            $getUsers = Users::_()->lists( $isOffline,$data, user()['sex'], $this->limit, ($pageNumber - 1) * $this->limit);
         } else {
             $pageNumber = 0;
-            $getUsers = Users::_()->lists($flag, $data, user()['sex'], $this->limit, $pageNumber);
+            $getUsers = Users::_()->lists($isOffline,$data, user()['sex'], $this->limit, $pageNumber);
         }
-        $totalCount = $getUsers->count();
-        $getUsers = $getUsers->toArray();
+        $totalCount = $getUsers['count'];
+        $getUsers = $getUsers['result']->toArray();
 
         foreach ($getUsers as $key => $val) {
             if (in_array($val['id'], $onlineUsers)) {
@@ -118,7 +165,6 @@ class ShowPersonsController extends Controller
                 $getUsers[$key]['profile_image'] = '/img/no-image.png';
             }
             if ($getUsers[$key]['is_online']) {
-
                 $getUsers[$key]['online_status_icon'] = '/img/0online.png';
                 $getUsers[$key]['online_status_label'] = "<b style='color:green;'>آنلاین</b>";
             } elseif ($getUsers[$key]['is_online'] == false) {
@@ -131,12 +177,12 @@ class ShowPersonsController extends Controller
         if ($request->ajax()) {
             return response([
                 'persons' => $content,
-                'count' => count($getUsers),
+                'count' => $totalCount,
                 'flag' => $flag
             ]);
         }
 
-        return view($this->view, ['content' => $content, 'flag' => $flag, 'count' => count($getUsers),]);
+        return view($this->view, ['content' => $content, 'flag' => $flag, 'count' =>$totalCount, 'provinces' => $provinces]);
     }
 
     function detailPersonView($user_id)

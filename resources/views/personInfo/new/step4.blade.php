@@ -67,7 +67,7 @@
                     <div class="col-lg-8">
                         <div class="row">
                             <div class="col-lg-5">
-                                {{ Form::select('s_education_from', [''=>'انتخاب کنید','under_diploma'=>'زیر دیپلم', 'diploma'=>'دیپلم', 'above_diploma'=>'فوق دیپلم', 'licensee'=>'لیسانس', 'above_licensee'=>'فوق لیسانس', 'public_dr'=>'دکترای عمومی', 'private_dr'=>'دکترای تخصصی', 'above_dr'=>'فوق تخصص', 'hozavi'=>'حوزوی'],[''], [ 'class' => 'form-control input-sm','id'=>'s_education_from' ])}}
+                                {{ Form::select('s_education_from', [''=>'انتخاب کنید','1'=>'زیر دیپلم', '2'=>'دیپلم', '3'=>'فوق دیپلم', '4'=>'لیسانس', '5'=>'فوق لیسانس', '6'=>'دکترای عمومی', '7'=>'دکترای تخصصی', '8'=>'فوق تخصص', '9'=>'حوزوی'],[''], [ 'class' => 'form-control input-sm','id'=>'s_education_from' ])}}
                                 <span class="text-danger small ">{{ $errors->first('s_education_from') }}</span>
                             </div>
 
@@ -134,7 +134,7 @@
                     {!! Form::label('میزان درآمد :','',['class' => 'control-label input-sm col-lg-4 ']) !!}
                     <div class="col-lg-8">
 
-                        {{ Form::select('s_my_income', [''=>'انتخاب کنید','0'=>'بدون درآمد', '-2M'=>'زیر 2 میلیون تومان', '2M-5M'=>'بين 2 تا 5 میلیون تومان', '5M-10M'=>'بين 5 تا 10 میلیون تومان', '+10M'=>'بیش از 10 میلیون تومان'],'', [ 'class' => 'form-control  input-sm','id'=>'s_my_income' ])}}
+                        {{ Form::select('s_my_income', [''=>'انتخاب کنید','0'=>'بدون درآمد', '1'=>'زیر 2 میلیون تومان', '2'=>'بين 2 تا 5 میلیون تومان', '3'=>'بين 5 تا 10 میلیون تومان', '4'=>'بیش از 10 میلیون تومان'],'', [ 'class' => 'form-control  input-sm','id'=>'s_my_income' ])}}
                         <span class="text-danger small ">{{ $errors->first('s_my_income') }}</span>
                     </div>
                 </div>

@@ -192,6 +192,7 @@
                                 @include('personInfo.detail.realMessage')
                                 @include('personInfo.detail.albumImages')
                                 @include('personInfo.detail.violationReport')
+                                @include('personInfo.search')
                                 @if(user()['role']=='admin')
                                     @include('personInfo.detail.confirm')
                                     @include('personInfo.detail.deactive')

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Http\Models\Provinces;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Input;
 
 class Users extends BaseModel
 {
@@ -47,9 +48,24 @@ class Users extends BaseModel
         return $this->belongsTo(Cities::class, 'city_id', 'id');
     }
 
+    public function getActivetUser()
+    {
+        return Users::with(['provinces', 'cities'])
+            ->where('active', 1)
+            ->where('status', 2)
+//            ->where('confirm', 'accept')
+            ->pluck('id');
+    }
+
     public function getCurrentUser()
     {
         return Users::with(['provinces', 'cities'])->where('id', user()['user_id'])->first();
+    }
+
+
+    public function getUserbyUsername($username)
+    {
+        return Users::where(['username' => $username])->first();
     }
 
     public function getUserById($user_id)
@@ -57,26 +73,157 @@ class Users extends BaseModel
         return Users::with(['provinces', 'cities'])->where('id', $user_id)->first();
     }
 
-    public function lists($flag = '', $data = '', $sex = '', $limit = 100000000, $offset = 0)
+
+    public function getUsersInfo()
+    {
+        return Users::select('users.*', 'roles.name as roleName')->with(['provinces', 'cities'])
+            ->leftJoin('user_roles', function ($join) {
+                $join->on('users.id', '=', 'user_roles.user_id');
+            })
+            ->leftJoin('roles', function ($join) {
+                $join->on('roles.id', '=', 'user_roles.role_id');
+            })
+            ->orderByRaw(" FIELD(confirm,'unknown' , 'accept', 'reject')  ")
+            ->get();
+    }
+
+
+    public function getUserInfo($username)
+    {
+        return Users::select('users.*', 'roles.name as roleName')
+            ->leftJoin('user_roles', function ($join) {
+                $join->on('users.id', '=', 'user_roles.user_id');
+            })
+            ->leftJoin('roles', function ($join) {
+                $join->on('roles.id', '=', 'user_roles.role_id');
+            })
+            ->where('username', '=', $username)
+            ->first();
+    }
+
+    public function lists( $isOffline,$data = '', $sex = '', $limit = 100000000, $offset = 0)
     {
 
-        if ($flag == 'visits' || $flag == 'favorites' || $flag == 'blacks' || $flag == 'onlines') {
-            $total = Users::with(['provinces', 'cities'])->where('id', '<>', user()['user_id'])->where('sex', '<>', $sex)->where('confirm', 'accept')->whereIn('id', $data);
-        } else {
-
-            $total = Users::with(['provinces', 'cities'])->where('id', '<>', user()['user_id'])->where('sex', '<>', $sex)->where('confirm', 'accept');
+        $total = Users::with(['provinces', 'cities'])
+            ->where('id', '<>', user()['user_id'])
+            ->where('sex', '<>', $sex)
+            ->where('confirm', 'accept');
+        if (count($data)) {
+            $total->whereIn('id', $data);
         }
-        return $total->limit($limit)->offset($offset)->get();
-    }
+        if (count($isOffline)) {
+            $total->whereNotIn('id', $isOffline);
+        }
+        $age_from = Input::get('age_from');
+        if (isset($age_from)) {
+            $total->where('age', '>=', $age_from);
+        }
 
-    public function getUserbyUserId($userId)
-    {
-        return Users::where(['id' => $userId])->first();
-    }
+        $age_to = Input::get('age_to');
+        if (isset($age_to)) {
+            $total->where('age', '<=', $age_to);
+        }
+        $marriage = Input::get('marriage');
 
-    public function getUserbyUsername($username)
-    {
-        return Users::where(['username' => $username])->first();
+        if (isset($marriage)) {
+            $total->where('marriage', $marriage);
+        }
+
+        $province = Input::get('province');
+        if (isset($province)) {
+            $total->where('province_id', $province);
+        }
+
+        $city = Input::get('city');
+        if (isset($city)) {
+            $total->where('city_id', $city);
+        }
+
+        $education_from= Input::get('education_from');
+        if (isset($education_from)) {
+            $total->where('education', '>=', $education_from);
+        }
+
+        $education_to = Input::get('education_to');
+        if (isset($education_to)) {
+            $total->where('education', '<=', $education_to);
+        }
+
+        $health_condition = Input::get('health_condition');
+        if (isset($health_condition)) {
+            $q = '';
+            foreach ($health_condition as $condition) {
+                $q .= "health_condition='{$condition}' OR ";
+            }
+            $q = substr($q, 0, -3);
+
+            $total->whereRaw("($q)");
+        }
+
+        $height_from = Input::get('height_from');
+        if (isset($height_from)) {
+            $total->where('height', '>=', $height_from);
+        }
+
+        $height_to = Input::get('height_to');
+        if (isset($height_to)) {
+            $total->where('height', '<=', $height_to);
+        }
+
+        $weight_from = Input::get('weight_from');
+        if (isset($weight_from)) {
+            $total->where('weight', '>=', $weight_from);
+        }
+
+        $weight_to = Input::get('weight_to');
+        if (isset($weight_to)) {
+            $total->where('weight', '<=', $weight_to);
+        }
+
+        $skin_color = Input::get('skin_color');
+        if (isset($skin_color)) {
+            $q = '';
+            foreach ($skin_color as $color) {
+                $q .= "skin_color='{$color}' OR ";
+            }
+            $q = substr($q, 0, -3);
+
+            $total->whereRaw("($q)");
+        }
+        $face = Input::get('face');
+        if (isset($face)) {
+            $total->where('face', $face);
+        }
+
+        $style = Input::get('style');
+        if (isset($style)) {
+            $total->where('style', $style);
+        }
+
+        $house = Input::get('house');
+        if (isset($house)) {
+            $total->where('house', $house);
+        }
+        $car = Input::get('car');
+        if (isset($car)) {
+            $total->where('car', $car);
+        }
+
+        $my_income_from = Input::get('my_income_from');
+        if (isset($my_income_from)) {
+            $total->where('my_income', '>=', $my_income_from);
+        }
+
+        $my_income_to = Input::get('my_income_to');
+        if (isset($my_income_to)) {
+            $total->where('my_income', '<=', $my_income_to);
+        }
+
+
+        $data=$total->limit($limit)->offset($offset)->get();
+        $count=$total->count();
+       return modelResponse('','', $data,$count);
+
     }
 
     public function addUser($input)
@@ -119,39 +266,6 @@ class Users extends BaseModel
             myLog($e->getFile() . '|' . $e->getLine() . '|' . $e->getMessage());
             return modelResponse(true, __('errors.errSystem'));
         }
-    }
-
-    public function getUsersInfo()
-    {
-        return Users::select('users.*', 'roles.name as roleName')->with(['provinces', 'cities'])
-            ->leftJoin('user_roles', function ($join) {
-                $join->on('users.id', '=', 'user_roles.user_id');
-            })
-            ->leftJoin('roles', function ($join) {
-                $join->on('roles.id', '=', 'user_roles.role_id');
-            })
-//            ->orderBy("id",'desc')
-            ->orderByRaw(" FIELD(confirm,'unknown' , 'accept', 'reject')  ")
-//            ->orderByRaw("IF(confirm = 'unknown', accept, reject) DESC")
-            ->get();
-    }
-
-//    public function getUsersInfoVersion()
-//    {
-//        return DB::select("SELECT id, MAX(updated_at) FROM users_versions GROUP BY  id ");
-//    }
-
-    public function getUserInfo($username)
-    {
-        return Users::select('users.*', 'roles.name as roleName')
-            ->leftJoin('user_roles', function ($join) {
-                $join->on('users.id', '=', 'user_roles.user_id');
-            })
-            ->leftJoin('roles', function ($join) {
-                $join->on('roles.id', '=', 'user_roles.role_id');
-            })
-            ->where('username', '=', $username)
-            ->first();
     }
 
     public function sendVerificationCode($user_id)

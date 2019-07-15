@@ -158,7 +158,7 @@
                 {!! Form::label('تحصیلات  :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
                 <div class="col-lg-8">
 
-                    {{ Form::select('education', [''=>'انتخاب کنید','under_diploma'=>'زیر دیپلم', 'diploma'=>'دیپلم', 'above_diploma'=>'فوق دیپلم', 'licensee'=>'لیسانس', 'above_licensee'=>'فوق لیسانس', 'public_dr'=>'دکترای عمومی', 'private_dr'=>'دکترای تخصصی', 'above_dr'=>'فوق تخصص', 'hozavi'=>'حوزوی'],'', [ 'class' => 'form-control input-sm','id'=>'education' ])}}
+                    {{ Form::select('education', [''=>'انتخاب کنید','1'=>'زیر دیپلم', '2'=>'دیپلم', '3'=>'فوق دیپلم', '4'=>'لیسانس', '5'=>'فوق لیسانس', '6'=>'دکترای عمومی', '7'=>'دکترای تخصصی', '8'=>'فوق تخصص', '9'=>'حوزوی'],'', [ 'class' => 'form-control input-sm','id'=>'education' ])}}
                     <span class="text-danger small ">{{ $errors->first('education') }}</span>
                 </div>
             </div>
@@ -177,14 +177,14 @@
                 {!! Form::label('میزان درآمد شما :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
                 <div class="col-lg-8">
 
-                    {{ Form::select('my_income', [''=>'انتخاب کنید','0'=>'بدون درآمد', '-2M'=>'زیر 2 میلیون تومان', '2M-5M'=>'بين 2 تا 5 میلیون تومان', '5M-10M'=>'بين 5 تا 10 میلیون تومان', '+10M'=>'بیش از 10 میلیون تومان'],'', [ 'class' => 'form-control  input-sm','id'=>'my_income' ])}}
+                    {{ Form::select('my_income', [''=>'انتخاب کنید','0'=>'بدون درآمد', '1'=>'زیر 2 میلیون تومان', '2'=>'بين 2 تا 5 میلیون تومان', '3'=>'بين 5 تا 10 میلیون تومان', '4'=>'بیش از 10 میلیون تومان'],'', [ 'class' => 'form-control  input-sm','id'=>'my_income' ])}}
                     <span class="text-danger small ">{{ $errors->first('my_income') }}</span>
                 </div>
             </div>
             <div class="form-group {{ $errors->has('family_income') ? 'has-error' : '' }}">
                 {!! Form::label('میزان درآمد خانواده :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
                 <div class="col-lg-8">
-                    {{ Form::select('family_income', [''=>'انتخاب کنید','0'=>'بدون درآمد', '-2M'=>'زیر 2 میلیون تومان', '2M-5M'=>'بين 2 تا 5 میلیون تومان', '5M-10M'=>'بين 5 تا 10 میلیون تومان', '+10M'=>'بیش از 10 میلیون تومان'],'', [ 'class' => 'form-control input-sm','id'=>'family_income' ])}}
+                    {{ Form::select('family_income', [''=>'انتخاب کنید','0'=>'بدون درآمد', '1'=>'زیر 2 میلیون تومان', '2'=>'بين 2 تا 5 میلیون تومان', '3'=>'بين 5 تا 10 میلیون تومان', '4'=>'بیش از 10 میلیون تومان'],'', [ 'class' => 'form-control input-sm','id'=>'family_income' ])}}
                     <span class="text-danger small ">{{ $errors->first('family_income') }}</span>
                 </div>
             </div>
@@ -198,7 +198,7 @@
             <div class="form-group {{ $errors->has('car') ? 'has-error' : '' }}">
                 {!! Form::label('وضعیت اتومبيل :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
                 <div class="col-lg-8">
-                    {{ Form::select('car', [''=>'انتخاب کنید','0'=>'بدون اتومبيل', '-30M'=>'اتومبیل کمتر از 30 میلیون تومان', '30M-60M'=>'داراي اتومبيل بين 30 تا 60 ميليون تومان', '60M-100M'=>'داراي اتومبيل بين 60 تا 100 ميليون تومان', '100M-200M'=>'داراي اتومبيل بين 100 تا 200 ميليون تومان','200M-400M'=>'داراي اتومبيل بين 200 تا 400 ميليون تومان', '+400M'=>'اتومبیل بیشتر از 400 میلیون تومان'],'', [ 'class' => 'form-control input-sm','id'=>'car' ])}}
+                    {{ Form::select('car', [''=>'انتخاب کنید','1'=>'بدون اتومبيل', '2'=>'اتومبیل کمتر از 30 میلیون تومان', '3'=>'داراي اتومبيل بين 30 تا 60 ميليون تومان', '4'=>'داراي اتومبيل بين 60 تا 100 ميليون تومان', '5'=>'داراي اتومبيل بين 100 تا 200 ميليون تومان','6'=>'داراي اتومبيل بين 200 تا 400 ميليون تومان', '7'=>'اتومبیل بیشتر از 400 میلیون تومان'],'', [ 'class' => 'form-control input-sm','id'=>'car' ])}}
                     <span class="text-danger small ">{{ $errors->first('car') }}</span>
                 </div>
             </div>

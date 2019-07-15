@@ -93,7 +93,7 @@
     <div class="form-group row">
         <label class="control-label col-lg-2 col-md-2 col-sm-3">رنگ پوست :</label>
         <div
-            class="col-lg-10 col-md-10 col-sm-9  val">@php echo houseStatus($person['skin_color']) @endphp</div>
+            class="col-lg-10 col-md-10 col-sm-9  val">@php  echo skinColorStatus($person['skin_color']) @endphp</div>
     </div>
 
     <div class="form-group row">

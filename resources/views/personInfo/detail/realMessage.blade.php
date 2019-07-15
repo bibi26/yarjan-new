@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col col-lg-12" style="text-align: right;">
                             <input name="text" class="btn btn-success" type="submit" value="ارسال"
-                                   style="background-color: #a7f995;" onclick="javascrit:sendRealMessage()">
+                                  onclick="javascrit:sendRealMessage()">
                             <button data-dismiss="modal" type="button" class="btn btn-danger"
                                     style="background-color: #fd265a;">بستن
                             </button>

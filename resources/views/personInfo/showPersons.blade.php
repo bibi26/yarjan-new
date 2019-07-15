@@ -117,55 +117,6 @@
     .card:hover .overlay {
         opacity: 1;
     }
-/*
-serch panel
- */
-    .card-item {
-        display: inline-block;
-        width: 100%;
-        box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 3px 0px;
-        border-radius: 3px;
-        background: #fff;
-        border: 0;
-    }
-
-    .card-item .panel-heading {
-        font-size: 20px;
-        color: #000;
-        overflow: inherit;
-        line-height: normal;
-
-    }
-
-    .card-head span {
-        display: inline-block;
-        padding: 15px;
-        background: #333;
-        color: #fff;
-        padding: 0 5px;
-        cursor: pointer;
-    }
-
-    .card-body {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-    .card-body:before, .card-body:after {
-        content: '';
-        display: block;
-        height: 15px;
-    }
-
-    .card-head span::before {
-        content: "\e113";
-        float: right;
-        font-family: 'Glyphicons Halflings';
-    }
-
-    .collapsed .card-head span::before {
-        transform: rotate(-180deg);
-    }
 
 </style>
 <script>
@@ -206,7 +157,6 @@ serch panel
                     $('#infiniteContent').append(data.persons);
                     offset += 1;
                 } else {
-
                     request_ajax = false;
                     $("#pagination_message").addClass('alert alert-danger');
                     $("#pagination_message").html('رکوردی دیگر یافت نشد!');
@@ -249,21 +199,6 @@ serch panel
         </div>
     </div>
 </div>
-<div class="row">
-    <div class=" col-lg-12">
-            <div class="card-item panel" style="height: 50px;">
-                <div class="card-head panel-heading alert alert-danger">جستجو<span class="pull-left"></span></div>
-                <div class="card-body panel-body" style="border: 2px solid black;">Lorem ipsum is a pseudo-Latin text used in web design, typography,
-                    layout, and printing in place of English to emphasise design elements over content. It's also called
-                    placeholder (or filler) text. It's a convenient tool for mock-ups. It helps to outline the visual
-                    elements of a document or presentation, eg typography, font, or layout. Lorem ipsum is mostly a part
-                    of a Latin text by the classical author and philosopher Cicero. Its words and letters have been
-                    changed by addition or removal, so to deliberately render its content nonsensical; it's not genuine,
-                    correct, or comprehensible Latin anymore.
-                </div>
-        </div>
-    </div>
-</div>
         <div class="row">
     <div class=" col-lg-12">
         <div class='posts-box'>
@@ -278,7 +213,6 @@ serch panel
         </div>
     </div>
 </div>
-
 
 @stop
 

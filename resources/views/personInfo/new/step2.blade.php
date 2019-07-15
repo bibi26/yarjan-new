@@ -40,7 +40,7 @@
                 <div class="form-group {{ $errors->has('skin_color') ? 'has-error' : '' }}">
                     {!! Form::label('رنگ پوست :','',['class' => 'control-label input-sm col-lg-4 required']) !!}
                     <div class="col-lg-8">
-                        {{ Form::select('skin_color', [''=>'انتخاب کنید','white'=>'سفید', 'bright_brunetee'=>'سبزه روشن', 'dark_brunetee'=>'سبزه تیره', 'balk'=>'سیاه'],'', [ 'class' => 'form-control input-sm','id'=>'skin_color' ])}}
+                        {{ Form::select('skin_color', [''=>'انتخاب کنید','white'=>'سفید', 'bright_brunetee'=>'سبزه روشن', 'dark_brunetee'=>'سبزه تیره', 'black'=>'سیاه'],'', [ 'class' => 'form-control input-sm','id'=>'skin_color' ])}}
                         <span class="text-danger small ">{{ $errors->first('skin_color') }}</span>
                     </div>
                 </div>

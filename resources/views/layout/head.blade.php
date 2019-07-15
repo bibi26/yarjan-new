@@ -4,9 +4,9 @@
     {{--<title>@yield('title')</title>--}}
     <title>@yield('title')</title>
     <link href="{{ URL::asset('/css/all.css') }}" rel="stylesheet" type="text/css">
-    {{--<link href="{{ URL::asset('/css/select2.css') }}" rel="stylesheet" type="text/css">--}}
+    <link href="{{ URL::asset('/css/select2.css') }}" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{{ URL::asset('/js/all.js') }}"></script>
-{{--    <script type="text/javascript" src="{{ URL::asset('/js/select2.js') }}"></script>--}}
+    <script type="text/javascript" src="{{ URL::asset('/js/select2.js') }}"></script>
     <link href="{{ URL::asset('/css/fileinput.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/css/theme.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('/css/animate.css') }}" rel="stylesheet" type="text/css">

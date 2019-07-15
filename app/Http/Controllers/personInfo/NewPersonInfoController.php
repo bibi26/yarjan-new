@@ -28,7 +28,7 @@ class NewPersonInfoController extends Controller
     function step1View($user_id)
     {
         $this->hasAccess($user_id);
-        $getUser = Users::_()->getUserbyUserId($user_id);
+        $getUser = Users::_()->getUserById($user_id);
 
         if ($getUser->step1 == 1) {
             if ($getUser->step5 == 1) {
@@ -43,7 +43,7 @@ class NewPersonInfoController extends Controller
     function step2View($user_id)
     {
         $this->hasAccess($user_id);
-        $getUser = Users::_()->getUserbyUserId($user_id);
+        $getUser = Users::_()->getUserById($user_id);
         if ($getUser->step2 == 1) {
             return view($this->view, ['step' => 2, 'userInfo' => $getUser]);
         }
@@ -53,7 +53,7 @@ class NewPersonInfoController extends Controller
     function step3View($user_id)
     {
         $this->hasAccess($user_id);
-        $getUser = Users::_()->getUserbyUserId($user_id);
+        $getUser = Users::_()->getUserById($user_id);
         if ($getUser->step3 == 1) {
             return view($this->view, ['step' => 3, 'userInfo' => $getUser]);
         }
@@ -63,7 +63,7 @@ class NewPersonInfoController extends Controller
     function step4View($user_id)
     {
         $this->hasAccess($user_id);
-        $getUser = Users::_()->getUserbyUserId($user_id);
+        $getUser = Users::_()->getUserById($user_id);
         if ($getUser->step4 == 1) {
             return view($this->view, ['step' => 4, 'userInfo' => $getUser]);
         }
@@ -73,7 +73,7 @@ class NewPersonInfoController extends Controller
     function step5View($user_id)
     {
         $this->hasAccess($user_id);
-        $getUser = Users::_()->getUserbyUserId($user_id);
+        $getUser = Users::_()->getUserById($user_id);
         if ($getUser->step4 == 1) {
             return view($this->view, ['step' => 5, 'userInfo' => $getUser]);
         }
@@ -84,7 +84,7 @@ class NewPersonInfoController extends Controller
     public function step1(Request $request)
     {
         $this->hasAccess($request['user_id']);
-        $getUser = Users::_()->getUserbyUserId($request['user_id']);
+        $getUser = Users::_()->getUserById($request['user_id']);
 
         $dataStep0 = [
             'fname' => 'required',

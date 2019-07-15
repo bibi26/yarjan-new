@@ -283,6 +283,8 @@
 
     }).call(this);
 </script>
+@include('personInfo.search')
+
 <header>
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
@@ -310,6 +312,8 @@
                                                                                       class="fa fa-balance-scale"></i>&nbsp;</span>قوانین</a>
                     </li>
                     <li><a href="#"><span><i style="color: #00CCFF;" class="fa fa-check-square"></i>&nbsp;</span>امکانات</a>
+                    <li><a href="#" data-toggle="modal"
+                           data-target="#searchPersons"><span><i style="color: #00CCFF;" class="fa fa-check-square"></i>&nbsp;</span>جستجو</a>
                     </li>
                     <li id="contactTopMenu"><a href="{{url('contactUs')}}"><span><i style="color: #00CCFF;"
                                                                                     class="fa fa-comment"></i>&nbsp;</span>تماس
