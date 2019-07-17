@@ -45,7 +45,7 @@ class Invoices extends Model
         }
     }
 
-    function goToPay($id)
+    function serviceCall($id)
     {
         try {
             return $this->where(['id' => $id, 'payed' => 0])->update(['go_to_pay_date' => Carbon::now(), 'payed' => 1]);
@@ -55,6 +55,4 @@ class Invoices extends Model
             return modelResponse(true, __('errors.errSystem'));
         }
     }
-
-
 }

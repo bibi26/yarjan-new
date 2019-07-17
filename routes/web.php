@@ -78,6 +78,10 @@ Route::get('/', function () {
 
 Route::post('/getCity','MainController@getCity')->name('getCity');
 
+Route::get('/features', 'FeaturesController@view');
+Route::get('/rules', 'RulesController@view');
+Route::get('/faq', 'FaqController@view');
+
 
 Route::get('/about','MainController@about');
 Route::get('/questionnaire','MainController@questionnaire');

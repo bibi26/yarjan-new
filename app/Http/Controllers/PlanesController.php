@@ -66,17 +66,17 @@ class PlanesController extends Controller
         return \Redirect::to("/planes/step3");
     }
 
-    function step3(Request $request)
+    function step3()
     {
         if(!session('factor')){
             return \Redirect::to("/planes/step3")->with('ePop', 'خطای دسترسی');
         }
         $factor=json_decode(session('factor'))[0];
-        $invoice = Invoices::_()->goToPay($factor->invoice_id);
+        $invoice = Invoices::_()->serviceCall($factor->invoice_id);
         if ($invoice['error']) {
             return \Redirect::to("/planes/step3")->with('ePop', 'خطای سیستمی');
         }
-        return \Redirect::to("/planes/pay");
+        return \Redirect::to("/planes/serviceCall");
     }
 
 }

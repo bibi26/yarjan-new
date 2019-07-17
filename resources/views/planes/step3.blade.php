@@ -6,7 +6,7 @@
 {!! Form::open(['route'=>'planes.step3','style'=>'padding: 10px','class'=>'form-horizontal' ,'id'=>'frmStep3']) !!}
 <div class="row" style="margin-top: 15px;">
     <div class=" col-lg-12 col-md-12  col-sm-12 col-xs-12 ">
-        <table class="table">
+        <table class="table" border="2">
             <thead>
             <tr style="font-size: 12px;">
                 <th>شناسه فاکتور</th>
@@ -16,7 +16,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="success" style="font-size: 12px;">
+            <tr  >
                 @php
                 $factor=json_decode(Session::get('factor'))[0];
                 @endphp
@@ -36,6 +36,7 @@
             <a class="btn btn-success btn-send pull-left " href="javascript:void(0);" onclick="nextStep3();"><span>پرداخت <i
                         class="fa fa-chevron-left"></i>&nbsp;</span></a>
         </div>
+    </div>
     </div>
     {!! Form::close() !!}
     <script>
