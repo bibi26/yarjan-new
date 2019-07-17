@@ -184,8 +184,6 @@
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content tabs" id="dv_sign">
-
-
                                 @include('personInfo.detail.aboutMe')
                                 @include('personInfo.detail.spouseCriteria')
                                 @include('personInfo.detail.freeMessage')

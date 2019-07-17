@@ -97,6 +97,6 @@ class CreateUsersVersions extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('users_versions');
     }
 }

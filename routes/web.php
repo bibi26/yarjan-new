@@ -23,6 +23,12 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::get('/step1', function () {
         return view('personInfo.main');
     });
+    Route::get('/planes/step1', 'PlanesController@step1View')->name("planes.step1View");
+    Route::get('/planes/step2', 'PlanesController@step2View')->name("planes.step2View");
+    Route::get('/planes/step3', 'PlanesController@step3View')->name("planes.step3View");
+    Route::post('/planes/step1', 'PlanesController@step1')->name("planes.step1");
+    Route::post('/planes/step2', 'PlanesController@step2')->name("planes.step2");
+    Route::post('/plane/step3', 'PlanesController@step3')->name("planes.step3");
     Route::get('{user_id}/step1', 'personInfo\NewPersonInfoController@step1View')->name("personInfo.step1View");
     Route::get('{user_id}/step2', 'personInfo\NewPersonInfoController@step2View')->name("personInfo.step2View");
     Route::get('{user_id}/step3', 'personInfo\NewPersonInfoController@step3View')->name("personInfo.step3View");
@@ -61,6 +67,7 @@ Route::group(['middleware' => ['is-admin']], function () {
     Route::post('/users/mng', 'users\MngUsersController@list')->name("usersMng");
     Route::post('/users/mng/confirm', 'users\MngUsersController@confirm')->name("confirmRegisteredUserInfo");
     Route::post('/users/mng/deactive', 'users\MngUsersController@deactive')->name("deactiveUser");
+
 //    Route::get('/table', 'ShowPersonsController@table')->name("table");
 
 });

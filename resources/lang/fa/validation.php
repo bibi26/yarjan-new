@@ -205,5 +205,6 @@ return [
         'birth_date_month' =>'ماه تاریخ تولد',
         'birth_date_day' =>'روز تاریخ تولد',
         'reason_violation' =>'دلیل تخلف',
+        'package' =>'بسته',
     ]
 ];

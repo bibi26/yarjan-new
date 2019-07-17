@@ -23,7 +23,7 @@ class ContactUsController extends Controller
 
 
     function newStore(Request $request)
-    {        return back()->with('sPop', 'پیام شما با موفقیت ارسال شد!');
+    {
 
         $this->validate($request,  [
             'mobile' => ["nullable", "regex:/^09[0-9]{9}+$/u"],
@@ -46,10 +46,11 @@ class ContactUsController extends Controller
     {
         $users = ContactUs::all();
         return Datatables::of($users)
-            ->addColumn('created_at', function ($users) {
-                return \Morilog\Jalali\Jalalian::forge($users->created_at)->format('Y-m-d H:m:i');
-            })
-            ->make();    }
+//            ->addColumn('created_at', function ($users) {
+//                return \Morilog\Jalali\Jalalian::forge($users->created_at)->format('Y-m-d H:m:i');
+//            })
+            ->make(true);
+    }
 
 
     function refreshCaptcha()

@@ -168,7 +168,6 @@ class MessageController extends Controller
         $result = Messages::_()->store(user()['user_id'], $request['reciever_user_id'], $request['text'], 0);
         if ($result['error']) {
             return responseHandler(true,'' ,$validator->errors()->all());
-
         }
         return responseHandler(false,'' );
 

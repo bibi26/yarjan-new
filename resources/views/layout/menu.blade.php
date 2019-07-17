@@ -334,9 +334,19 @@
                             <li><a href="{{url('show_persons/online')}}">کاربران آنلاین</a></li>
                         </ul>
                     </li>
+                    @if(Cookie::get('LOGEDIN') == true)
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i style="color: #00CCFF;"
-                                                                                       class="fa fa-caret-down"></i>&nbsp;ابزارها
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i style="color: #00CCFF;" class="fa fa-caret-down"></i>&nbsp;مدیر
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{route('contactus.mngView')}}">لیست تماس با ما</a></li>
+                            <li style="border-bottom: 1px solid #00aced;"></li>
+                            <li><a href="{{route('usersMng')}}">لیست کاربران</a></li>
+                        </ul>
+                    </li>
+                    @endif
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i style="color: #00CCFF;" class="fa fa-caret-down"></i>&nbsp;ابزارها
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{url('show_persons/visits')}}">بازدیدکنندگان من</a></li>

@@ -3,7 +3,6 @@
 @section('title', __('titles.mngUsers'))
 <script>
         $(function () {
-
             $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -16,7 +15,7 @@
                 columns: [
                     {
                         "orderable": true,
-                        "mData": null,
+                        "mData": 'id',
                         "mRender": function (data, type, full, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
@@ -27,15 +26,13 @@
                     { data: 'created_at', name: 'created_at' },
                 ]
             });
-
-
         });
     </script>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">کارتابل کاربران ثبت شده</h4>
+                    <h4 class="card-title">لیست پیام های تماس با ما</h4>
                     <div class="table-responsive m-t-40">
                         <table id='users-table' class="display nowrap table table-hover table-striped table-bordered"
                                cellspacing="0" width="100%">

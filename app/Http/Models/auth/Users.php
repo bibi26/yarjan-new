@@ -220,7 +220,7 @@ class Users extends BaseModel
         }
 
 
-        $data=$total->limit($limit)->offset($offset)->get();
+        $data=$total->orderBy('id', 'desc')->limit($limit)->offset($offset)->get();
         $count=$total->count();
        return modelResponse('','', $data,$count);
 

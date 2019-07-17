@@ -63,6 +63,7 @@ class ShowPersonsController extends Controller
         if ($flag == 'favorites') {
             $myFavorites = [];
             $getMyFavorites = Favorites::_()->myFavorites();
+//            dd($getMyFavorites);
             if (!empty($getMyFavorites)) {
                 foreach ($getMyFavorites->toArray() as $row) {
                     $myFavorites[] = $row->favorited_user_id;
