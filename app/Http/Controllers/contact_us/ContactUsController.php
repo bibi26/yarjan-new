@@ -46,9 +46,9 @@ class ContactUsController extends Controller
     {
         $users = ContactUs::all();
         return Datatables::of($users)
-//            ->addColumn('created_at', function ($users) {
-//                return \Morilog\Jalali\Jalalian::forge($users->created_at)->format('Y-m-d H:m:i');
-//            })
+            ->addColumn('created_at', function ($users) {
+                return \Morilog\Jalali\Jalalian::forge($users->created_at)->format('Y-m-d H:m:i');
+            })
             ->make(true);
     }
 

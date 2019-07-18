@@ -229,7 +229,6 @@ class NewPersonInfoController extends Controller
         } catch (\Exception $e) {
             \Log::channel('notify')->error("LINE => " . __LINE__ . " METHOD => " . __METHOD__ . " INFO => " . $e->getMessage());
             return responseHandler(true, 'خطا در آپلود فایل!');
-
         }
         $resetConfirm = Users::_()->step5ResetConfirm($request['user_id']);
         if ($resetConfirm ['error']) {

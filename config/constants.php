@@ -5,6 +5,14 @@ return [
     'siteTitle' => 'مدلینگ',
     'cpoyRightDate' => '2018',
     'upload' => [
+        'ticket' => [
+            'fileSizeByte' => 8000000,//8M=8000000
+            'fileSizeKiloByte' => 8192,//4M=8000000
+            'fileSizeSymbol' => '8M', //4M=8000000
+            'allowExtensionJS' => '/(\.jpg|\.jpeg)$/i',
+            'loadingFile' => '/img/7070.gif',
+            'folder' => 'storage/tickets/',
+        ] ,
         'register' => [
             'imageWidth' => 400,
             'imageHeight' => 400,

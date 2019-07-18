@@ -26,6 +26,10 @@ class Packages extends Model
         return self::$_instance;
     }
 
+    function lists()
+    {
+        return $this->get();
+    }
     function show($id)
     {
         return $this->where('code', $id)->first();

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BlackLists extends Migration
+class CreateTicketComments extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class BlackLists extends Migration
      */
     public function up()
     {
-        Schema::create('black_lists', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('blacker_user_id');
-            $table->integer('blacked_user_id');
-            $table->tinyInteger('blacked');
+        Schema::create('ticket_comments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('ticket_id');
+            $table->mediumText('comment');
+            $table->smallInteger('status')->default(0)->nullable();;
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class BlackLists extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('black_lists');
+        Schema::dropIfExists('ticket_comments');
     }
 }

@@ -15,7 +15,7 @@ class PlanesController extends Controller
 
     function step1View()
     {
-        $packages = Packages::all();
+        $packages = Packages::_()->lists();
         return view($this->view, ['step' => 1, 'packages' => $packages]);
     }
 
